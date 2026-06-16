@@ -67,6 +67,28 @@
         }
         .step-inactive { opacity: 0.4; filter: grayscale(1); }
         .zero-tolerance { border-left: 4px solid #ef4444; }
+        .mobile-menu {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.25s ease, opacity 0.2s ease;
+        }
+        .mobile-menu.open {
+            max-height: 280px;
+            opacity: 1;
+        }
+        @media (max-width: 767px) {
+            .glass-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            .chart-container {
+                height: 250px;
+            }
+            .mobile-tight-card {
+                border-radius: 1rem;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -83,7 +105,7 @@
      - 자산의 진화: 클릭 가능한 단계별 프로세스 뷰를 구현하여 흐름 설명.
      - 무관용 원칙: 강조된 카드 UI를 통해 단호한 운영 원칙 전달.
      - 정보 검증 기준: Doughnut Chart로 기술성/시장성 등 가중치 개념 시각화.
-     - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. 
+     - CONFIRMATION: Inline SVG icons are used for interface clarity. NO Mermaid JS used. 
 -->
 
 <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
@@ -98,28 +120,44 @@
             <span class="nav-link" onclick="showSection('insight')">인사이트</span>
             <span class="nav-link" onclick="showSection('notice')">공지사항</span>
         </div>
-        <button class="bg-slate-800 text-white px-4 py-2 rounded text-xs font-bold hover:bg-slate-700 transition" onclick="showSection('notice')">참여하기</button>
+        <div class="hidden md:block">
+            <button class="bg-slate-800 text-white px-4 py-2 rounded text-xs font-bold hover:bg-slate-700 transition" onclick="showSection('notice')">참여하기</button>
+        </div>
+        <button class="md:hidden w-10 h-10 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-800" type="button" onclick="toggleMobileNav()" aria-label="메뉴 열기" aria-controls="mobileMenu" aria-expanded="false">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 7h14M5 12h14M5 17h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </div>
+    <div id="mobileMenu" class="mobile-menu md:hidden border-t border-slate-100 bg-white/95">
+        <div class="px-6 py-3 grid gap-2 text-sm font-bold text-slate-700">
+            <button class="text-left py-3 border-b border-slate-100" type="button" onclick="showSection('intro')">비전</button>
+            <button class="text-left py-3 border-b border-slate-100" type="button" onclick="showSection('principles')">운영강령</button>
+            <button class="text-left py-3 border-b border-slate-100" type="button" onclick="showSection('insight')">인사이트</button>
+            <button class="text-left py-3 border-b border-slate-100" type="button" onclick="showSection('notice')">공지사항</button>
+            <button class="mt-2 bg-slate-800 text-white py-3 rounded-lg text-sm" type="button" onclick="showSection('notice')">참여하기</button>
+        </div>
     </div>
 </nav>
 
-<main class="pt-24 pb-20 max-w-6xl mx-auto px-6">
+<main class="pt-24 pb-14 md:pb-20 max-w-6xl mx-auto px-4 sm:px-6">
     <!-- Section: Intro -->
     <section id="intro" class="active-section">
-        <div class="text-center mb-16">
-            <h2 class="text-xs font-bold tracking-[0.3em] text-slate-400 mb-4">INVESTING FUNDAMENTALS</h2>
-            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 leading-tight mb-6">Building Wealth for the Future</h1>
-            <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+        <div class="text-center mb-12 md:mb-16">
+            <h2 class="text-[11px] md:text-xs font-bold tracking-[0.22em] md:tracking-[0.3em] text-slate-400 mb-4">INVESTING FUNDAMENTALS</h2>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 leading-tight mb-6">Building Wealth for the Future</h1>
+            <p class="text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
                 다가오는 웹 3.0 시대, 단순한 투자를 넘어 자산의 본질을 꿰뚫는 통찰력을 기릅니다.<br>
                 우리는 배우고, 검증하고, 함께 성장하는 지식 공동체입니다.
             </p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-14 md:mb-20">
             <div class="chart-container order-2 md:order-1">
                 <canvas id="visionChart"></canvas>
             </div>
-            <div class="space-y-6 order-1 md:order-2">
-                <h3 class="text-2xl font-bold text-slate-800">우리가 지향하는 핵심 가치</h3>
+            <div class="space-y-5 md:space-y-6 order-1 md:order-2">
+                <h3 class="text-xl md:text-2xl font-bold text-slate-800">우리가 지향하는 핵심 가치</h3>
                 <p class="text-slate-600">미래자산포럼은 단기 시세 차익보다 거시적 변화에 집중합니다. 4대 가치를 기반으로 집단 지성을 발휘하여 금융의 미래를 설계합니다.</p>
                 <ul class="space-y-4">
                     <li class="flex items-start space-x-3">
@@ -141,13 +179,13 @@
 
     <!-- Section: Principles -->
     <section id="principles" class="hidden">
-        <div class="mb-12">
-            <h2 class="text-3xl font-bold text-slate-800 mb-4">포럼 운영 강령 및 검증 체계</h2>
+        <div class="mb-8 md:mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">포럼 운영 강령 및 검증 체계</h2>
             <p class="text-slate-500">우리는 정보의 양보다 질, 그리고 검증의 엄격함을 중시합니다.</p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6 mb-16">
-            <div class="glass-card p-8 rounded-xl border border-slate-200">
+        <div class="grid md:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-16">
+            <div class="glass-card p-6 md:p-8 rounded-xl border border-slate-200">
                 <div class="mb-5 w-12 h-12 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-700">
                     <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M12 3v18M6 7h12M8 7l-3 6h6L8 7ZM16 7l-3 6h6l-3-6ZM9 21h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -156,7 +194,7 @@
                 <h4 class="font-bold text-lg mb-2">자율 책임</h4>
                 <p class="text-sm text-slate-500 leading-relaxed">모든 정보는 학술적 목적이며, 최종 투자 판단의 책임은 회원 개인에게 귀속됩니다.</p>
             </div>
-            <div class="glass-card p-8 rounded-xl border border-slate-200">
+            <div class="glass-card p-6 md:p-8 rounded-xl border border-slate-200">
                 <div class="mb-5 w-12 h-12 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-700">
                     <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/>
@@ -166,7 +204,7 @@
                 <h4 class="font-bold text-lg mb-2">철저한 검증</h4>
                 <p class="text-sm text-slate-500 leading-relaxed">기술성, 시장성, 토크노믹스, 리스크 요소를 다각도로 분석하여 정보를 선별합니다.</p>
             </div>
-            <div class="glass-card p-8 rounded-xl border border-slate-200">
+            <div class="glass-card p-6 md:p-8 rounded-xl border border-slate-200">
                 <div class="mb-5 w-12 h-12 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-700">
                     <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M7 12.5 4.8 10.3a2.2 2.2 0 0 1 0-3.1l1.1-1.1a2.2 2.2 0 0 1 3.1 0L12 9.1l3-3a2.2 2.2 0 0 1 3.1 0l1.1 1.1a2.2 2.2 0 0 1 0 3.1L17 12.5M8.5 14l2 2a2.1 2.1 0 0 0 3 0l2-2M9.5 9.5l-4 4M14.5 9.5l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -177,7 +215,7 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-2xl p-8 md:p-12 border border-slate-100 shadow-sm mb-16">
+        <div class="bg-white rounded-2xl p-5 md:p-12 border border-slate-100 shadow-sm mb-12 md:mb-16">
             <h3 class="text-xl font-bold text-slate-800 mb-8 flex items-center">
                 <span class="w-2 h-6 bg-red-500 mr-3"></span> 무관용 원칙 (Zero-Tolerance)
             </h3>
@@ -204,25 +242,25 @@
 
     <!-- Section: Insight -->
     <section id="insight" class="hidden">
-        <div class="mb-12 text-center">
-            <h2 class="text-3xl font-bold text-slate-800 mb-4">Founder's Insight</h2>
+        <div class="mb-8 md:mb-12 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">Founder's Insight</h2>
             <p class="text-slate-500 italic">"오프라인에서 온라인으로, 그리고 이제 온체인의 시대로"</p>
         </div>
 
-        <div class="grid lg:grid-cols-3 gap-8 mb-16">
-            <div id="step1" class="glass-card p-8 rounded-2xl cursor-pointer" onclick="toggleInsight(1)">
+        <div class="grid lg:grid-cols-3 gap-5 md:gap-8 mb-12 md:mb-16">
+            <div id="step1" class="glass-card p-6 md:p-8 rounded-2xl cursor-pointer" onclick="toggleInsight(1)">
                 <span class="text-xs font-bold text-slate-400 mb-2 block">STEP 01</span>
                 <h4 class="text-xl font-bold mb-4">OFFLINE</h4>
                 <p class="text-sm text-slate-500 leading-relaxed mb-4">실물과 실물이 직접 만나는 공간. 돈은 손에서 손으로 전해지고 가치는 물리적 공간에 머물렀습니다.</p>
                 <div class="h-1 bg-slate-200 w-full rounded"></div>
             </div>
-            <div id="step2" class="glass-card p-8 rounded-2xl cursor-pointer" onclick="toggleInsight(2)">
+            <div id="step2" class="glass-card p-6 md:p-8 rounded-2xl cursor-pointer" onclick="toggleInsight(2)">
                 <span class="text-xs font-bold text-slate-400 mb-2 block">STEP 02</span>
                 <h4 class="text-xl font-bold mb-4">ONLINE</h4>
                 <p class="text-sm text-slate-500 leading-relaxed mb-4">인터넷이 세상을 연결한 정보의 시대. 실물은 현실에 있고 정보만 통로를 통해 이동했습니다.</p>
                 <div class="h-1 bg-blue-400 w-full rounded"></div>
             </div>
-            <div id="step3" class="glass-card p-8 rounded-2xl cursor-pointer" onclick="toggleInsight(3)">
+            <div id="step3" class="glass-card p-6 md:p-8 rounded-2xl cursor-pointer" onclick="toggleInsight(3)">
                 <span class="text-xs font-bold text-slate-400 mb-2 block">STEP 03</span>
                 <h4 class="text-xl font-bold mb-4 text-blue-600">ON-CHAIN</h4>
                 <p class="text-sm text-slate-500 leading-relaxed mb-4 font-medium">가치와 기록 자체가 블록체인 위로 올라가는 가치의 디지털화. RWA와 스테이블코인이 혈관이 됩니다.</p>
@@ -230,13 +268,13 @@
             </div>
         </div>
 
-        <div class="bg-slate-900 text-white p-8 md:p-12 rounded-3xl overflow-hidden relative">
+        <div class="bg-slate-900 text-white p-6 md:p-12 rounded-2xl md:rounded-3xl overflow-hidden relative">
             <div class="relative z-10 max-w-2xl">
-                <h3 class="text-2xl font-bold mb-6">참여가 곧 가치가 되는 시대</h3>
+                <h3 class="text-xl md:text-2xl font-bold mb-5 md:mb-6">참여가 곧 가치가 되는 시대</h3>
                 <p class="text-slate-300 leading-relaxed mb-6">
                     단순히 보유(HODL)하는 것을 넘어, DAO나 거버넌스 투표, 온체인 금융 인프라 활용 등 '참여' 자체가 가치를 창출하는 패러다임이 열리고 있습니다. 지갑(Wallet)은 이제 개인의 가장 강력한 금융 플랫폼입니다.
                 </p>
-                <div class="flex items-center space-x-4">
+                <div class="flex flex-wrap items-center gap-2 md:gap-4">
                     <div class="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-500/30">#RWA</div>
                     <div class="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-500/30">#Stablecoin</div>
                     <div class="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full border border-blue-500/30">#Web3.0</div>
@@ -252,24 +290,24 @@
     <!-- Section: Notice -->
     <section id="notice" class="hidden">
         <div class="max-w-3xl mx-auto">
-            <div class="mb-12 text-center"><h2 class="text-3xl font-bold text-slate-800 mb-4">정기 모임 안내</h2><p class="text-slate-500">함께 배우고 검증하며 성장하는 여정에 동참하세요.</p></div>
-            <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
-                <div class="bg-slate-800 p-6 text-white flex justify-between items-center"><span class="text-lg font-bold">NEXT SESSION</span><span class="bg-blue-600 px-3 py-1 text-xs rounded">공지</span></div>
-                <div class="p-8 md:p-12 space-y-8">
+            <div class="mb-8 md:mb-12 text-center"><h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">정기 모임 안내</h2><p class="text-slate-500">함께 배우고 검증하며 성장하는 여정에 동참하세요.</p></div>
+            <div class="bg-white border border-slate-200 rounded-2xl md:rounded-3xl overflow-hidden shadow-sm">
+                <div class="bg-slate-800 p-5 md:p-6 text-white flex justify-between items-center"><span class="text-base md:text-lg font-bold">NEXT SESSION</span><span class="bg-blue-600 px-3 py-1 text-xs rounded">공지</span></div>
+                <div class="p-5 md:p-12 space-y-6 md:space-y-8">
                     <div><h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Date & Time</h4><p class="text-xl font-bold text-slate-800">공지사항에서 다음 일정을 확인하세요</p></div>
                     <div><h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Agenda</h4><ul class="space-y-4"><li class="flex items-start"><span class="w-6 h-6 bg-slate-100 rounded-full flex items-center justify-center text-xs mr-3">1</span><span class="text-slate-700">블록체인과 Web3.0 기초 학습</span></li><li class="flex items-start"><span class="w-6 h-6 bg-slate-100 rounded-full flex items-center justify-center text-xs mr-3">2</span><span class="text-slate-700">디지털 자산의 본질과 투자 관점 토론</span></li><li class="flex items-start"><span class="w-6 h-6 bg-slate-100 rounded-full flex items-center justify-center text-xs mr-3">3</span><span class="text-slate-700">검증된 정보와 리스크 관리 기준 공유</span></li></ul></div>
                 </div>
             </div>
-            <div class="mt-10">
-                <div class="flex items-end justify-between gap-4 mb-4"><div><h3 class="text-xl font-bold text-slate-800">공지사항</h3><p class="text-sm text-slate-500 mt-1">등록된 공지를 최신순으로 보여줍니다.</p></div><button type="button" class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-bold hover:bg-slate-50 transition" onclick="toggleNoticeAdmin()">관리</button></div>
+            <div class="mt-8 md:mt-10">
+                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4"><div><h3 class="text-lg md:text-xl font-bold text-slate-800">공지사항</h3><p class="text-sm text-slate-500 mt-1">등록된 공지를 최신순으로 보여줍니다.</p></div><button type="button" class="w-full sm:w-auto bg-white border border-slate-200 text-slate-700 px-4 py-3 sm:py-2 rounded-lg text-sm font-bold hover:bg-slate-50 transition" onclick="toggleNoticeAdmin()">관리</button></div>
                 <div id="noticeList" class="space-y-4"></div>
-                <div id="noticeAdminPanel" class="hidden mt-6 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div id="noticeAdminPanel" class="hidden mt-6 bg-white border border-slate-200 rounded-2xl p-5 md:p-6 shadow-sm">
                     <div class="mb-5"><h4 class="font-bold text-slate-800">공지 등록</h4><p class="text-xs text-slate-500 mt-1">GitHub Pages는 정적 호스팅이라, 등록 후 JSON을 내려받아 저장소에 올리면 방문자 모두에게 반영됩니다.</p></div>
                     <form id="noticeForm" class="space-y-4">
                         <div><label class="block text-xs font-bold text-slate-500 mb-2" for="noticeTitle">제목</label><input id="noticeTitle" class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300" type="text" placeholder="예: 7월 정기 모임 안내" required></div>
                         <div class="grid md:grid-cols-2 gap-4"><div><label class="block text-xs font-bold text-slate-500 mb-2" for="noticeDate">날짜</label><input id="noticeDate" class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300" type="date" required></div><div><label class="block text-xs font-bold text-slate-500 mb-2" for="noticeTag">분류</label><input id="noticeTag" class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300" type="text" placeholder="모임, 안내, 업데이트"></div></div>
                         <div><label class="block text-xs font-bold text-slate-500 mb-2" for="noticeBody">내용</label><textarea id="noticeBody" class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm min-h-[120px] focus:outline-none focus:ring-2 focus:ring-slate-300" placeholder="공지 내용을 입력하세요." required></textarea></div>
-                        <div class="flex flex-col md:flex-row gap-3"><button type="submit" class="bg-slate-800 text-white px-5 py-3 rounded-lg text-sm font-bold hover:bg-slate-700 transition">등록</button><button type="button" class="bg-white border border-slate-200 text-slate-700 px-5 py-3 rounded-lg text-sm font-bold hover:bg-slate-50 transition" onclick="downloadNoticesJson()">notices.json 내려받기</button><label class="bg-white border border-slate-200 text-slate-700 px-5 py-3 rounded-lg text-sm font-bold hover:bg-slate-50 transition cursor-pointer text-center">JSON 가져오기<input id="noticeImport" type="file" accept="application/json" class="hidden"></label></div>
+                        <div class="grid sm:grid-cols-3 gap-3"><button type="submit" class="bg-slate-800 text-white px-5 py-3 rounded-lg text-sm font-bold hover:bg-slate-700 transition">등록</button><button type="button" class="bg-white border border-slate-200 text-slate-700 px-5 py-3 rounded-lg text-sm font-bold hover:bg-slate-50 transition" onclick="downloadNoticesJson()">notices.json 내려받기</button><label class="bg-white border border-slate-200 text-slate-700 px-5 py-3 rounded-lg text-sm font-bold hover:bg-slate-50 transition cursor-pointer text-center">JSON 가져오기<input id="noticeImport" type="file" accept="application/json" class="hidden"></label></div>
                     </form>
                 </div>
             </div>
@@ -298,13 +336,24 @@
     function normalizeNotice(item) { return { id: item.id || Date.now() + '-' + Math.random().toString(16).slice(2), title: String(item.title || '').trim(), date: String(item.date || new Date().toISOString().slice(0, 10)).trim(), tag: String(item.tag || '공지').trim(), body: String(item.body || '').trim() }; }
     function saveLocalNotices() { localStorage.setItem('fwfNotices', JSON.stringify(notices)); }
     function escapeHtml(value) { return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;'); }
-    function renderNotices() { const list = document.getElementById('noticeList'); if (!list) return; const sorted = [...notices].sort((a, b) => b.date.localeCompare(a.date)); if (sorted.length === 0) { list.innerHTML = '<div class="bg-white border border-slate-200 rounded-2xl p-6 text-sm text-slate-500">등록된 공지가 없습니다.</div>'; return; } list.innerHTML = sorted.map(notice => '<article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"><div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3"><h4 class="font-bold text-slate-800">' + escapeHtml(notice.title) + '</h4><div class="flex items-center gap-2 text-xs"><span class="bg-slate-100 text-slate-600 px-2 py-1 rounded">' + escapeHtml(notice.tag) + '</span><time class="text-slate-400">' + escapeHtml(notice.date) + '</time></div></div><p class="text-sm text-slate-600 leading-relaxed whitespace-pre-line">' + escapeHtml(notice.body) + '</p></article>').join(''); }
+    function renderNotices() { const list = document.getElementById('noticeList'); if (!list) return; const sorted = [...notices].sort((a, b) => b.date.localeCompare(a.date)); if (sorted.length === 0) { list.innerHTML = '<div class="bg-white border border-slate-200 rounded-2xl p-5 md:p-6 text-sm text-slate-500">등록된 공지가 없습니다.</div>'; return; } list.innerHTML = sorted.map(notice => '<article class="bg-white border border-slate-200 rounded-2xl p-5 md:p-6 shadow-sm"><div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3"><h4 class="font-bold text-slate-800">' + escapeHtml(notice.title) + '</h4><div class="flex flex-wrap items-center gap-2 text-xs"><span class="bg-slate-100 text-slate-600 px-2 py-1 rounded">' + escapeHtml(notice.tag) + '</span><time class="text-slate-400">' + escapeHtml(notice.date) + '</time></div></div><p class="text-sm text-slate-600 leading-relaxed whitespace-pre-line">' + escapeHtml(notice.body) + '</p></article>').join(''); }
     async function loadNotices() { const local = JSON.parse(localStorage.getItem('fwfNotices') || '[]'); notices = Array.isArray(local) && local.length ? local.map(normalizeNotice) : [...defaultNotices]; try { const response = await fetch('notices.json', { cache: 'no-store' }); if (response.ok) { const remote = await response.json(); if (Array.isArray(remote) && remote.length) { notices = remote.map(normalizeNotice); saveLocalNotices(); } } } catch (error) {} renderNotices(); }
     async function hashText(value) { const bytes = new TextEncoder().encode(value); const digest = await crypto.subtle.digest('SHA-256', bytes); return Array.from(new Uint8Array(digest)).map(byte => byte.toString(16).padStart(2, '0')).join(''); }
     async function verifyNoticeAdmin() { if (sessionStorage.getItem('fwfNoticeAdmin') === 'true') return true; const password = prompt('관리자 비밀번호를 입력하세요.'); if (password === null) return false; if (await hashText(password) === NOTICE_ADMIN_PASSWORD_HASH) { sessionStorage.setItem('fwfNoticeAdmin', 'true'); return true; } alert('비밀번호가 올바르지 않습니다.'); return false; }
     async function toggleNoticeAdmin() { if (!(await verifyNoticeAdmin())) return; document.getElementById('noticeAdminPanel')?.classList.toggle('hidden'); }
     function downloadNoticesJson() { const blob = new Blob([JSON.stringify(notices, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = 'notices.json'; link.click(); URL.revokeObjectURL(url); }
-    function setupNoticeForm() { const form = document.getElementById('noticeForm'); const importInput = document.getElementById('noticeImport'); const dateInput = document.getElementById('noticeDate'); if (dateInput) dateInput.value = new Date().toISOString().slice(0, 10); form?.addEventListener('submit', event => { event.preventDefault(); const newNotice = normalizeNotice({ title: document.getElementById('noticeTitle').value, date: document.getElementById('noticeDate').value, tag: document.getElementById('noticeTag').value || '공지', body: document.getElementById('noticeBody').value }); notices = [newNotice, ...notices.filter(item => item.id !== newNotice.id)]; saveLocalNotices(); renderNotices(); form.reset(); if (dateInput) dateInput.value = new Date().toISOString().slice(0, 10); }); importInput?.addEventListener('change', async event => { const file = event.target.files?.[0]; if (!file) return; try { const imported = JSON.parse(await file.text()); if (!Array.isArray(imported)) throw new Error('JSON must be an array.'); notices = imported.map(normalizeNotice); saveLocalNotices(); renderNotices(); } catch (error) { alert('공지 JSON을 읽을 수 없습니다. 배열 형식의 notices.json인지 확인하세요.'); } finally { event.target.value = ''; } }); }    // Navigation Control
+    function setupNoticeForm() { const form = document.getElementById('noticeForm'); const importInput = document.getElementById('noticeImport'); const dateInput = document.getElementById('noticeDate'); if (dateInput) dateInput.value = new Date().toISOString().slice(0, 10); form?.addEventListener('submit', event => { event.preventDefault(); const newNotice = normalizeNotice({ title: document.getElementById('noticeTitle').value, date: document.getElementById('noticeDate').value, tag: document.getElementById('noticeTag').value || '공지', body: document.getElementById('noticeBody').value }); notices = [newNotice, ...notices.filter(item => item.id !== newNotice.id)]; saveLocalNotices(); renderNotices(); form.reset(); if (dateInput) dateInput.value = new Date().toISOString().slice(0, 10); }); importInput?.addEventListener('change', async event => { const file = event.target.files?.[0]; if (!file) return; try { const imported = JSON.parse(await file.text()); if (!Array.isArray(imported)) throw new Error('JSON must be an array.'); notices = imported.map(normalizeNotice); saveLocalNotices(); renderNotices(); } catch (error) { alert('공지 JSON을 읽을 수 없습니다. 배열 형식의 notices.json인지 확인하세요.'); } finally { event.target.value = ''; } }); }
+
+    function toggleMobileNav(forceOpen) {
+        const menu = document.getElementById('mobileMenu');
+        const button = document.querySelector('[aria-controls="mobileMenu"]');
+        if (!menu || !button) return;
+        const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !menu.classList.contains('open');
+        menu.classList.toggle('open', shouldOpen);
+        button.setAttribute('aria-expanded', String(shouldOpen));
+    }
+
+    // Navigation Control
     function showSection(sectionId) {
         const sections = ['intro', 'principles', 'insight', 'notice'];
         sections.forEach(id => {
@@ -315,6 +364,7 @@
         const activeSection = document.getElementById(sectionId);
         activeSection.classList.remove('hidden');
         activeSection.classList.add('active-section');
+        toggleMobileNav(false);
         
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
