@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -147,17 +148,30 @@
 
         <div class="grid md:grid-cols-3 gap-6 mb-16">
             <div class="glass-card p-8 rounded-xl border border-slate-200">
-                <div class="text-3xl mb-4">⚖️</div>
+                <div class="mb-5 w-12 h-12 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-700">
+                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 3v18M6 7h12M8 7l-3 6h6L8 7ZM16 7l-3 6h6l-3-6ZM9 21h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
                 <h4 class="font-bold text-lg mb-2">자율 책임</h4>
                 <p class="text-sm text-slate-500 leading-relaxed">모든 정보는 학술적 목적이며, 최종 투자 판단의 책임은 회원 개인에게 귀속됩니다.</p>
             </div>
             <div class="glass-card p-8 rounded-xl border border-slate-200">
-                <div class="text-3xl mb-4">🔍</div>
+                <div class="mb-5 w-12 h-12 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-700">
+                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/>
+                        <path d="m16 16 4 4M8.5 11.2l1.7 1.7 3.5-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
                 <h4 class="font-bold text-lg mb-2">철저한 검증</h4>
                 <p class="text-sm text-slate-500 leading-relaxed">기술성, 시장성, 토크노믹스, 리스크 요소를 다각도로 분석하여 정보를 선별합니다.</p>
             </div>
             <div class="glass-card p-8 rounded-xl border border-slate-200">
-                <div class="text-3xl mb-4">🤝</div>
+                <div class="mb-5 w-12 h-12 rounded-lg border border-slate-200 bg-white flex items-center justify-center text-slate-700">
+                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M7 12.5 4.8 10.3a2.2 2.2 0 0 1 0-3.1l1.1-1.1a2.2 2.2 0 0 1 3.1 0L12 9.1l3-3a2.2 2.2 0 0 1 3.1 0l1.1 1.1a2.2 2.2 0 0 1 0 3.1L17 12.5M8.5 14l2 2a2.1 2.1 0 0 0 3 0l2-2M9.5 9.5l-4 4M14.5 9.5l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
                 <h4 class="font-bold text-lg mb-2">신뢰 네트워크</h4>
                 <p class="text-sm text-slate-500 leading-relaxed">사람을 수단으로 삼지 않는, 진정성 있는 인적 네트워크 형성을 최우선으로 합니다.</p>
             </div>
@@ -279,13 +293,16 @@
 
 <script>
     const defaultNotices = [{ id: '2026-06-11-session', title: '6월 정기 모임 안내', date: '2026-06-11', tag: '모임', body: '블록체인의 기초부터 온체인 금융의 흐름까지 함께 공부하고 토론하는 정기 세션입니다.' }];
+    const NOTICE_ADMIN_PASSWORD_HASH = 'f96d945ffb4b9b1f3502ba670f040c242b07ad3c2f92a47af7f82d3c83cdf606';
     let notices = [...defaultNotices];
     function normalizeNotice(item) { return { id: item.id || Date.now() + '-' + Math.random().toString(16).slice(2), title: String(item.title || '').trim(), date: String(item.date || new Date().toISOString().slice(0, 10)).trim(), tag: String(item.tag || '공지').trim(), body: String(item.body || '').trim() }; }
     function saveLocalNotices() { localStorage.setItem('fwfNotices', JSON.stringify(notices)); }
     function escapeHtml(value) { return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;'); }
     function renderNotices() { const list = document.getElementById('noticeList'); if (!list) return; const sorted = [...notices].sort((a, b) => b.date.localeCompare(a.date)); if (sorted.length === 0) { list.innerHTML = '<div class="bg-white border border-slate-200 rounded-2xl p-6 text-sm text-slate-500">등록된 공지가 없습니다.</div>'; return; } list.innerHTML = sorted.map(notice => '<article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"><div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3"><h4 class="font-bold text-slate-800">' + escapeHtml(notice.title) + '</h4><div class="flex items-center gap-2 text-xs"><span class="bg-slate-100 text-slate-600 px-2 py-1 rounded">' + escapeHtml(notice.tag) + '</span><time class="text-slate-400">' + escapeHtml(notice.date) + '</time></div></div><p class="text-sm text-slate-600 leading-relaxed whitespace-pre-line">' + escapeHtml(notice.body) + '</p></article>').join(''); }
     async function loadNotices() { const local = JSON.parse(localStorage.getItem('fwfNotices') || '[]'); notices = Array.isArray(local) && local.length ? local.map(normalizeNotice) : [...defaultNotices]; try { const response = await fetch('notices.json', { cache: 'no-store' }); if (response.ok) { const remote = await response.json(); if (Array.isArray(remote) && remote.length) { notices = remote.map(normalizeNotice); saveLocalNotices(); } } } catch (error) {} renderNotices(); }
-    function toggleNoticeAdmin() { document.getElementById('noticeAdminPanel')?.classList.toggle('hidden'); }
+    async function hashText(value) { const bytes = new TextEncoder().encode(value); const digest = await crypto.subtle.digest('SHA-256', bytes); return Array.from(new Uint8Array(digest)).map(byte => byte.toString(16).padStart(2, '0')).join(''); }
+    async function verifyNoticeAdmin() { if (sessionStorage.getItem('fwfNoticeAdmin') === 'true') return true; const password = prompt('관리자 비밀번호를 입력하세요.'); if (password === null) return false; if (await hashText(password) === NOTICE_ADMIN_PASSWORD_HASH) { sessionStorage.setItem('fwfNoticeAdmin', 'true'); return true; } alert('비밀번호가 올바르지 않습니다.'); return false; }
+    async function toggleNoticeAdmin() { if (!(await verifyNoticeAdmin())) return; document.getElementById('noticeAdminPanel')?.classList.toggle('hidden'); }
     function downloadNoticesJson() { const blob = new Blob([JSON.stringify(notices, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = 'notices.json'; link.click(); URL.revokeObjectURL(url); }
     function setupNoticeForm() { const form = document.getElementById('noticeForm'); const importInput = document.getElementById('noticeImport'); const dateInput = document.getElementById('noticeDate'); if (dateInput) dateInput.value = new Date().toISOString().slice(0, 10); form?.addEventListener('submit', event => { event.preventDefault(); const newNotice = normalizeNotice({ title: document.getElementById('noticeTitle').value, date: document.getElementById('noticeDate').value, tag: document.getElementById('noticeTag').value || '공지', body: document.getElementById('noticeBody').value }); notices = [newNotice, ...notices.filter(item => item.id !== newNotice.id)]; saveLocalNotices(); renderNotices(); form.reset(); if (dateInput) dateInput.value = new Date().toISOString().slice(0, 10); }); importInput?.addEventListener('change', async event => { const file = event.target.files?.[0]; if (!file) return; try { const imported = JSON.parse(await file.text()); if (!Array.isArray(imported)) throw new Error('JSON must be an array.'); notices = imported.map(normalizeNotice); saveLocalNotices(); renderNotices(); } catch (error) { alert('공지 JSON을 읽을 수 없습니다. 배열 형식의 notices.json인지 확인하세요.'); } finally { event.target.value = ''; } }); }    // Navigation Control
     function showSection(sectionId) {
