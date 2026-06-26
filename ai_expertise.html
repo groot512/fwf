@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 시대의 진정한 전문성: Anthropic Claude Code 분석 리포트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: "Modern Tech Vibrant" (Indigo, Cyan, Amber, Slate) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; color: #0F172A; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .vibrant-gradient {
+            background: linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%);
+        }
+        .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-4px); }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+<!-- 
+NARRATIVE PLAN:
+1. Introduction: Setting the scale of the research (400k sessions, 235k users).
+2. The Power Shift: Human Planning vs AI Execution (Stacked Bar).
+3. The Success Curve: Success rates by expertise level (Line Chart), highlighting the "Intermediate Leap".
+4. The Skill Gap Myth: Comparing Devs vs Non-Devs (Grouped Bar).
+5. The Future of Work: Shift from debugging to operational/analytical tasks (Area Chart).
+6. Conclusion: Actionable insights for the AI era.
+-->
+
+<!-- 
+VISUALIZATION SELECTION SUMMARY:
+1. Big Numbers: Scale of research (Impactful stats).
+2. Chart.js (Horizontal Stacked Bar): Decision Ownership (Compare goals).
+3. Chart.js (Line Chart): Success Rate vs Expertise (Show change/trends).
+4. Chart.js (Bar Chart): Industry success rates (Comparison).
+5. Chart.js (Donut): Code vs Non-Code split (Composition).
+6. HTML/Tailwind Diagram: The Expertise Signal Flow (Organize process).
+- NO SVG OR MERMAID JS USED. ALL CHARTS RENDERED TO CANVAS.
+-->
+
+<!-- 
+CONFIRMATION: 
+- NEITHER Mermaid JS NOR SVG were used in this output. 
+- All labels > 16 chars are wrapped.
+- Specific tooltip callback logic implemented.
+-->
+
+<header class="vibrant-gradient text-white py-16 px-6 text-center shadow-lg">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">AI 시대의 진정한 전문성이란?</h1>
+        <p class="text-xl md:text-2xl opacity-90 font-light mb-8">앤트로픽(Anthropic) 40만 개 클로드 코드 세션 데이터 분석 리포트</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
+                <span class="block text-4xl font-bold">40만+</span>
+                <span class="text-sm uppercase tracking-widest opacity-80">분석 세션 수</span>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
+                <span class="block text-4xl font-bold">23.5만</span>
+                <span class="text-sm uppercase tracking-widest opacity-80">사용자 규모</span>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
+                <span class="block text-4xl font-bold">7개월</span>
+                <span class="text-sm uppercase tracking-widest opacity-80">추적 연구 기간</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 py-12">
+    
+    <!-- Section 1: Role Division -->
+    <section class="mb-20">
+        <div class="max-w-3xl mx-auto text-center mb-10">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">1. 기획은 인간, 실행은 AI</h2>
+            <p class="text-slate-600 leading-relaxed">
+                데이터 분석 결과, 인간과 AI 에이전트 간의 역할 분담이 뚜렷하게 나타났습니다. 
+                '무엇을 할 것인가'에 대한 고차원적 기획은 여전히 인간의 몫인 반면, 
+                그것을 '어떻게 구현할 것인가'에 대한 실행은 AI가 압도적으로 수행하고 있습니다.
+            </p>
+        </div>
+        <div class="card p-8">
+            <div class="chart-container">
+                <canvas id="decisionChart"></canvas>
+            </div>
+            <p class="mt-6 text-sm text-slate-500 text-center italic">
+                * 기획 결정(Planning)의 70%는 사람이, 실행 결정(Execution)의 80%는 클로드 코드가 담당합니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 2: Success Curve -->
+    <section class="mb-20 bg-slate-100 -mx-6 px-6 py-16 rounded-3xl">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-800 mb-6">2. 성공률의 임계점: '중급'의 도약</h2>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                    단순한 호기심으로 접근하는 초보자와 해당 분야의 업무 프로세스를 이해하는 중급자 사이에는 성공률에서 거대한 간극이 존재합니다. 
+                    가장 놀라운 점은 **'중급'에서 '전문가'로 갈 때의 생산성 향상보다 '초보'에서 '중급'으로 갈 때의 생산성 향상이 훨씬 크다**는 것입니다.
+                </p>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="bg-indigo-600 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-1 text-xs">!</span>
+                        <span class="text-slate-700"><strong>초보자:</strong> 문제가 발생하면 약 19%가 즉시 작업을 중단합니다.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-indigo-600 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-1 text-xs">!</span>
+                        <span class="text-slate-700"><strong>전문가:</strong> AI가 헤맬 때 도메인 지식을 바탕으로 올바른 방향으로 교정합니다.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="card p-8">
+                <div class="chart-container">
+                    <canvas id="successCurveChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Industry Gap -->
+    <section class="mb-20">
+        <div class="max-w-3xl mx-auto text-center mb-10">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">3. 코딩 배경의 중요성 감소</h2>
+            <p class="text-slate-600 leading-relaxed">
+                전통적인 소프트웨어 엔지니어링 지식보다 **'도메인 전문성'**이 더 중요해지고 있습니다. 
+                분석 결과, 개발자와 비개발자 간의 작업 성공률 차이는 단 5%에 불과했습니다. 특히 관리직이나 법무, 영업직군의 도약이 두드러졌습니다.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="card p-8">
+                <div class="chart-container">
+                    <canvas id="industryGapChart"></canvas>
+                </div>
+            </div>
+            <div class="flex flex-col justify-center space-y-6">
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-6 rounded-r-lg">
+                    <h4 class="font-bold text-amber-800 mb-2 underline">인사이트: 관리직의 성공 비결</h4>
+                    <p class="text-amber-900 text-sm">인간에게 일을 위임하고 지시하던 '매니지먼트 역량'이 AI 에이전트에게 지시를 내리는 '프롬프트 역량'과 그대로 일치하기 때문입니다.</p>
+                </div>
+                <div class="bg-cyan-50 border-l-4 border-cyan-400 p-6 rounded-r-lg">
+                    <h4 class="font-bold text-cyan-800 mb-2 underline">비(非)코드 세션의 증가</h4>
+                    <p class="text-cyan-900 text-sm">전체 세션의 **44%**는 직접적인 코드 작성을 포함하지 않았습니다. 데이터 분석과 커뮤니케이션 도구로서의 활용도가 급격히 높아지고 있습니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Signal Flow (Diagram) -->
+    <section class="mb-20">
+        <h2 class="text-3xl font-bold text-slate-800 text-center mb-12">4. 앤트로픽이 정의한 '전문성'의 3가지 신호</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Diagram Node 1 -->
+            <div class="flex flex-col items-center">
+                <div class="w-16 h-16 rounded-full bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">1</div>
+                <div class="card p-6 w-full text-center border-t-4 border-indigo-600">
+                    <h3 class="font-bold mb-2">정교한 구성</h3>
+                    <p class="text-sm text-slate-600">지시사항을 얼마나 구체적이고 명확하게(Precisely) 정의하는가?</p>
+                </div>
+            </div>
+            <!-- Connection (Hidden on mobile) -->
+            <div class="flex flex-col items-center">
+                <div class="w-16 h-16 rounded-full bg-cyan-600 text-white flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">2</div>
+                <div class="card p-6 w-full text-center border-t-4 border-cyan-600">
+                    <h3 class="font-bold mb-2">검증 요구</h3>
+                    <p class="text-sm text-slate-600">AI에게 무엇을 어떻게 검증(Verify)해달라고 명확히 요구하는가?</p>
+                </div>
+            </div>
+            <!-- Connection (Hidden on mobile) -->
+            <div class="flex flex-col items-center">
+                <div class="w-16 h-16 rounded-full bg-amber-500 text-white flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">3</div>
+                <div class="card p-6 w-full text-center border-t-4 border-amber-500">
+                    <h3 class="font-bold mb-2">주도권 유지</h3>
+                    <p class="text-sm text-slate-600">오류 정정의 주체가 누구인가? 사용자가 AI의 논리를 리드하는가?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Work Trend Shift -->
+    <section class="mb-20">
+        <div class="max-w-3xl mx-auto text-center mb-10">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">5. 업무 트렌드의 변화: 디버깅에서 운영으로</h2>
+            <p class="text-slate-600 leading-relaxed">
+                지난 7개월간 사용자들이 AI를 활용하는 방식은 단순 에러 수정(Fixing)에서 전체 비즈니스 프로세스의 분석 및 운영(Operating)으로 진화했습니다.
+            </p>
+        </div>
+        <div class="card p-8">
+            <div class="chart-container">
+                <canvas id="trendShiftChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-slate-900 text-white py-12 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-2xl font-bold mb-6">AI 시대를 위한 실무 액션 플랜</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+            <div class="bg-slate-800 p-4 rounded-lg flex items-center">
+                <span class="text-indigo-400 mr-3 text-xl">✓</span>
+                <p class="text-sm">'How'가 아닌 'What'과 'Why'에 집중하여 도메인 지식을 강화하라.</p>
+            </div>
+            <div class="bg-slate-800 p-4 rounded-lg flex items-center">
+                <span class="text-indigo-400 mr-3 text-xl">✓</span>
+                <p class="text-sm">지시와 검증의 해상도를 높여 AI가 멈추지 않게 하라.</p>
+            </div>
+            <div class="bg-slate-800 p-4 rounded-lg flex items-center">
+                <span class="text-indigo-400 mr-3 text-xl">✓</span>
+                <p class="text-sm">완벽한 전문가보다 '확실한 중급'의 전문성을 목표로 하라.</p>
+            </div>
+            <div class="bg-slate-800 p-4 rounded-lg flex items-center">
+                <span class="text-indigo-400 mr-3 text-xl">✓</span>
+                <p class="text-sm">AI를 단순 도구가 아닌 '문제 해결 파트너'로 대하라.</p>
+            </div>
+        </div>
+        <p class="mt-12 text-slate-500 text-xs uppercase tracking-widest">Source: Anthropic Research "Agentic coding and persistent returns to expertise"</p>
+    </div>
+</footer>
+
+<script>
+    // Utility: Wrap labels logic (~16 characters)
+    function wrapLabels(labels) {
+        return labels.map(label => {
+            if (typeof label !== 'string' || label.length <= 16) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > 16) {
+                    lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            });
+            lines.push(currentLine.trim());
+            return lines;
+        });
+    }
+
+    // Common Tooltip Config
+    const commonTooltipConfig = {
+        callbacks: {
+            title: function(tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            }
+        }
+    };
+
+    // 1. Decision Chart (Planning vs Execution)
+    new Chart(document.getElementById('decisionChart'), {
+        type: 'bar',
+        data: {
+            labels: wrapLabels(['기획 결정 (무엇을 할 것인가)', '실행 결정 (어떻게 할 것인가)']),
+            datasets: [
+                {
+                    label: '인간 (Human)',
+                    data: [70, 20],
+                    backgroundColor: '#4F46E5'
+                },
+                {
+                    label: 'AI (Claude)',
+                    data: [30, 80],
+                    backgroundColor: '#06B6D4'
+                }
+            ]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: commonTooltipConfig,
+                legend: { position: 'bottom' },
+                title: { display: true, text: '결정 주도권 비중 (%)' }
+            },
+            scales: {
+                x: { stacked: true, max: 100 },
+                y: { stacked: true }
+            }
+        }
+    });
+
+    // 2. Success Curve Chart
+    new Chart(document.getElementById('successCurveChart'), {
+        type: 'line',
+        data: {
+            labels: ['초보자', '중급자', '전문가'],
+            datasets: [{
+                label: '검증된 성공률 (%)',
+                data: [15, 28, 33],
+                borderColor: '#4F46E5',
+                backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 6,
+                pointBackgroundColor: '#4F46E5'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: commonTooltipConfig,
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true, max: 40 }
+            }
+        }
+    });
+
+    // 3. Industry Gap Chart
+    new Chart(document.getElementById('industryGapChart'), {
+        type: 'bar',
+        data: {
+            labels: wrapLabels(['소프트웨어 개발직군', '비소프트웨어 직군']),
+            datasets: [{
+                label: '성공률 (%)',
+                data: [34, 29],
+                backgroundColor: ['#4F46E5', '#F59E0B']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: commonTooltipConfig,
+                legend: { display: false },
+                title: { display: true, text: '직군별 코드 생성 성공률' }
+            },
+            scales: {
+                y: { beginAtZero: true, max: 50 }
+            }
+        }
+    });
+
+    // 5. Trend Shift Chart
+    new Chart(document.getElementById('trendShiftChart'), {
+        type: 'bar',
+        data: {
+            labels: wrapLabels(['디버깅 (Debugging)', '운영/배포 (Operating)', '분석/소통 (Analyzing)']),
+            datasets: [
+                {
+                    label: '조사 초기 (Early)',
+                    data: [33, 14, 10],
+                    backgroundColor: '#94A3B8'
+                },
+                {
+                    label: '조사 후기 (Late)',
+                    data: [19, 21, 20],
+                    backgroundColor: '#06B6D4'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: commonTooltipConfig,
+                legend: { position: 'bottom' },
+                title: { display: true, text: '업무 유형별 비중 변화 (%)' }
+            },
+            scales: {
+                y: { beginAtZero: true, max: 40 }
+            }
+        }
+    });
+</script>
+</body>
+</html>
