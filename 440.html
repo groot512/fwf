@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>미래자산포럼: 440조 유동성 인포그래픽 대시보드</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Pretendard -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* 기본 테마 및 우주 배경 설정 */
+    body {
+      background-color: #060b27;
+      background-image: radial-gradient(circle at 50% 50%, #0c143d 0%, #060b27 100%);
+      color: #f8fafc;
+      font-family: 'Noto Sans KR', 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* 프리미엄 글래스모피즘 카드 */
+    .glass-card {
+      background: rgba(20, 28, 47, 0.65);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* 네온 골드 발광 텍스트 */
+    .neon-gold {
+      color: #ffc53d;
+      text-shadow: 0 0 10px rgba(255, 197, 61, 0.45);
+    }
+
+    /* 네온 그린 발광 테두리 및 섀도우 */
+    .neon-green-glow {
+      border-color: #3de39d;
+      box-shadow: 0 0 15px rgba(61, 227, 157, 0.25);
+    }
+
+    /* 네온 블루 발광 효과 */
+    .neon-blue {
+      color: #38bdf8;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+    .neon-blue-glow {
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    }
+
+    /* 스크롤바 커스텀 */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(6, 11, 39, 0.5);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(56, 189, 248, 0.3);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.5);
+    }
+
+    /* 애니메이션 클래스 */
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.05); }
+    }
+    .glow-bg {
+      animation: pulse-slow 8s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative">
+
+  <!-- 우주 성운 같은 은은한 백그라운드 오라 효과 -->
+  <div class="absolute top-10 left-10 w-96 h-96 bg-indigo-900 rounded-full blur-[120px] opacity-30 glow-bg pointer-events-none"></div>
+  <div class="absolute bottom-10 right-10 w-[450px] h-[450px] bg-blue-950 rounded-full blur-[150px] opacity-25 glow-bg pointer-events-none"></div>
+
+  <!-- 메인 헤더 영역 -->
+  <header class="w-full max-w-7xl mx-auto px-4 pt-6 md:pt-10 z-10">
+    <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#3de39d] to-[#ffc53d] flex items-center justify-center shadow-lg shadow-indigo-950/50">
+          <i class="fa-solid fa-chart-line-up text-xl text-[#060b27]"></i>
+        </div>
+        <div>
+          <span class="text-xs uppercase tracking-widest text-[#38bdf8] font-semibold">Future Asset Forum</span>
+          <h1 class="text-xl md:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+            미래자산포럼 <span class="text-gray-400 font-normal">|</span> <span class="neon-gold">440조 원의 유동성 분석</span>
+          </h1>
+        </div>
+      </div>
+      <!-- 실시간 440조 유동성 대기 상태 위젯 -->
+      <div class="flex items-center gap-4 bg-black/40 px-5 py-2.5 rounded-xl border border-white/5">
+        <div class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3de39d] opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-[#3de39d]"></span>
+        </div>
+        <div>
+          <p class="text-[10px] text-gray-400 uppercase tracking-wider">시장 대기자금 규모</p>
+          <p class="text-lg font-bold text-slate-100 flex items-center gap-1">
+            ₩ <span id="liquidity-counter" class="neon-gold">440,000,000,000,000</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 콘텐츠 영역 -->
+  <main class="w-full max-w-7xl mx-auto px-4 py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6 z-10">
+    
+    <!-- 왼쪽: 유동성 인터랙티브 시뮬레이터 (7글자 너비 이상으로 7/12 차지) -->
+    <section class="lg:col-span-7 flex flex-col gap-6">
+      <div class="glass-card rounded-3xl p-6 flex flex-col h-full relative overflow-hidden">
+        
+        <!-- 데코레이션 탑 라인 -->
+        <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#3de39d] to-transparent"></div>
+        
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-wind-turbine text-[#3de39d]"></i>
+              시장 유동성 시각화 시뮬레이터
+            </h2>
+            <p class="text-xs text-gray-400">대기 중인 440조 원의 자금이 흐르는 로직을 시뮬레이션하세요.</p>
+          </div>
+          <!-- 상태 배지 -->
+          <span id="simulator-status-badge" class="px-3 py-1 text-xs rounded-full bg-[#3de39d]/10 text-[#3de39d] border border-[#3de39d]/20 font-semibold">
+            대기 모드 (폭풍전야)
+          </span>
+        </div>
+
+        <!-- 인터랙티브 그래픽 캔버스 -->
+        <div class="relative w-full bg-black/50 rounded-2xl border border-white/5 flex-grow min-h-[300px] flex items-center justify-center overflow-hidden mb-4">
+          <canvas id="flowCanvas" class="absolute inset-0 w-full h-full"></canvas>
+          
+          <!-- 캔버스 오버레이 설명 레이어 -->
+          <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end pointer-events-none">
+            <div class="bg-slate-950/80 backdrop-blur-md p-3 rounded-xl border border-white/5 max-w-[220px]">
+              <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">왼쪽: 스테이블코인 수조 (₩440T)</p>
+              <p class="text-xs text-slate-300">달러 연동 자산으로 보존되어 탈출하지 않은 준비 상태의 유동성</p>
+            </div>
+            <div class="bg-slate-950/80 backdrop-blur-md p-3 rounded-xl border border-white/5 max-w-[220px]">
+              <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">오른쪽: 암호자산 시장 (BTC/XRP)</p>
+              <p class="text-xs text-slate-300">유동성이 한꺼번에 유입될 시 가격 급등을 유발할 실제 매집 대상</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 시뮬레이터 제어 버튼셋 -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <button id="btn-prev" class="py-3 px-4 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-200 text-xs font-bold transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-rotate-left"></i>
+            이전 하락장 (환불탈출)
+          </button>
+          <button id="btn-wait" class="py-3 px-4 rounded-xl border-[#3de39d]/40 bg-[#3de39d]/10 hover:bg-[#3de39d]/20 text-[#3de39d] text-xs font-bold transition flex items-center justify-center gap-2 neon-green-glow">
+            <i class="fa-solid fa-hourglass-half"></i>
+            현재 하락장 (시장대기)
+          </button>
+          <button id="btn-rush" class="py-3 px-4 rounded-xl border-[#ffc53d]/40 bg-gradient-to-r from-[#ffc53d]/20 to-[#ff9f43]/20 hover:from-[#ffc53d]/30 hover:to-[#ff9f43]/30 text-[#ffc53d] text-xs font-bold transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-bolt-lightning"></i>
+            매수 신호 발생 (폭발적 유입)
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 오른쪽: 정보 인포그래픽 패널 (5/12 차지) -->
+    <section class="lg:col-span-5 flex flex-col gap-6">
+      
+      <!-- 백화점 상품권 비유 카드 -->
+      <div class="glass-card rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#ffc53d]/10 to-transparent rounded-full blur-xl"></div>
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <span class="w-8 h-8 rounded-lg bg-[#ffc53d]/20 flex items-center justify-center">
+              <i class="fa-solid fa-ticket-airline text-[#ffc53d]"></i>
+            </span>
+            <h3 class="font-bold text-white text-base">백화점 상품권 비유: 스테이블코인의 본질</h3>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            백화점 상품권을 왜 구매할까요? 결국 <span class="neon-gold font-semibold">백화점에서 물건을 사기 위해서</span>입니다. 
+            크립토 시장의 스테이블코인(USDT, USDC) 역시 이와 동일합니다. 달러를 맡기고 얻은 일종의 '디지털 상품권'이며, 시장에서 <span class="text-[#38bdf8] font-semibold">'살 준비를 끝낸 유기적인 돈'</span>을 의미합니다.
+          </p>
+        </div>
+        
+        <!-- 실시간 비유 수치화 가이드 -->
+        <div class="mt-4 p-3 rounded-xl bg-slate-950/40 border border-white/5 flex justify-between items-center">
+          <div class="text-center flex-1 border-r border-white/10">
+            <span class="text-[10px] text-gray-400 block">백화점 상품권</span>
+            <span class="text-sm font-semibold text-slate-200">USDT / USDC</span>
+          </div>
+          <div class="text-center flex-1">
+            <span class="text-[10px] text-gray-400 block">구매 가능 대상물</span>
+            <span class="text-sm font-semibold text-slate-200">XRP, BTC 등 자산</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 이전 하락장 vs 현재 하락장 핵심 대비표 -->
+      <div class="glass-card rounded-3xl p-6 flex flex-col gap-4">
+        <h3 class="font-bold text-white text-base flex items-center gap-2">
+          <i class="fa-solid fa-code-compare text-indigo-400"></i>
+          이전 사이클 vs 현재 사이클 차이점
+        </h3>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <!-- 이전 하락장 -->
+          <div class="p-4 rounded-2xl bg-rose-950/20 border border-rose-500/10 hover:border-rose-500/20 transition">
+            <span class="text-xs font-bold text-rose-400 block mb-1">과거 하락장 (패닉 탈출)</span>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              가격 급락 시 스테이블코인을 <span class="font-semibold text-rose-300">현금으로 환불</span>하여 시장에서 탈출. 유동성 볼륨 축소.
+            </p>
+            <div class="mt-3 flex items-center gap-1.5 text-[10px] text-rose-400/80">
+              <i class="fa-solid fa-circle-arrow-down"></i> 유동성 자본 이탈
+            </div>
+          </div>
+          
+          <!-- 현재 하락장 -->
+          <div class="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/10 hover:border-emerald-500/20 transition neon-green-glow">
+            <span class="text-xs font-bold text-[#3de39d] block mb-1">현재 하락장 (대기 유지)</span>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              가격은 흔들려도 스테이블코인은 <span class="font-semibold text-[#3de39d]">시장 안에 그대로 잔류</span>. 언제든 매수 진입 대기.
+            </p>
+            <div class="mt-3 flex items-center gap-1.5 text-[10px] text-[#3de39d]/80">
+              <i class="fa-solid fa-circle-arrow-up"></i> 시장 내 대기 수조 유지
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 왜 현금 대신 스테이블코인으로 대기할까? -->
+      <div class="glass-card rounded-3xl p-6">
+        <h3 class="font-bold text-white text-base mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-circle-question text-[#38bdf8]"></i>
+          왜 현금 대신 스테이블코인으로 기다리는가?
+        </h3>
+        <div class="space-y-3">
+          <div class="flex gap-3 items-start">
+            <div class="w-6 h-6 rounded-full bg-slate-800 text-xs text-slate-300 flex items-center justify-center font-bold flex-shrink-0 mt-0.5">1</div>
+            <div>
+              <p class="text-xs font-semibold text-slate-200">송금 및 입금 딜레이 제거 (극강의 신속성)</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">은행 현금 이체, 거래소 전송 등 환전 지연 없이 단 1초 만에 매수 체결 가능</p>
+            </div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <div class="w-6 h-6 rounded-full bg-slate-800 text-xs text-slate-300 flex items-center justify-center font-bold flex-shrink-0 mt-0.5">2</div>
+            <div>
+              <p class="text-xs font-semibold text-slate-200">은행 예금식 편리한 온체인 대기 상태</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">자금을 다른 자산으로 바꾸지 않고 온체인 예금 통장처럼 배치해 둔 메커니즘</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- 하단: 스테이블코인 패러다임 변화 & 투자의 본질 -->
+  <footer class="w-full max-w-7xl mx-auto px-4 pb-8 z-10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+      
+      <!-- 패러다임 시프트 타임라인 로드맵 (7/12) -->
+      <div class="glass-card rounded-3xl p-6 md:col-span-7 flex flex-col justify-between">
+        <div>
+          <h3 class="font-bold text-white text-base mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-arrows-spin text-[#38bdf8]"></i>
+            스테이블코인의 거대한 패러다임 진화 과정
+          </h3>
+          <p class="text-xs text-gray-400 mb-4">단순한 코인 거래용 도구에서 국가 간 금융 인프라로의 진화 양상</p>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 relative">
+            <!-- 화살표 배경 데코 (데스크톱용) -->
+            <div class="hidden sm:block absolute top-1/2 left-0 right-0 h-[1px] bg-gradient-to-r from-[#38bdf8]/10 via-[#3de39d]/40 to-[#ffc53d]/10 pointer-events-none -translate-y-1/2"></div>
+            
+            <!-- 단계 1 -->
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-white/5 relative z-10 hover:border-[#38bdf8]/30 transition group">
+              <span class="px-2 py-0.5 bg-[#38bdf8]/10 text-[#38bdf8] text-[9px] rounded-full font-bold">STAGE 01</span>
+              <h4 class="text-xs font-bold text-slate-200 mt-2 mb-1 group-hover:text-[#38bdf8]">코인 거래용 매개물</h4>
+              <p class="text-[11px] text-slate-400">초기 단순 암호화폐 거래 및 가치 페깅 보존 가치 수단</p>
+            </div>
+            <!-- 단계 2 -->
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-white/5 relative z-10 hover:border-[#3de39d]/30 transition group">
+              <span class="px-2 py-0.5 bg-[#3de39d]/10 text-[#3de39d] text-[9px] rounded-full font-bold">STAGE 02</span>
+              <h4 class="text-xs font-bold text-slate-200 mt-2 mb-1 group-hover:text-[#3de39d]">글로벌 기업 결제망</h4>
+              <p class="text-[11px] text-slate-400">국가 간 송금, 결제사(Visa/Stripe), IT 빅테크 연동</p>
+            </div>
+            <!-- 단계 3 -->
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-white/5 relative z-10 hover:border-[#ffc53d]/30 transition group">
+              <span class="px-2 py-0.5 bg-[#ffc53d]/10 text-[#ffc53d] text-[9px] rounded-full font-bold">STAGE 03</span>
+              <h4 class="text-xs font-bold text-slate-200 mt-2 mb-1 group-hover:text-[#ffc53d]">실물자산 토큰화 (RWA)</h4>
+              <p class="text-[11px] text-slate-400">온체인 금융, 토큰 증권, 제도권 CBDC 허브 역할 수행</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 미래자산포럼 드림 투자의 본질 (5/12) -->
+      <div class="glass-card rounded-3xl p-6 md:col-span-5 flex flex-col justify-between">
+        <div>
+          <h3 class="font-bold text-slate-100 text-sm mb-2 flex items-center gap-1.5">
+            <i class="fa-solid fa-pen-nib text-[#ffc53d]"></i>
+            미래자산포럼의 투자의 본질 제언
+          </h3>
+          <blockquote class="text-xs text-slate-300 italic border-l-2 border-[#ffc53d] pl-3 py-1 leading-relaxed">
+            "투자는 결국 무엇을 사느냐보다 무엇을 이해하느냐의 싸움입니다. 이해하면 버틸 수 있고 이해하지 못하면 두려워집니다. 패닉셀은 가격 때문이 아니라 무지에서 나옵니다."
+          </blockquote>
+        </div>
+        <div class="mt-4 flex justify-between items-center text-[11px] text-gray-500 border-t border-white/5 pt-3">
+          <span>제도권 도입과 유동성 확장 분석</span>
+          <span class="font-bold text-[#ffc53d]">미래자산포럼 드림 <i class="fa-solid fa-heart text-rose-500/80"></i></span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    /* 글로벌 변수 설정 및 인터랙티브 시뮬레이터 구동 엔진 */
+    const canvas = document.getElementById('flowCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // 시뮬레이터 상태 상태값 정의: 'wait', 'prev', 'rush'
+    let currentMode = 'wait';
+    
+    // 파티클 클래스 정의
+    class Particle {
+      constructor(x, y, targetX, targetY, isLeftPool) {
+        this.x = x;
+        this.y = y;
+        this.targetX = targetX;
+        this.targetY = targetY;
+        this.isLeftPool = isLeftPool;
+        this.baseRadius = Math.random() * 2.5 + 1.5;
+        this.radius = this.baseRadius;
+        this.color = isLeftPool ? 'rgba(61, 227, 157, 0.8)' : 'rgba(255, 197, 61, 0.8)'; // 그린(대기) vs 골드(매집)
+        this.speed = Math.random() * 1.5 + 0.5;
+        this.angle = Math.random() * Math.PI * 2;
+        this.vibration = Math.random() * 0.4 + 0.1;
+      }
+
+      update() {
+        if (currentMode === 'wait') {
+          // 'wait' 모드: 왼쪽 원형 수조(스테이블코인 대기소) 안에서 미세하게 진동 및 군집 회전
+          const targetAngle = Math.atan2(this.y - canvas.height / 2, this.x - canvas.width * 0.3);
+          this.x += Math.cos(targetAngle + Math.PI/2) * 0.5 + (Math.random() - 0.5) * this.vibration;
+          this.y += Math.sin(targetAngle + Math.PI/2) * 0.5 + (Math.random() - 0.5) * this.vibration;
+          
+          // 수조를 이탈하면 중앙으로 밀어넣기
+          const distToPool = Math.hypot(this.x - canvas.width * 0.3, this.y - canvas.height / 2);
+          if (distToPool > 80) {
+            this.x += (canvas.width * 0.3 - this.x) * 0.05;
+            this.y += (canvas.height / 2 - this.y) * 0.05;
+          }
+          this.color = 'rgba(61, 227, 157, 0.7)'; // 그린색 유지
+          
+        } else if (currentMode === 'prev') {
+          // 'prev' 모드: 자금이 밖으로 유출 (화면 하단 아래로 스르륵 흘러내려가 소멸)
+          this.y += this.speed * 1.2;
+          this.x += Math.sin(this.y * 0.05) * 0.5;
+          this.color = 'rgba(239, 68, 68, 0.5)'; // 빨강 소멸색 변환
+          
+          // 화면 아래로 가면 재생성
+          if (this.y > canvas.height + 20) {
+            this.x = canvas.width * 0.3 + (Math.random() - 0.5) * 100;
+            this.y = -10;
+          }
+          
+        } else if (currentMode === 'rush') {
+          // 'rush' 모드: 왼쪽(수조)에서 오른쪽(코인시장)으로 급류를 타며 빠른 속도로 질주 및 폭발 효과
+          this.color = 'rgba(255, 197, 61, 0.9)'; // 네온골드색 변환
+          const tx = canvas.width * 0.75 + (Math.random() - 0.5) * 60;
+          const ty = canvas.height / 2 + (Math.random() - 0.5) * 60;
+          
+          this.x += (tx - this.x) * (this.speed * 0.02 + 0.01);
+          this.y += (ty - this.y) * (this.speed * 0.02 + 0.01);
+          
+          // 타겟 근처 도달 시 주변을 돌게 만들기
+          const distToCrypto = Math.hypot(this.x - canvas.width * 0.75, this.y - canvas.height / 2);
+          if (distToCrypto < 40) {
+            this.x += (Math.random() - 0.5) * 4;
+            this.y += (Math.random() - 0.5) * 4;
+          }
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = currentMode === 'rush' ? 8 : 4;
+        ctx.fill();
+        ctx.shadowBlur = 0; // 최적화 위해 섀도 블러 초기화
+      }
+    }
+
+    let particles = [];
+    const particleCount = 180;
+
+    function initParticles() {
+      particles = [];
+      const cx = canvas.width * 0.3;
+      const cy = canvas.height / 2;
+      for (let i = 0; i < particleCount; i++) {
+        // 수조 반경 내 랜덤 배치
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 70;
+        const x = cx + Math.cos(angle) * radius;
+        const y = cy + Math.sin(angle) * radius;
+        particles.push(new Particle(x, y, cx, cy, true));
+      }
+    }
+
+    // 캔버스 사이즈 조절 및 반응형 대응
+    function resizeCanvas() {
+      const parent = canvas.parentElement;
+      canvas.width = parent.clientWidth;
+      canvas.height = parent.clientHeight;
+      initParticles();
+    }
+    
+    window.addEventListener('resize', resizeCanvas);
+
+    // 메인 그리기 루프
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // 수조(컨테이너) 가이드 라인 그리기
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.lineWidth = 1;
+      
+      // 왼쪽 대기풀 테두리
+      ctx.beginPath();
+      ctx.arc(canvas.width * 0.3, canvas.height / 2, 85, 0, Math.PI * 2);
+      ctx.stroke();
+      
+      // 오른쪽 매집타겟 테두리
+      ctx.beginPath();
+      ctx.arc(canvas.width * 0.75, canvas.height / 2, 85, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // 수조 중심 기호 표시
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.font = 'bold 24px Inter';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('$', canvas.width * 0.3, canvas.height / 2);
+      ctx.fillText('₿', canvas.width * 0.75, canvas.height / 2);
+
+      // 흐름 화살표 및 브릿지 시각화
+      if (currentMode === 'rush') {
+        ctx.strokeStyle = 'rgba(255, 197, 61, 0.2)';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([5, 15]);
+        ctx.lineDashOffset -= 1;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width * 0.35, canvas.height / 2);
+        ctx.lineTo(canvas.width * 0.7, canvas.height / 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // 파티클 그리기 및 업데이트
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    // 실시간 유동성 카운터 롤러 효과
+    let counterValue = 440000000000000;
+    const counterElement = document.getElementById('liquidity-counter');
+    
+    function animateCounter() {
+      // 대기모드일 땐 아주 미세하게 요동치며 리얼리티 부여
+      if (currentMode === 'wait') {
+        const variance = (Math.random() - 0.5) * 150000000;
+        counterValue += variance;
+      } else if (currentMode === 'rush') {
+        // 매수신호 시 급감 (기존 수조에서 가치 이전)
+        counterValue -= 12500000000;
+        if (counterValue < 12000000000000) counterValue = 12000000000000;
+      } else if (currentMode === 'prev') {
+        // 환불 모드 시 급감 (시장 이탈)
+        counterValue -= 24500000000;
+        if (counterValue < 500000000000) counterValue = 500000000000;
+      }
+      counterElement.innerText = Math.floor(counterValue).toLocaleString();
+      setTimeout(animateCounter, 80);
+    }
+
+    // 버튼 인터랙티브 액션 바인딩
+    const statusBadge = document.getElementById('simulator-status-badge');
+
+    document.getElementById('btn-prev').addEventListener('click', () => {
+      currentMode = 'prev';
+      statusBadge.innerText = '이전 하락장 (환불탈출 모드)';
+      statusBadge.className = 'px-3 py-1 text-xs rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 font-semibold';
+    });
+
+    document.getElementById('btn-wait').addEventListener('click', () => {
+      currentMode = 'wait';
+      counterValue = 440000000000000; // 카운터 초기화
+      statusBadge.innerText = '대기 모드 (폭풍전야)';
+      statusBadge.className = 'px-3 py-1 text-xs rounded-full bg-[#3de39d]/10 text-[#3de39d] border border-[#3de39d]/20 font-semibold';
+      initParticles();
+    });
+
+    document.getElementById('btn-rush').addEventListener('click', () => {
+      currentMode = 'rush';
+      statusBadge.innerText = '급유입 모드 (메가 펌핑)';
+      statusBadge.className = 'px-3 py-1 text-xs rounded-full bg-[#ffc53d]/10 text-[#ffc53d] border border-[#ffc53d]/20 font-semibold';
+    });
+
+    // 윈도우 로드 완료 시 엔진 시작
+    window.onload = function() {
+      resizeCanvas();
+      animate();
+      animateCounter();
+    };
+  </script>
+</body>
+</html>
