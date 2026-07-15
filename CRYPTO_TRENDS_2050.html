@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2050 가상자산 투자 트렌드 분석</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap');
+
+        /* 글로벌 다크 우주 배경 설정 */
+        body {
+            background-color: #060b27;
+            background-image: radial-gradient(circle at 50% 50%, #0c143d 0%, #060b27 100%);
+            color: #f8fafc;
+            font-family: 'Pretendard', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* 프리미엄 글래스모피즘 카드 */
+        .glass-card {
+            background: rgba(20, 28, 47, 0.65);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border-radius: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* 네온 골드 발광 텍스트 */
+        .neon-gold {
+            color: #ffc53d;
+            text-shadow: 0 0 10px rgba(255, 197, 61, 0.4);
+        }
+
+        /* 네온 그린 발광 테두리 */
+        .neon-green-glow {
+            border: 2px solid #3de39d;
+            box-shadow: 0 0 15px rgba(61, 227, 157, 0.25);
+        }
+
+        /* 차트 컨테이너 */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 250px;
+            }
+        }
+
+        .stat-value {
+            font-weight: 800;
+            letter-spacing: -0.05em;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .grid-layout {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <!-- Plan Summary
+    1. Introduction: "Digital Space" header with key metrics (27% ownership, 14% asset share).
+    2. Section 1: Demographic Shift. Visualizing 3040 dominance and female influx.
+    3. Section 2: Four Paradigm Shifts. Using side-by-side neon charts for Motivation, Channels, and Methods.
+    4. Section 3: Asset Diversification. Showing the transition from Bitcoin only to Alt/Stable coins.
+    5. Conclusion: Strategic SWOT for banking institutions in a dark-themed grid.
+    -->
+
+    <!-- Visualization Choice Summary
+    1. Current Ownership -> Goal: Inform -> Chart.js Doughnut (Neon Green/Gold). (NO SVG)
+    2. Investment Motivation (Then vs Now) -> Goal: Compare -> Chart.js Horizontal Bar. (NO SVG)
+    3. Information Channels -> Goal: Change -> Chart.js Bar Chart. (NO SVG)
+    4. Investment Frequency -> Goal: Organize -> Chart.js Polar Area Chart. (NO SVG)
+    5. Strategic Analysis -> Goal: Organize -> Structured HTML Grid with neon accents. (NO SVG)
+    -->
+
+    <!-- Confirmation: NEITHER Mermaid JS NOR SVG were used in this output. All icons are CSS/Unicode. Charts are Canvas. -->
+
+    <header class="max-w-6xl mx-auto mb-16 text-center">
+        <h1 class="text-4xl md:text-6xl font-black mb-4">
+            <span class="neon-gold">CRYPTO TRENDS</span><br>
+            <span class="text-white">2050 세대 가상자산 리포트</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
+            하나금융경영연구소 데이터를 통해 분석한 투기에서 전략으로의 패러다임 전환.
+        </p>
+    </header>
+
+    <main class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- 주요 지표 섹션 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="glass-card p-6 flex flex-col items-center justify-center text-center border-t-4 border-[#ffc53d]">
+                <div class="text-gray-400 text-sm font-semibold mb-2">보유 응답자</div>
+                <div class="stat-value text-5xl neon-gold">27%</div>
+                <div class="chart-container h-32 mt-4">
+                    <canvas id="mainOwnershipChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="glass-card p-6 md:col-span-3">
+                <h3 class="text-xl font-bold mb-6 flex items-center">
+                    <span class="mr-2">📊</span> 금융자산 포트폴리오의 변화
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+                        <div class="text-xs text-gray-400 uppercase tracking-widest">누적 투자액</div>
+                        <div class="text-2xl font-bold text-white mt-1">1,000만 원+</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+                        <div class="text-xs text-gray-400 uppercase tracking-widest">자산 내 비중</div>
+                        <div class="text-2xl font-bold text-[#3de39d] mt-1">14%</div>
+                    </div>
+                    <div class="p-4 rounded-xl neon-green-glow bg-[#3de39d]/10">
+                        <div class="text-xs text-[#3de39d] font-bold uppercase tracking-widest">투자 성향 격차</div>
+                        <div class="text-2xl font-bold text-white mt-1">3.5배</div>
+                    </div>
+                </div>
+                <p class="mt-6 text-sm text-gray-400">
+                    투자자는 미투자자 대비 현금성 자산은 0.7배 적지만 전체 투자액은 1.5배 많으며, 평균 7개의 금융상품을 보유한 고관여 투자자입니다.
+                </p>
+            </div>
+        </div>
+
+        <!-- 인구 통계 및 투자 성향 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="glass-card p-8">
+                <h2 class="text-2xl font-bold mb-6 text-white border-l-4 border-[#3de39d] pl-4">누가 참여하고 있는가?</h2>
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center p-4 bg-white/5 rounded-xl">
+                        <div>
+                            <div class="font-bold">세대별 주도층</div>
+                            <div class="text-xs text-gray-400">가장 활발한 투자 활동</div>
+                        </div>
+                        <div class="text-2xl font-black neon-gold">3040 세대</div>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-white/5 rounded-xl">
+                        <div>
+                            <div class="font-bold">직업군</div>
+                            <div class="text-xs text-gray-400">투자자 비중 50% 이상</div>
+                        </div>
+                        <div class="text-2xl font-black text-white">화이트칼라</div>
+                    </div>
+                    <div class="p-4 bg-[#3de39d]/5 border border-[#3de39d]/20 rounded-xl">
+                        <div class="font-bold text-[#3de39d] mb-1">신규 유입 트렌드</div>
+                        <p class="text-sm text-gray-300">2024년 이후 여성 투자자 유입이 급증했으며, 50만원 미만 소액 투자를 중심으로 20대의 참여가 활발해졌습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8">
+                <h2 class="text-2xl font-bold mb-6 text-white">투자 동기의 극적인 변화</h2>
+                <div class="chart-container">
+                    <canvas id="motivationChart"></canvas>
+                </div>
+                <p class="mt-4 text-xs text-center text-gray-500 italic">마우스를 그래프에 올리면 상세 수치가 표시됩니다.</p>
+            </div>
+        </div>
+
+        <!-- 4대 패러다임 전환 -->
+        <div class="grid-layout">
+            <!-- 채널 변화 -->
+            <div class="glass-card p-6">
+                <div class="flex items-center mb-4">
+                    <span class="p-2 bg-[#ffc53d]/20 rounded-lg mr-3 text-xl">🌐</span>
+                    <h3 class="text-lg font-bold">정보 채널의 공식화</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="channelChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-gray-400">지인 추천(44%→39%) 의존도는 낮아지고, 거래소 및 전문 분석 플랫폼(10%→19%) 활용도가 급증했습니다.</p>
+            </div>
+
+            <!-- 방식 변화 -->
+            <div class="glass-card p-6">
+                <div class="flex items-center mb-4">
+                    <span class="p-2 bg-[#3de39d]/20 rounded-lg mr-3 text-xl">⏳</span>
+                    <h3 class="text-lg font-bold">계획적 장기 투자</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="frequencyChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-gray-400">수시 매매 중심에서 벗어나 정기적 적립(34%) 및 수개월 단위 장기 거래(47%)가 대세로 자리 잡았습니다.</p>
+            </div>
+
+            <!-- 자산 변화 -->
+            <div class="glass-card p-6">
+                <div class="flex items-center mb-4">
+                    <span class="p-2 bg-blue-500/20 rounded-lg mr-3 text-xl">💎</span>
+                    <h3 class="text-lg font-bold">자산 종류의 다변화</h3>
+                </div>
+                <div class="flex flex-col h-full">
+                    <div class="flex-grow space-y-4">
+                        <div class="relative pt-1">
+                            <div class="flex items-center justify-between">
+                                <div><span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-200 bg-blue-600">코인 보유자</span></div>
+                                <div class="text-right"><span class="text-xs font-semibold inline-block text-blue-200">89%</span></div>
+                            </div>
+                            <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200/20 mt-2">
+                                <div style="width:89%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-white/5 border-l-4 border-blue-400">
+                            <div class="text-sm font-bold text-white">비트코인에서 알트로</div>
+                            <div class="text-xs text-gray-400 mt-1">경험이 쌓일수록 알트코인과 스테이블코인의 비중이 증가하는 특징을 보입니다.</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-white/5 border-l-4 border-purple-400">
+                            <div class="text-sm font-bold text-white">NFT 및 기타 자산</div>
+                            <div class="text-xs text-gray-400 mt-1">투자 기간이 길어질수록 NFT 등 신규 자산군으로 영역을 확장합니다.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 금융권 시사점 -->
+        <section class="mt-12 py-10">
+            <h2 class="text-3xl font-black text-center mb-10 neon-gold">은행을 향한 메시지: 위기 혹은 기회</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card p-8 border-l-8 border-red-500/50">
+                    <h4 class="text-xl font-bold text-red-400 mb-4 flex items-center">
+                        <span class="mr-2">❌</span> 위기 요인 (Threats)
+                    </h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start"><span class="text-red-500 mr-2">●</span> 자산 이탈: 현금성 자산 비중이 일반인 대비 30% 낮아 예적금 매력도 하락</li>
+                        <li class="flex items-start"><span class="text-red-500 mr-2">●</span> 고객 접점 약화: 투자 정보 획득 채널이 거래소와 핀테크 플랫폼으로 이동</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-8 border-l-8 border-[#3de39d]/50">
+                    <h4 class="text-xl font-bold text-[#3de39d] mb-4 flex items-center">
+                        <span class="mr-2">✅</span> 기회 요인 (Opportunities)
+                    </h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start"><span class="text-[#3de39d] mr-2">●</span> 제도화 요구: 신뢰할 수 있는 기존 금융권의 커스터디(수탁) 및 관리 역할 기대</li>
+                        <li class="flex items-start"><span class="text-[#3de39d] mr-2">●</span> 서비스 확장: 가상자산 연계 적립식 상품 및 포트폴리오 관리 서비스 도입 적기</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 py-10 border-t border-white/10 text-center">
+        <p class="text-gray-500 text-sm">© 2024 DATA VIZ PROJECT | Source: Hana Institute of Finance</p>
+        <p class="text-xs text-gray-600 mt-2">이 인포그래픽은 SVG 및 Mermaid JS를 사용하지 않고 개발되었습니다.</p>
+    </footer>
+
+    <script>
+        // 공통 차트 설정
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Pretendard';
+
+        const wrapLabel = (label) => {
+            if (typeof label === 'string' && label.length > 16) {
+                const words = label.split(' ');
+                let lines = [];
+                let currentLine = "";
+                words.forEach(word => {
+                    if ((currentLine + word).length > 16) {
+                        lines.push(currentLine.trim());
+                        currentLine = word + " ";
+                    } else {
+                        currentLine += word + " ";
+                    }
+                });
+                lines.push(currentLine.trim());
+                return lines;
+            }
+            return label;
+        };
+
+        const tooltipPlugin = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // 1. 보유 현황 차트
+        new Chart(document.getElementById('mainOwnershipChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['보유 중', '미보유'],
+                datasets: [{
+                    data: [27, 73],
+                    backgroundColor: ['#ffc53d', 'rgba(255, 255, 255, 0.05)'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '80%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: tooltipPlugin
+                }
+            }
+        });
+
+        // 2. 투자 동기 변화 차트
+        new Chart(document.getElementById('motivationChart'), {
+            type: 'bar',
+            data: {
+                labels: [wrapLabel('FOMO (유행 추종)'), wrapLabel('새로운 투자 경험'), wrapLabel('성장 가능성 및 포트폴리오')],
+                datasets: [
+                    {
+                        label: '초기 동기 (%)',
+                        data: [57, 26, 17],
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        borderRadius: 8
+                    },
+                    {
+                        label: '최근 동기 (%)',
+                        data: [34, 44, 22],
+                        backgroundColor: '#ffc53d',
+                        borderRadius: 8
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: tooltipPlugin
+                },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 3. 정보 채널 차트
+        new Chart(document.getElementById('channelChart'), {
+            type: 'bar',
+            data: {
+                labels: [wrapLabel('주변 지인 추천'), wrapLabel('거래소 공식 채널'), wrapLabel('데이터 분석 플랫폼')],
+                datasets: [
+                    {
+                        label: '과거 (%)',
+                        data: [44, 15, 10],
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        borderRadius: 4
+                    },
+                    {
+                        label: '현재 (%)',
+                        data: [39, 24, 19],
+                        backgroundColor: '#3de39d',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: tooltipPlugin
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: true }
+                }
+            }
+        });
+
+        // 4. 투자 방식 차트
+        new Chart(document.getElementById('frequencyChart'), {
+            type: 'polarArea',
+            data: {
+                labels: [wrapLabel('수시/단기 매매'), wrapLabel('정기적 적립'), wrapLabel('수개월 단위 장기')],
+                datasets: [{
+                    data: [19, 34, 47],
+                    backgroundColor: [
+                        'rgba(255, 255, 255, 0.1)',
+                        'rgba(61, 227, 157, 0.5)',
+                        'rgba(61, 227, 157, 0.9)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: tooltipPlugin
+                }
+            }
+        });
+    </script>
+</body>
+</html>
