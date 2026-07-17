@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 시대 생존 공식: Unlearning Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #060b27;
+            background-image: radial-gradient(circle at 50% 50%, #0c143d 0%, #060b27 100%);
+            color: #f8fafc;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(20, 28, 47, 0.65);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .neon-gold {
+            color: #ffc53d;
+            text-shadow: 0 0 10px rgba(255, 197, 61, 0.4);
+        }
+
+        .neon-green-glow {
+            border: 1px solid #3de39d;
+            box-shadow: 0 0 15px rgba(61, 227, 157, 0.25);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .step-path {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .step-path {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .unlearning-glow {
+            background: linear-gradient(135deg, rgba(255, 197, 61, 0.1) 0%, rgba(61, 227, 157, 0.1) 100%);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+<!-- 
+    [Narrative Plan]
+    1. Introduction: The Exponential Crisis (J-Curve and AI Singularity).
+    2. The Paradox: Knowledge Depreciation vs. Premium Assets (The rise of Context).
+    3. Method: The 3-Stage Unlearning Protocol (The solution for individuals).
+    4. Proof: Chairman Yu's Strategic Pivot (Real-world business case).
+    5. Action: GPS Coordinates for the Future (Immediate implementation strategy).
+
+    [Visualization Choices]
+    - AI Growth vs. Consciousness: Line Chart (Chart.js) - Visualizing the widening gap.
+    - Asset Re-valuation: Donut Chart (Chart.js) - Showing the shift to 'Relationship Capital'.
+    - Unlearning Steps: CSS-based Glowing Grid - Process flow without SVG.
+    - Business Insight: Comparison Matrix - Highlighting the 'Gray Zone' success.
+    - GPS Strategy: Interactive Glass-Cards - Hierarchy of goals.
+
+    [Selected Palette: Dark Cosmic Gold & Green]
+    - Primary: #060b27 (Deep Space)
+    - Highlight 1: #ffc53d (Neon Gold)
+    - Highlight 2: #3de39d (Neon Green)
+
+    [NO SVG & NO MERMAID CONFIRMATION]
+    - All diagrams are built with HTML/CSS Grid and Flexbox.
+    - Icons are Unicode/Emoji-based or CSS-styled boxes.
+    - Chart.js/Plotly.js render to Canvas/WebGL.
+-->
+
+<header class="pt-20 pb-16 px-6 text-center">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight">
+            AI 시대의 <span class="neon-gold">진짜 생존 공식</span>
+        </h1>
+        <p class="text-lg md:text-2xl text-slate-400 font-medium max-w-2xl mx-auto">
+            낡은 지도를 버리고 새로운 맥락을 설계하는 <br class="hidden md:block">
+            <span class="text-white border-b-2 border-emerald-400 pb-1 italic font-bold">언러닝(Unlearning) 학습법</span>
+        </p>
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 pb-24 space-y-12">
+
+    <section class="glass-card rounded-3xl p-6 md:p-10">
+        <div class="mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold neon-gold mb-4">1. 가속도의 공포: J-Curve와 인간의 지체</h2>
+            <p class="text-slate-300 leading-relaxed">
+                미래학자 레이 커즈와일이 경고한 '기술적 특이점'은 이미 시작되었습니다. AI 기술은 수직 상승하는데, 인간의 의식과 신뢰는 그 속도를 따라가지 못할 때 우리는 필연적으로 불안을 느낍니다.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="chart-container">
+                <canvas id="growthChart"></canvas>
+            </div>
+            <div class="space-y-4">
+                <div class="glass-card neon-green-glow p-5 rounded-xl">
+                    <span class="block text-emerald-400 font-bold mb-1">신뢰의 격차 (15%)</span>
+                    <p class="text-sm text-slate-400">기술은 완성되었으나 인간의 불신으로 인해 실제 활용률은 기술 수준을 따라가지 못하는 병목 현상 발생.</p>
+                </div>
+                <div class="glass-card p-5 rounded-xl border-l-4 border-amber-400">
+                    <span class="block text-amber-400 font-bold mb-1">지식의 가치 폭락</span>
+                    <p class="text-sm text-slate-400">검색 가능한 모든 지식의 단가는 0원으로 수렴합니다. 이제 '무엇을 아는가'는 더 이상 차별점이 아닙니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="glass-card p-8 rounded-3xl border-t-4 border-emerald-400">
+            <h3 class="text-xl font-bold neon-gold mb-4">프리미엄 자산: 관계(Relationship)</h3>
+            <p class="text-slate-400 text-sm mb-6">AI가 고도화될수록 사람들은 검증된 이들이 모인 '커뮤니티'로 회귀합니다. 수평적 협업과 상부상조가 가능한 커뮤니티 자본이 최고의 자산이 됩니다.</p>
+            <div class="chart-container h-64">
+                <canvas id="assetDonutChart"></canvas>
+            </div>
+        </div>
+        <div class="glass-card p-8 rounded-3xl border-t-4 border-amber-400">
+            <h3 class="text-xl font-bold neon-gold mb-4">프리미엄 자산: 맥락(Context)</h3>
+            <p class="text-slate-400 text-sm mb-6">정보는 흔하지만 정보의 '의도'와 '서사'는 귀합니다. 자신만의 고유한 인과관계를 설계하는 '맥락 부자'가 시장의 주도권을 잡습니다.</p>
+            <div class="space-y-4 mt-4">
+                <div class="flex items-center gap-4 p-4 glass-card rounded-lg unlearning-glow">
+                    <div class="text-2xl">📡</div>
+                    <div>
+                        <p class="font-bold text-white">검색에서 연상으로</p>
+                        <p class="text-xs text-slate-400">특정 키워드에 당신의 브랜드가 떠오르게 설계</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 p-4 glass-card rounded-lg">
+                    <div class="text-2xl">🧩</div>
+                    <div>
+                        <p class="font-bold text-white">비전 설계의 힘</p>
+                        <p class="text-xs text-slate-400">상대의 약점을 보완하는 통찰력 있는 해결책 제시</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12">
+        <h2 class="text-3xl font-bold text-center mb-12"><span class="neon-gold">언러닝(Unlearning)</span> 학습법 3단계</h2>
+        <div class="step-path">
+            <div class="glass-card flex-1 p-8 rounded-2xl text-center relative overflow-hidden group border-b-4 border-amber-500">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🗑️</div>
+                <h4 class="text-xl font-bold text-white mb-2">01. 언러닝</h4>
+                <p class="text-sm text-slate-400">낡은 지도를 버려라. 과거의 데이터에 기반한 성공 방정식을 머릿속에서 비워내는(Reset) 과정.</p>
+            </div>
+            <div class="glass-card flex-1 p-8 rounded-2xl text-center relative overflow-hidden group border-b-4 border-emerald-500">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🔍</div>
+                <h4 class="text-xl font-bold text-white mb-2">02. 리러닝</h4>
+                <p class="text-sm text-slate-400">본질을 재정의하라. 현장의 지형을 다시 살피고 사물의 본질을 새로운 시각으로 재해석(Redefine).</p>
+            </div>
+            <div class="glass-card flex-1 p-8 rounded-2xl text-center relative overflow-hidden group border-b-4 border-indigo-500">
+                <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🚀</div>
+                <h4 class="text-xl font-bold text-white mb-2">03. 뉴러닝</h4>
+                <p class="text-sm text-slate-400">기술과 통찰을 엮어라. 최신 AI 기술과 나만의 인문학적·비즈니스적 통찰을 융합(New-learn).</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="glass-card rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+        <div class="bg-gradient-to-r from-amber-600/20 to-emerald-600/20 p-8 border-b border-white/10">
+            <h2 class="text-2xl font-bold text-white">유석환 회장의 실전 비즈니스 인사이트</h2>
+        </div>
+        <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <div class="w-12 h-12 glass-card neon-green-glow rounded-full flex items-center justify-center font-bold text-emerald-400 shrink-0">A</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-1">비전을 파는 전략 (셀트리온 시절)</h4>
+                        <p class="text-sm text-slate-400 italic">"물건이 없으면 비전을 팔아라. 비전을 팔면 영원한 갑이 된다."</p>
+                        <p class="text-sm text-slate-500 mt-2">상대방의 약점(미래 성장 동력 부재)을 분석하여, 6개월 뒤 사장이 될 부사장에게 '성공의 무기'를 판매.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-12 h-12 glass-card neon-green-glow rounded-full flex items-center justify-center font-bold text-emerald-400 shrink-0">B</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-1">초현역 비즈니스 창조 (로킷헬스케어)</h4>
+                        <p class="text-sm text-slate-400 italic">"노화는 데이터의 축적이다. 본질을 재정의하면 길이 보인다."</p>
+                        <p class="text-sm text-slate-500 mt-2">의학 비전공자임에도 하루 2시간 독학을 통해 AI와 3D 바이오 프린팅을 융합하여 인공 장기 재생에 도전.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl neon-green-glow bg-emerald-950/20">
+                <h4 class="font-bold text-emerald-400 mb-4">💡 회장님의 한마디</h4>
+                <blockquote class="text-slate-300 border-l-2 border-emerald-400 pl-4 py-2">
+                    "전공 지식은 결국 700시간의 분량입니다. 하루 2시간씩 1년이면 누구든 새로운 전공 하나를 마스터할 수 있습니다. 지식의 파편을 상상력으로 연결하십시오."
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <section class="space-y-8">
+        <h2 class="text-3xl font-bold text-center neon-gold">미래를 그리는 나침반: GPS 3대 좌표</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-card p-8 rounded-2xl border-l-2 border-slate-500">
+                <span class="text-xs font-bold text-slate-500 tracking-widest uppercase">Macro View</span>
+                <h4 class="text-xl font-bold text-white mt-2 mb-4">10년 뒤의 좌표</h4>
+                <p class="text-sm text-slate-400">세상의 거시적 변화 예측. 인구 고령화, 에너지 위기, AI 완전 대체 등 큰 흐름 속 나의 위치.</p>
+            </div>
+            <div class="glass-card p-8 rounded-2xl border-l-2 border-amber-400">
+                <span class="text-xs font-bold text-amber-500 tracking-widest uppercase">Milestone</span>
+                <h4 class="text-xl font-bold text-white mt-2 mb-4">3년 뒤의 좌표</h4>
+                <p class="text-sm text-slate-400">10년 뒤의 목표를 위해 3년 안에 완수해야 할 핵심 성과와 중간 지점(마일스톤) 확보.</p>
+            </div>
+            <div class="glass-card p-8 rounded-2xl border-l-2 border-emerald-400 neon-green-glow">
+                <span class="text-xs font-bold text-emerald-500 tracking-widest uppercase">Immediate Action</span>
+                <h4 class="text-xl font-bold text-white mt-2 mb-4">3개월 뒤의 좌표</h4>
+                <p class="text-sm text-slate-400">당장 이번 분기에 실행 가능한 실천 계획. 구체적인 행동 목록(논문 분석, 장비 확보 등).</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="glass-card rounded-3xl p-6 md:p-10 border border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.15)] relative overflow-hidden mt-16">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500"></div>
+        
+        <div class="text-center mb-8">
+            <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/20 text-indigo-400 text-xs font-bold tracking-widest mb-3 border border-indigo-500/30">AI POWERED</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">나만의 맞춤형 GPS & 액션 플랜 설계</h2>
+            <p class="text-slate-400 text-sm md:text-base">현재 직무를 입력하면, 유석환 회장의 '언러닝 학습법'을 기반으로 AI가 당장 실행할 <span class="text-emerald-400 font-bold">3개월 뒤의 좌표(Action Plan)</span>를 도출해 드립니다.</p>
+        </div>
+
+        <div class="max-w-2xl mx-auto flex flex-col md:flex-row gap-4 mb-8">
+            <input type="text" id="jobInput" placeholder="예: 5년차 퍼포먼스 마케터, 백엔드 개발자..." class="flex-1 bg-slate-900/50 border border-slate-700 text-white rounded-xl px-5 py-4 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder-slate-500">
+            <button id="generateBtn" onclick="generateAIPlan()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-8 py-4 rounded-xl transition-all shadow-[0_0_15px_rgba(99,102,241,0.4)] flex items-center justify-center gap-2 whitespace-nowrap">
+                <span>좌표 생성하기</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" /></svg>
+            </button>
+        </div>
+
+        <!-- 로딩 인디케이터 -->
+        <div id="loadingIndicator" class="hidden flex flex-col items-center justify-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 mb-4"></div>
+            <p class="text-indigo-400 animate-pulse font-medium">AI가 당신의 낡은 지도를 분석하고 새로운 좌표를 계산 중입니다...</p>
+        </div>
+
+        <!-- 결과 표시 영역 -->
+        <div id="resultArea" class="hidden space-y-6 mt-8 border-t border-slate-800 pt-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-slate-900/40 border border-slate-700/50 p-5 rounded-xl">
+                    <div class="text-amber-500 text-xl mb-2">🗑️ 언러닝 (버릴 것)</div>
+                    <p id="resUnlearning" class="text-sm text-slate-300 leading-relaxed"></p>
+                </div>
+                <div class="bg-slate-900/40 border border-slate-700/50 p-5 rounded-xl">
+                    <div class="text-emerald-500 text-xl mb-2">🔍 리러닝 (재정의)</div>
+                    <p id="resRelearning" class="text-sm text-slate-300 leading-relaxed"></p>
+                </div>
+                <div class="bg-slate-900/40 border border-slate-700/50 p-5 rounded-xl">
+                    <div class="text-indigo-500 text-xl mb-2">🚀 뉴러닝 (새로운 통찰)</div>
+                    <p id="resNewlearning" class="text-sm text-slate-300 leading-relaxed"></p>
+                </div>
+            </div>
+            
+            <div class="bg-emerald-900/20 border border-emerald-500/30 p-6 rounded-xl relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 text-emerald-500/10 text-9xl font-black">3</div>
+                <h4 class="text-lg font-bold text-emerald-400 mb-4 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    3개월 뒤의 좌표 (Immediate Action Plan)
+                </h4>
+                <ul id="resActionPlan" class="space-y-3 text-sm text-slate-300 relative z-10">
+                    <!-- 동적 생성 -->
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="glass-card mt-12 py-16 px-6 text-center border-t border-white/10">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-extrabold text-white mb-6">인간의 의식은 외주 줄 수 없습니다</h2>
+        <p class="text-slate-400 mb-8 leading-relaxed">
+            AI가 내비게이션처럼 큰 길을 가르쳐줄 때, 최후의 승자는 엉뚱한 길을 상상하는 사람입니다.<br>
+            아이언맨의 기술을 입되, 피터팬의 상상력을 유지하십시오. 그것이 AI 시대를 이기는 유일한 공식입니다.
+        </p>
+        <p class="text-xs text-slate-600 tracking-widest uppercase">
+            © 2024 UNLEARNING STRATEGY INFOGRAPHIC | Based on Chairman Yu Seok-hwan
+        </p>
+    </div>
+</footer>
+
+<script>
+    // Global Chart Defaults
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
+    // 1. J-Curve Growth Chart
+    const ctxGrowth = document.getElementById('growthChart').getContext('2d');
+    new Chart(ctxGrowth, {
+        type: 'line',
+        data: {
+            labels: ['과거', '현재', '가까운 미래', 'AGI 시대', ['인공지능 기술의', '기하급수적 발전']],
+            datasets: [{
+                label: 'AI 기술 발전 (J-Curve)',
+                data: [5, 20, 60, 180, 450],
+                borderColor: '#3de39d',
+                backgroundColor: 'rgba(61, 227, 157, 0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 4,
+                pointBackgroundColor: '#3de39d'
+            }, {
+                label: '인간 의식 수용도',
+                data: [10, 18, 25, 30, 35],
+                borderColor: '#ffc53d',
+                borderDash: [5, 5],
+                fill: false,
+                tension: 0.1,
+                borderWidth: 2,
+                pointBackgroundColor: '#ffc53d'
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            return Array.isArray(label) ? label.join(' ') : label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: { display: false, grid: { display: false } },
+                x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+            }
+        }
+    });
+
+    // 2. Asset Re-valuation Donut
+    const ctxAsset = document.getElementById('assetDonutChart').getContext('2d');
+    new Chart(ctxAsset, {
+        type: 'doughnut',
+        data: {
+            labels: [['단순 정보 및', '지식 자산'], ['커뮤니티 및', '맥락 기반 자본']],
+            datasets: [{
+                data: [20, 80],
+                backgroundColor: ['rgba(255, 255, 255, 0.1)', '#ffc53d'],
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            cutout: '70%',
+            plugins: {
+                legend: { position: 'bottom', labels: { boxWidth: 12, padding: 20, font: { size: 11 } } },
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            return Array.isArray(label) ? label.join(' ') : label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    async function fetchWithRetry(url, options, maxRetries = 3) {
+        let delay = 1000;
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok && response.status === 429) {
+                    throw new Error("Rate limited");
+                }
+                return response;
+            } catch (error) {
+                if (i === maxRetries - 1) throw error;
+                await new Promise(res => setTimeout(res, delay));
+                delay *= 2;
+            }
+        }
+    }
+
+    async function generateAIPlan() {
+        const job = document.getElementById('jobInput').value.trim();
+        if (!job) {
+            // alert 대신 사용자 친화적인 UI 효과 사용
+            const inputEl = document.getElementById('jobInput');
+            inputEl.classList.add('border-red-500', 'ring-1', 'ring-red-500');
+            setTimeout(() => inputEl.classList.remove('border-red-500', 'ring-1', 'ring-red-500'), 2000);
+            return;
+        }
+
+        const btn = document.getElementById('generateBtn');
+        const loading = document.getElementById('loadingIndicator');
+        const resultArea = document.getElementById('resultArea');
+
+        // UI 상태 변경
+        btn.disabled = true;
+        btn.classList.add('opacity-50', 'cursor-not-allowed');
+        resultArea.classList.add('hidden');
+        loading.classList.remove('hidden');
+
+        const systemPrompt = `당신은 유석환 회장의 '언러닝(Unlearning)' 철학을 바탕으로 커리어를 컨설팅하는 최고의 전략가입니다.
+사용자의 직업을 입력받으면, 해당 직무에서 과거에는 통했지만 이제는 버려야 할 것(언러닝), 새롭게 정의해야 할 본질(리러닝), AI 기술과 융합할 새로운 통찰(뉴러닝)을 정의하십시오.
+특히, 당장 실천해야 할 '3개월 뒤의 좌표(Immediate Action)'를 구체적인 행동 단위로 3가지 제시해야 합니다.`;
+
+        const userQuery = `내 직무/상황: ${job}. 이 상황에 맞는 언러닝 전략과 당장 실행할 3개월 액션 플랜을 도출해줘.`;
+
+        const apiKey = ""; // API Key는 Canvas 환경에서 자동 주입됨
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+        const payload = {
+            contents: [{ parts: [{ text: userQuery }] }],
+            systemInstruction: { parts: [{ text: systemPrompt }] },
+            generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: "OBJECT",
+                    properties: {
+                        unlearning: { type: "STRING", description: "버려야 할 낡은 지식/고정관념 (1~2문장)" },
+                        relearning: { type: "STRING", description: "새롭게 정의해야 할 본질 (1~2문장)" },
+                        newlearning: { type: "STRING", description: "AI와 결합한 새로운 통찰 (1~2문장)" },
+                        actionPlan: {
+                            type: "ARRAY",
+                            items: { type: "STRING", description: "3개월 내 실행 가능한 구체적 행동 지침" }
+                        }
+                    },
+                    required: ["unlearning", "relearning", "newlearning", "actionPlan"]
+                }
+            }
+        };
+
+        try {
+            const response = await fetchWithRetry(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+            
+            if (result.candidates && result.candidates.length > 0) {
+                const jsonText = result.candidates[0].content.parts[0].text;
+                const data = JSON.parse(jsonText);
+
+                // 결과 렌더링
+                document.getElementById('resUnlearning').textContent = data.unlearning;
+                document.getElementById('resRelearning').textContent = data.relearning;
+                document.getElementById('resNewlearning').textContent = data.newlearning;
+                
+                const actionPlanList = document.getElementById('resActionPlan');
+                actionPlanList.innerHTML = ''; // 초기화
+                data.actionPlan.forEach(plan => {
+                    const li = document.createElement('li');
+                    li.className = 'flex items-start gap-2';
+                    li.innerHTML = `<span class="text-emerald-500 mt-1">●</span> <span>${plan}</span>`;
+                    actionPlanList.appendChild(li);
+                });
+
+                loading.classList.add('hidden');
+                resultArea.classList.remove('hidden');
+            }
+        } catch (error) {
+            console.error("API Error:", error);
+            document.getElementById('resUnlearning').textContent = "일시적인 오류가 발생했습니다. 다시 시도해 주세요.";
+            loading.classList.add('hidden');
+            resultArea.classList.remove('hidden');
+        } finally {
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+    }
+</script>
+
+</body>
+</html>
