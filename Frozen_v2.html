@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Frozen v2 Briefing - Institutional Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Pretendard', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+        .glass-card-accent {
+            background: rgba(238, 242, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(199, 210, 254, 0.6);
+        }
+        .glass-card-emerald {
+            background: rgba(236, 253, 245, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(167, 243, 208, 0.6);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(241, 245, 249, 0.8); }
+        ::-webkit-scrollbar-thumb { background: rgba(203, 213, 225, 1); border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-100/50 text-slate-900 antialiased min-h-screen p-4 sm:p-8 flex flex-col items-center">
+
+    <div class="w-full max-w-6xl mx-auto flex flex-col gap-6">
+        
+        <!-- Header Banner -->
+        <header class="glass-panel rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-xs font-bold tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-200">SECTOR DEEP DIVE</span>
+                    <span class="text-xs text-slate-500 font-medium">2026.07.22 | STRATEGIC BRIEFING</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">구글 '프로즌 v2(Frozen v2)' 인포그래픽 리포트</h1>
+                <p class="text-sm text-slate-600 mt-1">AI 반도체 패러다임 전환이 국내 반도체 생태계 및 주가에 미치는 영향 분석</p>
+            </div>
+            <div class="flex items-center gap-3 bg-white/80 px-4 py-2.5 rounded-2xl border border-slate-200 shadow-sm self-stretch md:self-auto justify-between md:justify-start">
+                <div class="text-right">
+                    <span class="text-[10px] uppercase font-bold text-slate-400 block">Report Status</span>
+                    <span class="text-xs font-bold text-blue-600">Verified & Published</span>
+                </div>
+                <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-blue-500/20">JB</div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Column 1: Key Metrics & Tech Overview -->
+            <div class="flex flex-col gap-6">
+                <!-- Metrics Card -->
+                <div class="glass-panel rounded-3xl p-6 flex flex-col gap-4">
+                    <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Key Performance Metrics</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-card-emerald p-4 rounded-2xl">
+                            <span class="text-xs text-slate-600 font-medium block">전력 효율 향상</span>
+                            <div class="text-2xl font-extrabold text-emerald-600 mt-1">6 ~ 10배</div>
+                            <span class="text-[11px] text-slate-500 mt-0.5 block">기존 GPU/TPU 대비</span>
+                        </div>
+                        <div class="glass-card-accent p-4 rounded-2xl">
+                            <span class="text-xs text-slate-600 font-medium block">상용화 목표</span>
+                            <div class="text-2xl font-extrabold text-blue-600 mt-1">2028년</div>
+                            <span class="text-[11px] text-slate-500 mt-0.5 block">서버 대규모 배치</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Insight -->
+                <div class="glass-panel rounded-3xl p-6 flex flex-col gap-3 flex-1">
+                    <h2 class="text-xs font-bold text-blue-600 uppercase tracking-wider flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> 핵심 인사이트: 커스텀 ASIC 가속
+                    </h2>
+                    <p class="text-sm text-slate-700 leading-relaxed">
+                        추론 비용 절감이 빅테크 생존의 핵심으로 부상했습니다. 구글 제미나이 전용 칩 도입은 인프라 투자의 중심이 단순히 <strong class="text-slate-900">연산력 확장</strong>에서 <strong class="text-slate-900">비용 및 전력 효율 최적화</strong>로 완전히 이동했음을 증명합니다.
+                    </p>
+                    <div class="bg-blue-50/80 border border-blue-100 rounded-2xl p-3.5 mt-auto">
+                        <span class="text-xs font-bold text-blue-900 block mb-1">💡 패러다임 전환 포인트</span>
+                        <span class="text-xs text-blue-800 leading-snug block">범용성 중심에서 모델 특화형 고정 가중치(Frozen) 구조로의 전환 가속화</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2 & 3: Highlighted Korean Stock Outlook (Emphasized) -->
+            <div class="lg:col-span-2 flex flex-col gap-6">
+                
+                <!-- Highlighted Stock Outlook Section -->
+                <div class="glass-panel rounded-3xl p-6 sm:p-8 border-2 border-indigo-200/80 bg-gradient-to-br from-white/90 via-indigo-50/40 to-blue-50/50 shadow-xl flex flex-col gap-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-indigo-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold tracking-wider text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full border border-indigo-200">K-MARKET FOCUS</span>
+                            <h2 class="text-xl font-extrabold text-slate-900 mt-2">국내 반도체 주식 및 종목별 전망 분석</h2>
+                        </div>
+                        <span class="text-xs text-slate-500 font-semibold bg-white px-3 py-1 rounded-xl shadow-xs border border-slate-200">전략적 비중 조절 필요</span>
+                    </div>
+
+                    <!-- Market Division Chart Simulation -->
+                    <div>
+                        <h3 class="text-xs font-bold text-slate-600 uppercase tracking-wide mb-3">AI 메모리 수요 구조적 분화 전망</h3>
+                        <div class="space-y-3.5 bg-white/70 p-4 rounded-2xl border border-indigo-100">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-700">고성능 AI 학습 / 범용 추론 (HBM 핵심 유지)</span>
+                                    <span class="text-emerald-600 font-bold">70%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden p-0.5">
+                                    <div class="bg-emerald-500 h-full rounded-full transition-all duration-1000 shadow-xs" style="width: 70%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-slate-700">맞춤형 저가 효율 칩 (고정 가중치 서버용)</span>
+                                    <span class="text-blue-600 font-bold">30%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden p-0.5">
+                                    <div class="bg-blue-600 h-full rounded-full transition-all duration-1000 shadow-xs" style="width: 30%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Stock Strategy Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Card 1 -->
+                        <div class="bg-white/90 p-5 rounded-2xl border border-indigo-100 shadow-sm flex flex-col gap-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100">메모리반도체 (SK하이닉스 등)</span>
+                                <span class="text-[11px] font-bold text-emerald-600">중립~비중확대</span>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed mt-1">
+                                단기적으로 '프로즌 v2' 같은 전용 칩 등장으로 HBM 피크아웃 우려가 자극될 수 있으나, 초고성능 HBM4 등 기술 리더십을 보유한 선두권 기업은 압도적인 기술 해자를 지속 유지할 전망입니다.
+                            </p>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="bg-white/90 p-5 rounded-2xl border border-indigo-100 shadow-sm flex flex-col gap-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-purple-700 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-100">디자인하우스 및 ASIC 생태계</span>
+                                <span class="text-[11px] font-bold text-purple-600">장기 수혜 기대</span>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed mt-1">
+                                빅테크들의 자체 커스텀 칩 설계 붐이 가속화되면서, 설계 도면을 실리콘으로 구현하는 국내 디자인하우스 및 인프라 관련 밸류체인에 중장기적인 수혜 모멘텀이 작용할 것으로 기대됩니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="glass-panel rounded-3xl p-4 text-center">
+            <span class="text-xs text-slate-500 font-medium">BiteLabs Strategic Intelligence Unit • Designed by Jarvis for Community Publication</span>
+        </footer>
+
+    </div>
+
+</body>
+</html>
