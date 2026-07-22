@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미래자산포럼 | 자신의 알고리즘을 설계하는 사람들</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05060a;
+    --bg2:#0b0e17;
+    --accent1:#5b8cff;
+    --accent2:#8b5bff;
+    --accent3:#00e0c6;
+    --text:#eaeef7;
+    --sub:#9aa4bd;
+    --card:#10131e;
+    --border:rgba(255,255,255,0.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Noto Sans KR', sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  .container{
+    max-width:720px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:60px 20px;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(91,140,255,0.25), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(139,91,255,0.25), transparent 40%),
+      var(--bg);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:40px 40px;
+    mask-image:radial-gradient(circle at center, black 30%, transparent 75%);
+  }
+  .hero-tag{
+    position:relative;
+    display:inline-block;
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--accent3);
+    border:1px solid rgba(0,224,198,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    margin-bottom:24px;
+    animation:fadeDown 1s ease;
+  }
+  .hero h1{
+    position:relative;
+    font-size:clamp(28px, 7vw, 44px);
+    font-weight:900;
+    line-height:1.4;
+    background:linear-gradient(120deg,#fff, #b9c6ff 40%, var(--accent3));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:fadeUp 1.2s ease;
+  }
+  .hero p.lead{
+    position:relative;
+    margin-top:20px;
+    color:var(--sub);
+    font-size:clamp(14px, 3.6vw, 17px);
+    max-width:520px;
+    animation:fadeUp 1.4s ease;
+  }
+  .scroll-cue{
+    margin-top:60px;
+    font-size:12px;
+    color:var(--sub);
+    letter-spacing:3px;
+    animation:bounce 2s infinite;
+  }
+  @keyframes fadeDown{from{opacity:0; transform:translateY(-20px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+
+  /* ===== SECTION 공통 ===== */
+  section{
+    padding:80px 0;
+    position:relative;
+  }
+  .section-title{
+    font-size:clamp(22px, 5.5vw, 30px);
+    font-weight:900;
+    margin-bottom:16px;
+    letter-spacing:-0.5px;
+  }
+  .section-title span{
+    background:linear-gradient(90deg, var(--accent1), var(--accent3));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .section-sub{
+    color:var(--sub);
+    font-size:15px;
+    margin-bottom:36px;
+  }
+  .divider{
+    width:48px;
+    height:4px;
+    border-radius:2px;
+    background:linear-gradient(90deg, var(--accent1), var(--accent2));
+    margin-bottom:20px;
+  }
+
+  /* ===== 인용구 스타일 ===== */
+  .quote-block{
+    border-left:3px solid var(--accent2);
+    padding:18px 20px;
+    margin:28px 0;
+    background:linear-gradient(90deg, rgba(139,91,255,0.08), transparent);
+    border-radius:0 12px 12px 0;
+    font-size:16px;
+    font-weight:500;
+    color:#f1f3fb;
+  }
+  .quote-big{
+    text-align:center;
+    font-size:clamp(20px,5vw,26px);
+    font-weight:700;
+    line-height:1.6;
+    margin:40px 0;
+    padding:0 10px;
+  }
+  .quote-big .hl{
+    color:var(--accent3);
+  }
+
+  /* ===== 기업 카드 ===== */
+  .company-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:24px;
+  }
+  .company-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px 10px;
+    text-align:center;
+    transition:transform .3s ease, border-color .3s ease;
+  }
+  .company-card:hover{ transform:translateY(-4px); border-color:var(--accent1); }
+  .company-card .emoji{ font-size:26px; display:block; margin-bottom:8px;}
+  .company-card .name{ font-weight:700; font-size:14px; margin-bottom:4px;}
+  .company-card .desc{ font-size:11.5px; color:var(--sub); }
+
+  /* ===== 카드 리스트 (분야) ===== */
+  .topic-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-top:10px;
+  }
+  .topic-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px 16px;
+    position:relative;
+    overflow:hidden;
+  }
+  .topic-card::after{
+    content:"";
+    position:absolute;
+    width:80px;height:80px;
+    background:radial-gradient(circle, rgba(91,140,255,0.25), transparent 70%);
+    top:-30px; right:-30px;
+  }
+  .topic-card .icon{ font-size:26px; margin-bottom:10px; display:block; }
+  .topic-card h4{ font-size:15px; font-weight:700; margin-bottom:6px; }
+  .topic-card p{ font-size:12.5px; color:var(--sub); }
+
+  /* ===== 변화 타임라인 ===== */
+  .change-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:20px;
+  }
+  .change-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px 18px;
+  }
+  .change-item .badge{
+    flex-shrink:0;
+    width:46px; height:46px;
+    border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px;
+    background:linear-gradient(135deg, var(--accent1), var(--accent2));
+  }
+  .change-item .txt strong{ display:block; font-size:14.5px; margin-bottom:2px;}
+  .change-item .txt span{ font-size:12.5px; color:var(--sub);}
+
+  /* ===== 자산 리스트 ===== */
+  .asset-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:24px;
+  }
+  .asset-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 16px;
+    background:linear-gradient(90deg, rgba(0,224,198,0.06), transparent);
+    border:1px solid var(--border);
+    border-radius:12px;
+    font-size:14.5px;
+    font-weight:500;
+  }
+  .asset-item .num{
+    color:var(--accent3);
+    font-weight:900;
+    font-size:14px;
+    width:24px;
+  }
+
+  /* ===== 선택 섹션 (소비자 vs 창조자) ===== */
+  .choice-wrap{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin-top:30px;
+  }
+  .choice-card{
+    border-radius:18px;
+    padding:26px 20px;
+    border:1px solid var(--border);
+    position:relative;
+  }
+  .choice-card.dim{
+    background:#0c0e15;
+    color:var(--sub);
+  }
+  .choice-card.glow{
+    background:linear-gradient(135deg, rgba(91,140,255,0.15), rgba(139,91,255,0.15));
+    border:1px solid var(--accent1);
+  }
+  .choice-card h4{
+    font-size:16px;
+    margin-bottom:8px;
+    color:var(--text);
+  }
+  .choice-card p{ font-size:13.5px; }
+
+  /* ===== CTA / Footer ===== */
+  .cta{
+    text-align:center;
+    padding:90px 0 60px;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(91,140,255,0.2), transparent 60%);
+  }
+  .cta h2{
+    font-size:clamp(24px,6vw,34px);
+    font-weight:900;
+    margin-bottom:14px;
+  }
+  .cta h2 .hl{
+    background:linear-gradient(90deg, var(--accent1), var(--accent3));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .cta p{ color:var(--sub); font-size:14.5px; margin-bottom:30px; }
+  .cta-btn{
+    display:inline-block;
+    padding:14px 34px;
+    border-radius:999px;
+    background:linear-gradient(90deg, var(--accent1), var(--accent2));
+    color:#fff;
+    font-weight:700;
+    font-size:15px;
+    text-decoration:none;
+    box-shadow:0 8px 30px rgba(91,140,255,0.35);
+  }
+  footer{
+    text-align:center;
+    padding:40px 20px 50px;
+    color:var(--sub);
+    font-size:12.5px;
+    border-top:1px solid var(--border);
+  }
+  footer strong{ color:var(--text); display:block; margin-bottom:6px; font-size:14px;}
+
+  /* ===== 반응형 ===== */
+  @media(max-width:480px){
+    .company-grid{ grid-template-columns:repeat(3,1fr); gap:8px;}
+    .company-card{ padding:14px 6px;}
+    .company-card .desc{ display:none; }
+    .topic-grid{ grid-template-columns:1fr; }
+  }
+
+  /* 스크롤 애니메이션 */
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  .reveal.show{
+    opacity:1;
+    transform:translateY(0);
+  }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-tag">EDITORIAL · 사설</span>
+    <h1>미래는 기술을 배우는 사람이 아니라<br>자신의 알고리즘을 설계하는<br>사람이 만든다</h1>
+    <p class="lead">구글이 반도체 회로에 신경망을 새겼듯,<br>우리는 우리의 삶에 무엇을 새기고 있는가.</p>
+    <div class="scroll-cue">SCROLL ↓</div>
+  </section>
+
+  <!-- 1. 구글 이야기 -->
+  <section>
+    <div class="container reveal">
+      <div class="divider"></div>
+      <h2 class="section-title">하드웨어가 <span>소프트웨어</span>를 따라가는 시대</h2>
+      <p class="section-sub">구글은 AI 모델 '제미나이'를 위해 신경망 구조를 반도체에 새긴 전용 칩, '프로즌 칩'을 발표했다. 이는 단순한 기술 진화가 아니라, 생각이 현실을 설계하는 시대의 시작이다.</p>
+
+      <div class="company-grid">
+        <div class="company-card">
+          <span class="emoji">🍎</span>
+          <div class="name">Apple</div>
+          <div class="desc">OS와 칩을 함께 설계</div>
+        </div>
+        <div class="company-card">
+          <span class="emoji">🚗</span>
+          <div class="name">Tesla</div>
+          <div class="desc">자동차 · AI 생태계 통합</div>
+        </div>
+        <div class="company-card">
+          <span class="emoji">🔷</span>
+          <div class="name">Google</div>
+          <div class="desc">AI 구조를 실리콘에 각인</div>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        남이 만든 도구에 자신을 맞추는 것이 아니라,<br>
+        <strong>자신의 생각에 맞게 세상을 설계하는 것.</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 범용 인간 -->
+  <section style="background:var(--bg2);">
+    <div class="container reveal">
+      <div class="divider"></div>
+      <h2 class="section-title">우리는 너무 오래 <span>범용 인간</span>으로 살았다</h2>
+      <p class="section-sub">
+        학교가 원하는 모습, 회사가 원하는 기준, 사회가 만든 성공 공식을 따라가며
+        정작 나만의 알고리즘은 설계하지 못한 채 살아온 것은 아닐까.
+      </p>
+      <p class="section-sub">
+        정보는 넘치는데 방향이 없고, 지식은 많아졌는데 중심은 흔들린다.
+        생각과 행동 사이에서 에너지는 소모되고, 결국 <strong style="color:#fff;">번아웃</strong>이라는
+        이름으로 삶은 지쳐간다.
+      </p>
+
+      <div class="quote-big">
+        정보를 많이 가진 사람이 아니라,<br>
+        <span class="hl">자신만의 사고 구조</span>를 가진 사람이<br>
+        경쟁력을 갖는 시대가 된다.
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 포럼 소개 -->
+  <section>
+    <div class="container reveal">
+      <div class="divider"></div>
+      <h2 class="section-title">미래자산포럼은 <span>사고의 OS</span>다</h2>
+      <p class="section-sub">
+        우리는 코인을 사고파는 투자 모임이 아니다. AI 사용법만 배우는 교육기관도 아니다.
+        우리가 만들고 싶은 것은 AI와 블록체인 시대를 살아갈 <strong style="color:#fff;">새로운 사고의 운영체제(OS)</strong>다.
+      </p>
+
+      <div class="topic-grid">
+        <div class="topic-card">
+          <span class="icon">🤖</span>
+          <h4>AI</h4>
+          <p>노동의 방식을 바꾸는 기술</p>
+        </div>
+        <div class="topic-card">
+          <span class="icon">⛓️</span>
+          <h4>블록체인</h4>
+          <p>신뢰의 방식을 바꾸는 구조</p>
+        </div>
+        <div class="topic-card">
+          <span class="icon">📚</span>
+          <h4>디지털 인문학</h4>
+          <p>인간의 사고를 바꾸는 철학</p>
+        </div>
+        <div class="topic-card">
+          <span class="icon">🔍</span>
+          <h4>팩트체크</h4>
+          <p>허위정보와 사기를 분별하는 눈</p>
+        </div>
+        <div class="topic-card" style="grid-column: span 2;">
+          <span class="icon">🏃</span>
+          <h4>건강 &amp; 스포츠</h4>
+          <p>지속 가능한 삶을 위한 기본기</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 변화의 축 -->
+  <section style="background:var(--bg2);">
+    <div class="container reveal">
+      <div class="divider"></div>
+      <h2 class="section-title">세상은 이미 <span>다르게</span> 움직인다</h2>
+
+      <div class="change-list">
+        <div class="change-item">
+          <div class="badge">🤖</div>
+          <div class="txt"><strong>AI</strong><span>노동의 방식을 바꾼다</span></div>
+        </div>
+        <div class="change-item">
+          <div class="badge">⛓️</div>
+          <div class="txt"><strong>블록체인</strong><span>신뢰의 방식을 바꾼다</span></div>
+        </div>
+        <div class="change-item">
+          <div class="badge">🧩</div>
+          <div class="txt"><strong>DAO</strong><span>조직의 방식을 바꾼다</span></div>
+        </div>
+        <div class="change-item">
+          <div class="badge">💰</div>
+          <div class="txt"><strong>디지털 자산</strong><span>금융의 개념을 바꾼다</span></div>
+        </div>
+        <div class="change-item">
+          <div class="badge">🧠</div>
+          <div class="txt"><strong>인문학</strong><span>인간의 사고를 바꾼다</span></div>
+        </div>
+      </div>
+
+      <div class="quote-big" style="margin-top:50px;">
+        기술은 세상을 바꾸지만,<br>
+        <span class="hl">철학은 기술을 사용하는 사람을 바꾼다.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 미래 자산 -->
+  <section>
+    <div class="container reveal">
+      <div class="divider"></div>
+      <h2 class="section-title">진짜 <span>미래 자산</span>은 무엇인가</h2>
+      <p class="section-sub">우리가 말하는 미래 자산은 비트코인만이 아니다.</p>
+
+      <div class="asset-list">
+        <div class="asset-item"><span class="num">01</span> 생각하는 능력</div>
+        <div class="asset-item"><span class="num">02</span> AI를 활용하는 능력</div>
+        <div class="asset-item"><span class="num">03</span> 사람들과 연결되는 신뢰</div>
+        <div class="asset-item"><span class="num">04</span> 변화를 읽어내는 통찰</div>
+        <div class="asset-item"><span class="num">05</span> 스스로를 업데이트하는 메타인지</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 선택 -->
+  <section style="background:var(--bg2);">
+    <div class="container reveal">
+      <div class="divider"></div>
+      <h2 class="section-title">당신은 어떤 삶을 <span>설계</span>할 것인가</h2>
+      <p class="section-sub">구글은 자신의 알고리즘을 실리콘 위에 새기고 있다. 그렇다면 우리는 무엇을 우리의 삶 속에 새기고 있는가.</p>
+
+      <div class="choice-wrap">
+        <div class="choice-card dim">
+          <h4>😶 소비자로 살아가기</h4>
+          <p>남들이 만들어 놓은 회로 위를 그저 달리는 삶</p>
+        </div>
+        <div class="choice-card glow">
+          <h4>🚀 창조자로 살아가기</h4>
+          <p>자신의 철학과 가치, 미래를 향한 비전을 삶이라는 하드웨어 위에 직접 설계하는 삶</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container reveal">
+      <h2>우리는 기술을 배우는 공동체가 아니다.<br><span class="hl">우리는 미래를 설계하는 공동체다.</span></h2>
+      <p>돈을 이해하고, 기술을 이해하고, 사람을 이해하고,<br>세상의 변화를 읽어내는 통찰을 함께 키운다.</p>
+      <a href="#" class="cta-btn">미래자산포럼과 함께하기 →</a>
+    </div>
+  </section>
+
+  <footer>
+    <strong>미래자산포럼</strong>
+    자신만의 알고리즘을 설계하는 사람들의 커뮤니티
+  </footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('show'); }
+    });
+  },{threshold:0.15});
+  reveals.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
