@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미래자산포럼 | 글로벌 자산 시가총액 Top 30</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --glass-bg: rgba(20, 25, 40, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --highlight: #00f2fe;
+            --highlight-alt: #4facfe;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated gradient background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: linear-gradient(45deg, #0f172a, #1e1b4b, #064e3b, #312e81);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating orbs for extra glass effect depth */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+        .orb-1 { width: 300px; height: 300px; background: rgba(79, 172, 254, 0.4); top: -50px; left: -50px; animation-delay: 0s; }
+        .orb-2 { width: 400px; height: 400px; background: rgba(168, 85, 247, 0.3); bottom: -100px; right: -100px; animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 50px); }
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 1.5rem;
+        }
+
+        .glass-button {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-button:hover, .glass-button.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--highlight);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            color: #fff;
+        }
+
+        /* Table Styles */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(4px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background-color 0.2s ease;
+        }
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        tr:last-child {
+            border-bottom: none;
+        }
+
+        /* Fade in animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="animated-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <main class="container mx-auto px-4 py-8 md:py-12 max-w-6xl flex flex-col gap-8 min-h-screen">
+        
+        <header class="glass-panel p-6 md:p-8 flex flex-col items-center text-center fade-in">
+            <div class="inline-block px-4 py-1 rounded-full border border-[rgba(255,255,255,0.2)] bg-white/5 text-sm md:text-base font-medium text-[var(--highlight)] mb-4 shadow-[0_0_10px_rgba(0,242,254,0.1)]">
+                🌐 미래자산포럼 회원 전용
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4">
+                글로벌 자산 시가총액 Top 30
+            </h1>
+            <div class="flex flex-wrap justify-center gap-4 text-sm md:text-base text-gray-300">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-green-400"></span>
+                    적용 환율: 1 USD = 1,475 KRW
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                    데이터 출처: CoinGlass / Global Assets Market Cap
+                </div>
+            </div>
+        </header>
+
+        <div class="flex justify-center gap-4 fade-in" style="animation-delay: 0.1s;">
+            <button id="btn-global" class="glass-button active px-6 py-3 rounded-xl font-semibold text-gray-300 w-full max-w-[200px]" onclick="switchTab('global')">
+                통합 자산 Top 30
+            </button>
+            <button id="btn-crypto" class="glass-button px-6 py-3 rounded-xl font-semibold text-gray-400 w-full max-w-[200px]" onclick="switchTab('crypto')">
+                암호화폐 Top 30
+            </button>
+        </div>
+
+        <div class="glass-panel overflow-hidden fade-in flex-grow flex flex-col" style="animation-delay: 0.2s;">
+            <!-- Global Assets Table -->
+            <div id="table-global" class="w-full overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse whitespace-nowrap min-w-[800px]">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-4 font-semibold text-gray-200">순위</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">자산명 (티커)</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">카테고리</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">시가총액 (USD)</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">시가총액 (KRW 환산)</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">단위 가격 (USD)</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">단위 가격 (KRW)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="global-tbody" class="text-sm md:text-base text-gray-300">
+                        <!-- Data will be injected here via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Crypto Only Table -->
+            <div id="table-crypto" class="w-full overflow-x-auto custom-scrollbar hide">
+                <table class="w-full text-left border-collapse whitespace-nowrap min-w-[800px]">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-4 font-semibold text-gray-200">순위</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">암호화폐명</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">심볼</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">시가총액 (USD)</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">시가총액 (KRW 환산)</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">개당 가격 (USD)</th>
+                            <th class="px-6 py-4 font-semibold text-gray-200">개당 가격 (KRW)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="crypto-tbody" class="text-sm md:text-base text-gray-300">
+                        <!-- Data will be injected here via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer class="text-center text-sm text-gray-400 mt-auto fade-in" style="animation-delay: 0.3s;">
+            <p>※ 원화 금액은 이해를 돕기 위해 천억/조/경 단위로 반올림하여 직관적으로 표기하였습니다.</p>
+            <p class="mt-2 text-gray-500">© 2026 미래자산포럼. All rights reserved.</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Data for Global Assets Top 30
+        const globalData = [
+            { rank: 1, name: "금 (Gold)", category: "귀금속", capUsd: "$28.15 T", capKrw: "약 4경 1,525조 원", priceUsd: "$4,049.00 / oz", priceKrw: "약 5,972,200원" },
+            { rank: 2, name: "엔비디아 (NVDA)", category: "기업 (미국)", capUsd: "$5.09 T", capKrw: "약 7,506조 2,000억 원", priceUsd: "$210.12", priceKrw: "약 309,900원" },
+            { rank: 3, name: "애플 (AAPL)", category: "기업 (미국)", capUsd: "$4.71 T", capKrw: "약 6,950조 2,000억 원", priceUsd: "$320.84", priceKrw: "약 473,200원" },
+            { rank: 4, name: "알파벳 (GOOGL)", category: "기업 (미국)", capUsd: "$3.91 T", capKrw: "약 5,765조 7,000억 원", priceUsd: "$320.40", priceKrw: "약 472,600원" },
+            { rank: 5, name: "은 (Silver)", category: "귀금속", capUsd: "$3.26 T", capKrw: "약 4,813조 원", priceUsd: "$57.98 / oz", priceKrw: "약 85,500원" },
+            { rank: 6, name: "마이크로소프트 (MSFT)", category: "기업 (미국)", capUsd: "$2.83 T", capKrw: "약 4,177조 2,000억 원", priceUsd: "$381.32", priceKrw: "약 562,400원" },
+            { rank: 7, name: "아마존 (AMZN)", category: "기업 (미국)", capUsd: "$2.52 T", capKrw: "약 3,720조 원", priceUsd: "$234.45", priceKrw: "약 345,800원" },
+            { rank: 8, name: "TSMC (TSM)", category: "기업 (대만)", capUsd: "$2.17 T", capKrw: "약 3,196조 3,000억 원", priceUsd: "$417.86", priceKrw: "약 616,300원" },
+            { rank: 9, name: "브로드컴 (AVGO)", category: "기업 (미국)", capUsd: "$1.87 T", capKrw: "약 2,750조 9,000억 원", priceUsd: "$392.20", priceKrw: "약 578,500원" },
+            { rank: 10, name: "사우디 아람코", category: "기업 (사우디)", capUsd: "$1.73 T", capKrw: "약 2,550조 3,000억 원", priceUsd: "$7.15", priceKrw: "약 10,500원" },
+            { rank: 11, name: "메타 (META)", category: "기업 (미국)", capUsd: "$1.54 T", capKrw: "약 2,267조 1,000억 원", priceUsd: "$605.84", priceKrw: "약 893,600원" },
+            { rank: 12, name: "스페이스X (SPCX)", category: "기업 (미국)", capUsd: "$1.52 T", capKrw: "약 2,246조 4,000억 원", priceUsd: "$115.67", priceKrw: "약 170,600원" },
+            { rank: 13, name: "비트코인 (BTC)", category: "암호화폐", capUsd: "$1.30 T", capKrw: "약 1,916조 원", priceUsd: "$64,801.00", priceKrw: "약 9,558만 원" },
+            { rank: 14, name: "테슬라 (TSLA)", category: "기업 (미국)", capUsd: "$1.21 T", capKrw: "약 1,781조 8,000억 원", priceUsd: "$321.74", priceKrw: "약 474,600원" },
+            { rank: 15, name: "삼성전자", category: "기업 (한국)", capUsd: "$1.20 T", capKrw: "약 1,774조 4,000억 원", priceUsd: "$183.22", priceKrw: "약 270,300원" },
+            { rank: 16, name: "마이크론 (MU)", category: "기업 (미국)", capUsd: "$1.13 T", capKrw: "약 1,666조 8,000억 원", priceUsd: "$1,001.00", priceKrw: "약 1,476,500원" },
+            { rank: 17, name: "일라이 릴리 (LLY)", category: "기업 (미국)", capUsd: "$1.06 T", capKrw: "약 1,563조 5,000억 원", priceUsd: "$1,190.00", priceKrw: "약 1,755,300원" },
+            { rank: 18, name: "버크셔 해서웨이", category: "기업 (미국)", capUsd: "$1.05 T", capKrw: "약 1,554조 7,000억 원", priceUsd: "$489.01", priceKrw: "약 721,300원" },
+            { rank: 19, name: "Vanguard S&P 500 (VOO)", category: "ETF", capUsd: "$972.3 B", capKrw: "약 1,434조 2,000억 원", priceUsd: "$679.17", priceKrw: "약 1,001,800원" },
+            { rank: 20, name: "JP모건 체이스 (JPM)", category: "기업 (미국)", capUsd: "$926.6 B", capKrw: "약 1,366조 7,000억 원", priceUsd: "$348.57", priceKrw: "약 514,100원" },
+            { rank: 21, name: "SK하이닉스", category: "기업 (한국)", capUsd: "$924.4 B", capKrw: "약 1,363조 4,000억 원", priceUsd: "$1,302.00", priceKrw: "약 1,920,000원" },
+            { rank: 22, name: "AMD", category: "기업 (미국)", capUsd: "$873.8 B", capKrw: "약 1,288조 9,000억 원", priceUsd: "$535.90", priceKrw: "약 790,500원" },
+            { rank: 23, name: "iShares Core S&P 500 (IVV)", category: "ETF", capUsd: "$869.3 B", capKrw: "약 1,282조 2,000억 원", priceUsd: "$742.29", priceKrw: "약 1,094,900원" },
+            { rank: 24, name: "월마트 (WMT)", category: "기업 (미국)", capUsd: "$859.0 B", capKrw: "약 1,267조 원", priceUsd: "$107.94", priceKrw: "약 159,200원" },
+            { rank: 25, name: "SPDR S&P 500 ETF (SPY)", category: "ETF", capUsd: "$780.2 B", capKrw: "약 1,150조 8,000억 원", priceUsd: "$738.91", priceKrw: "약 1,089,900원" },
+            { rank: 26, name: "ASML", category: "기업 (네덜란드)", capUsd: "$693.0 B", capKrw: "약 1,022조 2,000억 원", priceUsd: "$1,804.00", priceKrw: "약 2,660,900원" },
+            { rank: 27, name: "비자 (V)", category: "기업 (미국)", capUsd: "$666.9 B", capKrw: "약 983조 7,000억 원", priceUsd: "$350.67", priceKrw: "약 517,200원" },
+            { rank: 28, name: "엑손모빌 (XOM)", category: "기업 (미국)", capUsd: "$652.2 B", capKrw: "약 962조 원", priceUsd: "$157.35", priceKrw: "약 232,100원" },
+            { rank: 29, name: "Vanguard Total Stock (VTI)", category: "ETF", capUsd: "$647.3 B", capKrw: "약 954조 8,000억 원", priceUsd: "$364.89", priceKrw: "약 538,200원" },
+            { rank: 30, name: "존슨앤드존슨 (JNJ)", category: "기업 (미국)", capUsd: "$621.3 B", capKrw: "약 916조 4,000억 원", priceUsd: "$258.11", priceKrw: "약 380,700원" }
+        ];
+
+        // Data for Crypto Only Top 30
+        const cryptoData = [
+            { rank: 1, name: "비트코인", symbol: "BTC", capUsd: "$1,318.19 B", capKrw: "약 1,944조 3,000억 원", priceUsd: "$65,711.98", priceKrw: "약 9,692만 원" },
+            { rank: 2, name: "이더리움", symbol: "ETH", capUsd: "$232.26 B", capKrw: "약 342조 6,000억 원", priceUsd: "$1,924.58", priceKrw: "약 283만 9,000원" },
+            { rank: 3, name: "테더", symbol: "USDT", capUsd: "$184.07 B", capKrw: "약 271조 5,000억 원", priceUsd: "$1.00", priceKrw: "약 1,475원" },
+            { rank: 4, name: "바이낸스 코인", symbol: "BNB", capUsd: "$75.83 B", capKrw: "약 111조 8,000억 원", priceUsd: "$569.43", priceKrw: "약 83만 9,900원" },
+            { rank: 5, name: "USDC", symbol: "USDC", capUsd: "$73.15 B", capKrw: "약 107조 8,000억 원", priceUsd: "$1.00", priceKrw: "약 1,475원" },
+            { rank: 6, name: "리플", symbol: "XRP", capUsd: "$70.85 B", capKrw: "약 104조 4,000억 원", priceUsd: "$1.134", priceKrw: "약 1,673원" },
+            { rank: 7, name: "솔라나", symbol: "SOL", capUsd: "$45.13 B", capKrw: "약 66조 5,000억 원", priceUsd: "$77.43", priceKrw: "약 11만 4,200원" },
+            { rank: 8, name: "트론", symbol: "TRX", capUsd: "$31.21 B", capKrw: "약 46조 원", priceUsd: "$0.3289", priceKrw: "약 485원" },
+            { rank: 9, name: "하이퍼리퀴드", symbol: "HYPE", capUsd: "$14.86 B", capKrw: "약 21조 9,800억 원", priceUsd: "$58.79", priceKrw: "약 8만 6,700원" },
+            { rank: 10, name: "도지코인", symbol: "DOGE", capUsd: "$11.24 B", capKrw: "약 16조 5,200억 원", priceUsd: "$0.07245", priceKrw: "약 107원" },
+            { rank: 11, name: "UNUS SED LEO", symbol: "LEO", capUsd: "$8.95 B", capKrw: "약 13조 2,000억 원", priceUsd: "$9.722", priceKrw: "약 1만 4,300원" },
+            { rank: 12, name: "지캐시", symbol: "ZEC", capUsd: "$8.63 B", capKrw: "약 12조 7,300억 원", priceUsd: "$514.44", priceKrw: "약 75만 8,800원" },
+            { rank: 13, name: "모네로", symbol: "XMR", capUsd: "$6.60 B", capKrw: "약 9조 7,350억 원", priceUsd: "$351.49", priceKrw: "약 51만 8,400원" },
+            { rank: 14, name: "체인링크", symbol: "LINK", capUsd: "$6.42 B", capKrw: "약 9조 4,690억 원", priceUsd: "$8.577", priceKrw: "약 1만 2,650원" },
+            { rank: 15, name: "카르다노", symbol: "ADA", capUsd: "$6.35 B", capKrw: "약 9조 3,660억 원", priceUsd: "$0.1740", priceKrw: "약 257원" },
+            { rank: 16, name: "스텔라루멘", symbol: "XLM", capUsd: "$6.30 B", capKrw: "약 9조 2,920억 원", priceUsd: "$0.1844", priceKrw: "약 272원" },
+            { rank: 17, name: "캔톤", symbol: "CC", capUsd: "$4.76 B", capKrw: "약 7조 270억 원", priceUsd: "$0.1217", priceKrw: "약 179.5원" },
+            { rank: 18, name: "다이", symbol: "DAI", capUsd: "$4.64 B", capKrw: "약 6조 8,440억 원", priceUsd: "$0.9998", priceKrw: "약 1,475원" },
+            { rank: 19, name: "비트코인 캐시", symbol: "BCH", capUsd: "$4.36 B", capKrw: "약 6조 4,310억 원", priceUsd: "$217.31", priceKrw: "약 32만 500원" },
+            { rank: 20, name: "월드리버티 USD", symbol: "USD1", capUsd: "$4.17 B", capKrw: "약 6조 1,500억 원", priceUsd: "$0.9991", priceKrw: "약 1,474원" },
+            { rank: 21, name: "그램 (톤코인)", symbol: "GRAM", capUsd: "$4.12 B", capKrw: "약 6조 760억 원", priceUsd: "$1.507", priceKrw: "약 2,223원" },
+            { rank: 22, name: "에테나 USDe", symbol: "USDe", capUsd: "$4.03 B", capKrw: "약 5조 9,440억 원", priceUsd: "$1.000", priceKrw: "약 1,475원" },
+            { rank: 23, name: "라이트코인", symbol: "LTC", capUsd: "$3.64 B", capKrw: "약 5조 3,690억 원", priceUsd: "$47.08", priceKrw: "약 6만 9,440원" },
+            { rank: 24, name: "글로벌 달러", symbol: "USDG", capUsd: "$3.27 B", capKrw: "약 4조 8,230억 원", priceUsd: "$1.000", priceKrw: "약 1,475원" },
+            { rank: 25, name: "헤데라", symbol: "HBAR", capUsd: "$3.20 B", capKrw: "약 4조 7,200억 원", priceUsd: "$0.07312", priceKrw: "약 107.8원" },
+            { rank: 26, name: "수이", symbol: "SUI", capUsd: "$3.11 B", capKrw: "약 4조 5,870억 원", priceUsd: "$0.7686", priceKrw: "약 1,134원" },
+            { rank: 27, name: "아발란체", symbol: "AVAX", capUsd: "$2.84 B", capKrw: "약 4조 1,890억 원", priceUsd: "$6.574", priceKrw: "약 9,697원" },
+            { rank: 28, name: "페이팔 USD", symbol: "PYUSD", capUsd: "$2.77 B", capKrw: "약 4조 890억 원", priceUsd: "$0.9997", priceKrw: "약 1,475원" },
+            { rank: 29, name: "크로노스", symbol: "CRO", capUsd: "$2.73 B", capKrw: "약 4조 220억 원", priceUsd: "$0.05769", priceKrw: "약 85.1원" },
+            { rank: 30, name: "테더 골드", symbol: "XAUt", capUsd: "$2.52 B", capKrw: "약 3조 7,210억 원", priceUsd: "$4,116.43", priceKrw: "약 607만 2,000원" }
+        ];
+
+        function renderTables() {
+            const globalTbody = document.getElementById('global-tbody');
+            const cryptoTbody = document.getElementById('crypto-tbody');
+            
+            // Helper function to create badge styles based on category
+            const getCategoryBadge = (category) => {
+                let colorClass = "bg-gray-500/20 text-gray-300 border-gray-500/30";
+                if(category.includes("귀금속")) colorClass = "bg-yellow-500/20 text-yellow-300 border-yellow-500/30";
+                if(category.includes("기업")) colorClass = "bg-blue-500/20 text-blue-300 border-blue-500/30";
+                if(category.includes("암호화폐")) colorClass = "bg-purple-500/20 text-purple-300 border-purple-500/30";
+                if(category.includes("ETF")) colorClass = "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
+                
+                return `<span class="px-2 py-1 rounded-md text-xs border ${colorClass}">${category}</span>`;
+            };
+
+            // Render Global Table
+            globalData.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-[var(--highlight)]">${item.rank}</td>
+                    <td class="px-6 py-4 font-medium text-white">${item.name}</td>
+                    <td class="px-6 py-4">${getCategoryBadge(item.category)}</td>
+                    <td class="px-6 py-4">${item.capUsd}</td>
+                    <td class="px-6 py-4 text-emerald-300 font-medium">${item.capKrw}</td>
+                    <td class="px-6 py-4">${item.priceUsd}</td>
+                    <td class="px-6 py-4">${item.priceKrw}</td>
+                `;
+                globalTbody.appendChild(tr);
+            });
+
+            // Render Crypto Table
+            cryptoData.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-[var(--highlight)]">${item.rank}</td>
+                    <td class="px-6 py-4 font-medium text-white flex items-center gap-2">
+                        ${item.name}
+                    </td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-md text-xs">${item.symbol}</span></td>
+                    <td class="px-6 py-4">${item.capUsd}</td>
+                    <td class="px-6 py-4 text-emerald-300 font-medium">${item.capKrw}</td>
+                    <td class="px-6 py-4">${item.priceUsd}</td>
+                    <td class="px-6 py-4">${item.priceKrw}</td>
+                `;
+                cryptoTbody.appendChild(tr);
+            });
+        }
+
+        function switchTab(tabName) {
+            const globalTable = document.getElementById('table-global');
+            const cryptoTable = document.getElementById('table-crypto');
+            const btnGlobal = document.getElementById('btn-global');
+            const btnCrypto = document.getElementById('btn-crypto');
+
+            if (tabName === 'global') {
+                globalTable.classList.remove('hide');
+                cryptoTable.classList.add('hide');
+                
+                btnGlobal.classList.add('active', 'text-gray-300');
+                btnGlobal.classList.remove('text-gray-400');
+                
+                btnCrypto.classList.remove('active', 'text-gray-300');
+                btnCrypto.classList.add('text-gray-400');
+            } else {
+                cryptoTable.classList.remove('hide');
+                globalTable.classList.add('hide');
+                
+                btnCrypto.classList.add('active', 'text-gray-300');
+                btnCrypto.classList.remove('text-gray-400');
+                
+                btnGlobal.classList.remove('active', 'text-gray-300');
+                btnGlobal.classList.add('text-gray-400');
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', renderTables);
+    </script>
+</body>
+</html>
