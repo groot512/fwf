@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>오프라인 · 온라인 · 온체인 — 다음 승자는 어디에서 나오는가</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#08090b;
+    --bg-1:#101318;
+    --bg-2:#171b22;
+    --line:rgba(255,255,255,.08);
+    --line-strong:rgba(255,255,255,.16);
+    --text-0:#eef0f3;
+    --text-1:#aab1bd;
+    --text-2:#6b7280;
+
+    --offline:#c98a3a;
+    --offline-soft:rgba(201,138,58,.14);
+    --online:#4c8df5;
+    --online-soft:rgba(76,141,245,.14);
+    --onchain:#3ddc97;
+    --onchain-soft:rgba(61,220,151,.14);
+
+    --font-kr:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-mono:'JetBrains Mono',monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{background:var(--bg-0);}
+  body{
+    font-family:var(--font-kr);
+    background:var(--bg-0);
+    color:var(--text-0);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{display:block;}
+  section{position:relative;padding:88px 22px;max-width:920px;margin:0 auto;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:.16em;
+    color:var(--onchain);
+    text-transform:uppercase;
+    display:flex;align-items:center;gap:8px;
+    margin-bottom:16px;
+  }
+  .eyebrow::before{content:'';width:16px;height:1px;background:var(--onchain);}
+  h2.section-title{
+    font-size:clamp(22px,5.4vw,32px);
+    font-weight:800;
+    letter-spacing:-.01em;
+    color:var(--text-0);
+    margin-bottom:12px;
+  }
+  .section-desc{color:var(--text-1);font-size:15px;max-width:56ch;margin-bottom:44px;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.08s;}
+  .reveal-delay-2{transition-delay:.16s;}
+  .reveal-delay-3{transition-delay:.24s;}
+
+  /* ===== HERO ===== */
+  .hero{
+    min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding-top:64px;padding-bottom:64px;
+    position:relative;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  }
+  .hero-bg span{
+    position:absolute;border-radius:50%;
+    filter:blur(1px);
+    background:var(--onchain);
+    opacity:0;
+    animation:drift 7s ease-in-out infinite;
+  }
+  @keyframes drift{
+    0%{opacity:0;transform:translateY(0);}
+    15%{opacity:.55;}
+    85%{opacity:.25;}
+    100%{opacity:0;transform:translateY(-140px);}
+  }
+  .hero-grid{
+    position:absolute;inset:0;z-index:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:34px 34px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,black 10%,transparent 75%);
+  }
+  .hero-inner{position:relative;z-index:1;}
+  .hero-stack{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--text-2);
+    display:flex;gap:10px;align-items:center;margin-bottom:26px;
+  }
+  .hero-stack .dim{color:var(--text-2);}
+  .hero-stack .active{color:var(--onchain);}
+  .hero-title{
+    font-size:clamp(30px,9vw,52px);
+    font-weight:800;
+    letter-spacing:-.02em;
+    line-height:1.16;
+    margin-bottom:22px;
+  }
+  .hero-title .fade{color:var(--text-2);}
+  .hero-title .mid{color:var(--text-1);}
+  .hero-title .glow{
+    color:var(--onchain);
+    text-shadow:0 0 34px rgba(61,220,151,.35);
+  }
+  .hero-sub{
+    font-size:clamp(16px,4vw,19px);
+    color:var(--text-1);
+    max-width:34ch;
+    margin-bottom:14px;
+  }
+  .hero-line{
+    font-size:14px;
+    color:var(--text-2);
+    max-width:44ch;
+  }
+  .scroll-cue{
+    position:relative;z-index:1;
+    margin-top:56px;
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;
+    color:var(--text-2);text-transform:uppercase;
+  }
+  .scroll-cue .track{width:1px;height:34px;background:linear-gradient(var(--text-2),transparent);position:relative;overflow:hidden;}
+  .scroll-cue .track::after{content:'';position:absolute;top:-34px;left:0;width:1px;height:34px;background:var(--onchain);animation:scrollmove 1.8s ease-in-out infinite;}
+  @keyframes scrollmove{0%{top:-34px;}100%{top:34px;}}
+
+  /* ===== ERA TIMELINE ===== */
+  .era-list{display:flex;flex-direction:column;gap:14px;}
+  .era-card{
+    border:1px solid var(--line);
+    background:var(--bg-1);
+    border-radius:16px;
+    padding:24px 22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .era-card::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--bar,var(--text-2));
+  }
+  .era-card.c-offline{--bar:var(--offline);}
+  .era-card.c-online{--bar:var(--online);}
+  .era-card.c-onchain{--bar:var(--onchain);border-color:rgba(61,220,151,.28);background:linear-gradient(135deg,var(--onchain-soft),transparent 60%),var(--bg-1);}
+  .era-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px;flex-wrap:wrap;}
+  .era-period{font-family:var(--font-mono);font-size:12px;color:var(--text-2);letter-spacing:.06em;}
+  .era-badge{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;
+    padding:3px 9px;border-radius:20px;
+    border:1px solid rgba(61,220,151,.4);color:var(--onchain);background:rgba(61,220,151,.08);
+  }
+  .era-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--bg-2);border:1px solid var(--line);color:var(--fg,var(--text-1));margin-bottom:14px;}
+  .era-card.c-offline .era-icon{color:var(--offline);}
+  .era-card.c-online .era-icon{color:var(--online);}
+  .era-card.c-onchain .era-icon{color:var(--onchain);}
+  .era-title{font-size:18px;font-weight:700;margin-bottom:8px;}
+  .era-desc{font-size:14px;color:var(--text-1);margin-bottom:16px;}
+  .era-tags{display:flex;flex-wrap:wrap;gap:7px;}
+  .era-tag{font-family:var(--font-mono);font-size:11.5px;color:var(--text-1);border:1px solid var(--line-strong);padding:4px 10px;border-radius:20px;}
+
+  /* ===== PILLARS ===== */
+  .pillar-grid{display:flex;flex-direction:column;gap:14px;}
+  .pillar-card{
+    border:1px solid var(--line);background:var(--bg-1);border-radius:16px;padding:26px 22px;
+  }
+  .pillar-num{font-family:var(--font-mono);font-size:12px;color:var(--text-2);margin-bottom:12px;letter-spacing:.08em;}
+  .pillar-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  .pillar-card:nth-child(1) .pillar-icon{background:var(--online-soft);color:var(--online);}
+  .pillar-card:nth-child(2) .pillar-icon{background:var(--offline-soft);color:var(--offline);}
+  .pillar-card:nth-child(3) .pillar-icon{background:var(--onchain-soft);color:var(--onchain);}
+  .pillar-title{font-size:19px;font-weight:800;margin-bottom:10px;}
+  .pillar-en{font-family:var(--font-mono);font-size:12px;color:var(--text-2);font-weight:400;margin-left:6px;}
+  .pillar-body{font-size:14.5px;color:var(--text-1);margin-bottom:16px;}
+  .pillar-quote{
+    font-size:14px;color:var(--text-0);
+    border-left:2px solid var(--line-strong);
+    padding-left:14px;
+  }
+  .pillar-card:nth-child(1) .pillar-quote{border-color:var(--online);}
+  .pillar-card:nth-child(2) .pillar-quote{border-color:var(--offline);}
+  .pillar-card:nth-child(3) .pillar-quote{border-color:var(--onchain);}
+
+  /* ===== LAYERS (signature) ===== */
+  .layers-wrap{display:flex;flex-direction:column-reverse;gap:0;position:relative;padding-left:26px;}
+  .layers-rail{position:absolute;left:9px;top:6px;bottom:6px;width:1px;background:var(--line-strong);}
+  .layer-band{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--bg-1);
+    border-radius:14px;
+    padding:20px 20px;
+    margin-bottom:14px;
+  }
+  .layer-band:first-child{margin-bottom:0;}
+  .layer-dot{
+    position:absolute;left:-26px;top:24px;width:9px;height:9px;border-radius:50%;
+    background:var(--dotc,var(--text-2));
+    box-shadow:0 0 0 4px var(--bg-0);
+  }
+  .layer-band.l-offline{--dotc:var(--offline);}
+  .layer-band.l-online{--dotc:var(--online);}
+  .layer-band.l-onchain{--dotc:var(--onchain);border-color:rgba(61,220,151,.3);background:linear-gradient(135deg,var(--onchain-soft),transparent 65%),var(--bg-1);}
+  .layer-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;gap:10px;flex-wrap:wrap;}
+  .layer-name{font-size:17px;font-weight:800;}
+  .layer-name span{font-family:var(--font-mono);font-size:11.5px;font-weight:500;color:var(--text-2);margin-left:6px;}
+  .layer-role{font-family:var(--font-mono);font-size:12px;color:var(--text-1);}
+  .layer-items{font-size:13.5px;color:var(--text-1);}
+  .flow-caption{font-family:var(--font-mono);font-size:11.5px;color:var(--text-2);margin-top:18px;display:flex;align-items:center;gap:8px;letter-spacing:.03em;}
+  .flow-caption svg{color:var(--onchain);flex-shrink:0;}
+
+  /* ===== CYCLE ===== */
+  .cycle-box{
+    border:1px solid var(--line);border-radius:18px;background:var(--bg-1);padding:30px 20px;
+  }
+  .cycle-nodes{display:flex;flex-direction:column;gap:0;}
+  .cycle-node{display:flex;align-items:center;gap:14px;padding:14px 4px;}
+  .cycle-node .n-dot{
+    width:34px;height:34px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-mono);font-size:12px;font-weight:700;
+    border:1px solid var(--line-strong);color:var(--onchain);background:var(--bg-2);
+  }
+  .cycle-node .n-text b{display:block;font-size:14.5px;font-weight:700;color:var(--text-0);}
+  .cycle-node .n-text span{font-size:12.5px;color:var(--text-2);}
+  .cycle-arrow{margin-left:16px;color:var(--text-2);height:20px;}
+  .cycle-caption{
+    margin-top:14px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:13.5px;color:var(--text-1);
+  }
+
+  /* ===== INVESTOR ===== */
+  .investor-intro{font-size:14.5px;color:var(--text-1);margin-bottom:26px;max-width:52ch;}
+  .focus-list{display:flex;flex-direction:column;gap:10px;}
+  .focus-item{
+    display:flex;align-items:center;gap:14px;
+    border:1px solid var(--line);background:var(--bg-1);border-radius:12px;padding:16px 18px;
+  }
+  .focus-item .f-icon{width:30px;height:30px;border-radius:8px;background:var(--onchain-soft);color:var(--onchain);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .focus-item b{font-size:14.5px;font-weight:700;display:block;}
+  .focus-item span{font-size:12.5px;color:var(--text-2);}
+
+  /* ===== CONCLUSION ===== */
+  .conclusion-box{
+    border:1px solid rgba(61,220,151,.25);
+    border-radius:20px;
+    padding:34px 26px;
+    background:linear-gradient(160deg,rgba(61,220,151,.08),transparent 60%),var(--bg-1);
+    position:relative;
+  }
+  .conclusion-mark{font-family:var(--font-mono);color:var(--onchain);font-size:34px;line-height:1;margin-bottom:6px;}
+  .conclusion-text{font-size:clamp(17px,4.4vw,21px);font-weight:700;line-height:1.5;color:var(--text-0);margin-bottom:18px;}
+  .conclusion-note{font-size:13.5px;color:var(--text-1);border-top:1px solid var(--line);padding-top:16px;}
+
+  /* ===== SUMMARY ===== */
+  .summary-box{
+    border:1px solid var(--line-strong);border-radius:18px;
+    padding:26px 22px;background:var(--bg-2);
+  }
+  .summary-title{display:flex;align-items:center;gap:9px;font-size:15.5px;font-weight:800;margin-bottom:16px;color:var(--onchain);}
+  .summary-list{list-style:none;display:flex;flex-direction:column;gap:11px;}
+  .summary-list li{
+    display:flex;gap:10px;font-size:14px;color:var(--text-1);line-height:1.55;
+  }
+  .summary-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--onchain);flex-shrink:0;margin-top:8px;}
+  .summary-list li b{color:var(--text-0);font-weight:600;}
+
+  footer{
+    text-align:center;padding:44px 22px 60px;
+    font-family:var(--font-mono);font-size:11px;color:var(--text-2);letter-spacing:.05em;
+  }
+
+  /* ===== Responsive (tablet/desktop) ===== */
+  @media (min-width:760px){
+    section{padding:120px 40px;}
+    .era-list{flex-direction:row;align-items:stretch;}
+    .era-card{flex:1;}
+    .pillar-grid{flex-direction:row;align-items:stretch;}
+    .pillar-card{flex:1;}
+    .layers-wrap{padding-left:32px;}
+    .layer-dot{left:-32px;}
+    .focus-list{flex-direction:row;flex-wrap:wrap;}
+    .focus-item{flex:1 1 calc(50% - 5px);}
+  }
+  @media (min-width:900px){
+    .hero-title{font-size:58px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important;}
+  }
+
+  :focus-visible{outline:2px solid var(--onchain);outline-offset:3px;}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-bg" id="heroParticles"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-stack">
+      <span class="dim">오프라인</span>→<span class="dim">온라인</span>→<span class="active">온체인</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="fade">산업의 중심은</span><br>
+      <span class="mid">시대마다 이동했다.</span><br>
+      <span class="glow">다음은 온체인이다.</span>
+    </h1>
+    <p class="hero-sub">앞으로 세상을 이끌 상위 기업은 어디에서 나올까?</p>
+    <p class="hero-line">제조업 → 플랫폼을 거쳐, 이제 자산과 AI가 스스로 거래하는 온체인(Web3) 경제가 시작되고 있습니다.</p>
+  </div>
+  <div class="scroll-cue"><div class="track"></div>SCROLL</div>
+</section>
+
+<section id="era">
+  <div class="eyebrow reveal">TIMELINE</div>
+  <h2 class="section-title reveal">산업의 중심은 어떻게 이동해왔나</h2>
+  <p class="section-desc reveal">경쟁력을 만드는 질문 자체가 시대마다 달라졌습니다.</p>
+
+  <div class="era-list">
+    <div class="era-card c-offline reveal">
+      <div class="era-top">
+        <span class="era-period">20th CENTURY</span>
+      </div>
+      <div class="era-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V10l6 4V10l6 4V10l6 4v7H3z"/><path d="M3 21h18"/></svg>
+      </div>
+      <div class="era-title">오프라인 제조업의 시대</div>
+      <div class="era-desc">"무엇을 만드는가"가 경쟁력이었습니다.</div>
+      <div class="era-tags">
+        <span class="era-tag">삼성</span><span class="era-tag">현대</span><span class="era-tag">도요타</span><span class="era-tag">GE</span>
+      </div>
+    </div>
+
+    <div class="era-card c-online reveal reveal-delay-1">
+      <div class="era-top">
+        <span class="era-period">21st CENTURY 초반</span>
+      </div>
+      <div class="era-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.4"/><circle cx="19" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M7 7.4 10.5 16M17 7.4 13.5 16M7.4 6h9.2"/></svg>
+      </div>
+      <div class="era-title">온라인 플랫폼의 시대</div>
+      <div class="era-desc">"얼마나 많은 사람을 연결하는가"가 경쟁력이었습니다.</div>
+      <div class="era-tags">
+        <span class="era-tag">구글</span><span class="era-tag">애플</span><span class="era-tag">아마존</span><span class="era-tag">메타</span><span class="era-tag">네이버</span><span class="era-tag">카카오</span>
+      </div>
+    </div>
+
+    <div class="era-card c-onchain reveal reveal-delay-2">
+      <div class="era-top">
+        <span class="era-period">NOW</span>
+        <span class="era-badge">진행 중</span>
+      </div>
+      <div class="era-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8.5" width="7" height="7" rx="1.6"/><rect x="14.5" y="8.5" width="7" height="7" rx="1.6"/><path d="M9.5 12h5"/></svg>
+      </div>
+      <div class="era-title">온체인(Web3) 경제의 시대</div>
+      <div class="era-desc">사람이 아니라, 자산과 AI가 스스로 움직이는 경제가 만들어지고 있습니다.</div>
+      <div class="era-tags">
+        <span class="era-tag">AI Agent</span><span class="era-tag">RWA</span><span class="era-tag">스테이블코인</span><span class="era-tag">DePIN</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pillars">
+  <div class="eyebrow reveal">THREE AXES</div>
+  <h2 class="section-title reveal">앞으로 주목해야 할 세 가지 축</h2>
+  <p class="section-desc reveal">각 축은 서로 다른 분야처럼 보이지만, 결국 하나의 흐름으로 이어집니다.</p>
+
+  <div class="pillar-grid">
+    <div class="pillar-card reveal">
+      <div class="pillar-num">AXIS · 01</div>
+      <div class="pillar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+      <div class="pillar-title">AI Agent 경제<span class="pillar-en">Agentic Economy</span></div>
+      <p class="pillar-body">AI가 스스로 데이터를 사고, GPU를 빌리고, API를 결제하고, 다른 AI와 계약을 맺는 경제 주체가 됩니다. AI는 은행 계좌도 신용카드도 가질 수 없기에, AI가 쓰는 금융은 자연스럽게 온체인 지갑과 스테이블코인이 됩니다.</p>
+      <div class="pillar-quote">AI 시대의 금융 인프라는 블록체인이 될 가능성이 높습니다.</div>
+    </div>
+
+    <div class="pillar-card reveal reveal-delay-1">
+      <div class="pillar-num">AXIS · 02</div>
+      <div class="pillar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v5c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V7l-8-4Z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div class="pillar-title">RWA와 스테이블코인<span class="pillar-en">Real World Assets</span></div>
+      <p class="pillar-body">미국 국채, 금, 부동산, 펀드 등 수백조 달러의 실물자산이 블록체인으로 이동 중입니다. 이 과정에서 가장 많이 쓰이는 결제 수단이 스테이블코인이며, 세계 금융기관들도 이미 시장에 뛰어들고 있습니다.</p>
+      <div class="pillar-quote">온체인은 코인 시장을 넘어, 실물 금융이 거래되는 새로운 금융망으로 발전할 가능성이 큽니다.</div>
+    </div>
+
+    <div class="pillar-card reveal reveal-delay-2">
+      <div class="pillar-num">AXIS · 03</div>
+      <div class="pillar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4M6.5 10v4M17.5 10v4M10 17.5h4"/></svg></div>
+      <div class="pillar-title">DePIN과 DeAI<span class="pillar-en">Decentralized Infra</span></div>
+      <p class="pillar-body">AI가 발전할수록 GPU와 데이터센터는 부족해집니다. 빅테크만의 독점이 아니라, 개인과 기업이 남는 GPU·저장공간·네트워크를 제공하고 그 보상을 온체인으로 받는 구조가 DePIN입니다.</p>
+      <div class="pillar-quote">우버가 자동차를 연결했듯, DePIN은 전 세계 컴퓨팅 자원을 연결합니다.</div>
+    </div>
+  </div>
+</section>
+
+<section id="layers">
+  <div class="eyebrow reveal">THE THREE LAYERS</div>
+  <h2 class="section-title reveal">결국 세상은 세 개의 층으로 나뉜다</h2>
+  <p class="section-desc reveal">아래층 위에 다음 층이 쌓이듯, 경제의 인프라도 층층이 쌓여왔습니다.</p>
+
+  <div class="layers-wrap reveal">
+    <div class="layers-rail"></div>
+
+    <div class="layer-band l-onchain">
+      <div class="layer-dot"></div>
+      <div class="layer-head">
+        <div class="layer-name">온체인<span>Web3</span></div>
+        <div class="layer-role">자산과 AI가 스스로 거래한다</div>
+      </div>
+      <div class="layer-items">AI Agent · 스테이블코인 · RWA · DePIN</div>
+    </div>
+
+    <div class="layer-band l-online">
+      <div class="layer-dot"></div>
+      <div class="layer-head">
+        <div class="layer-name">온라인<span>Web2</span></div>
+        <div class="layer-role">사람을 연결한다</div>
+      </div>
+      <div class="layer-items">구글 · 애플 · 아마존 · 메타</div>
+    </div>
+
+    <div class="layer-band l-offline">
+      <div class="layer-dot"></div>
+      <div class="layer-head">
+        <div class="layer-name">오프라인</div>
+        <div class="layer-role">물건을 만든다</div>
+      </div>
+      <div class="layer-items">제조업 · 공장 · 물류 · 에너지</div>
+    </div>
+  </div>
+  <div class="flow-caption reveal">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    가치의 흐름은 아래층에서 위층으로, 새로운 인프라 위에 다음 경제가 쌓입니다
+  </div>
+</section>
+
+<section id="cycle">
+  <div class="eyebrow reveal">ONE ECOSYSTEM</div>
+  <h2 class="section-title reveal">네 가지 흐름은 결국 하나로 연결된다</h2>
+  <p class="section-desc reveal">각각 다른 영역 같지만, 온체인 위에서 하나의 순환 구조를 이룹니다.</p>
+
+  <div class="cycle-box reveal">
+    <div class="cycle-nodes">
+      <div class="cycle-node">
+        <div class="n-dot">01</div>
+        <div class="n-text"><b>AI 에이전트 경제</b><span>AI가 스스로 일하고 판단한다</span></div>
+      </div>
+      <div class="cycle-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M18 13l-6 6-6-6"/></svg></div>
+      <div class="cycle-node">
+        <div class="n-dot">02</div>
+        <div class="n-text"><b>스테이블코인 결제망</b><span>그 결과를 온체인으로 결제한다</span></div>
+      </div>
+      <div class="cycle-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M18 13l-6 6-6-6"/></svg></div>
+      <div class="cycle-node">
+        <div class="n-dot">03</div>
+        <div class="n-text"><b>RWA · 실물자산 토큰화</b><span>실물자산이 담보이자 기반이 된다</span></div>
+      </div>
+      <div class="cycle-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M18 13l-6 6-6-6"/></svg></div>
+      <div class="cycle-node">
+        <div class="n-dot">04</div>
+        <div class="n-text"><b>DePIN · 분산 컴퓨팅</b><span>AI가 쓸 연산력을 다시 공급한다</span></div>
+      </div>
+    </div>
+    <div class="cycle-caption">AI가 일하고, 스테이블코인으로 결제하며, RWA가 담보가 되고, DePIN이 연산을 제공하는 구조 — 이 네 축은 서로를 순환시키며 하나의 생태계로 완성됩니다.</div>
+  </div>
+</section>
+
+<section id="investor">
+  <div class="eyebrow reveal">INVESTOR'S LENS</div>
+  <h2 class="section-title reveal">미래의 투자자는 어디를 봐야 하는가?</h2>
+  <p class="investor-intro reveal">과거에는 제조업을, 그다음에는 플랫폼 기업을 보면 되었습니다. 이제는 온체인 경제의 기반 인프라를 볼 시점입니다.</p>
+
+  <div class="focus-list">
+    <div class="focus-item reveal">
+      <div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 12h6"/></svg></div>
+      <div><b>AI 에이전트 경제</b><span>스스로 거래하는 AI</span></div>
+    </div>
+    <div class="focus-item reveal reveal-delay-1">
+      <div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M9 12h6M12 9v6"/></svg></div>
+      <div><b>스테이블코인 결제망</b><span>온체인 금융의 기본 통화</span></div>
+    </div>
+    <div class="focus-item reveal reveal-delay-2">
+      <div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v5c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V7l-8-4Z"/></svg></div>
+      <div><b>RWA</b><span>실물자산 토큰화</span></div>
+    </div>
+    <div class="focus-item reveal reveal-delay-3">
+      <div class="f-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h7v7"/></svg></div>
+      <div><b>DePIN</b><span>분산형 AI 인프라</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="conclusion">
+  <div class="conclusion-box reveal">
+    <div class="conclusion-mark">"</div>
+    <p class="conclusion-text">20세기는 제조업이 지배했고, 21세기는 플랫폼이 지배했다. 앞으로의 시대는 온체인 인프라를 장악하는 기업들이 새로운 승자가 될 가능성이 높다.</p>
+    <p class="conclusion-note">따라서 단순히 "어떤 코인이 오를까?"를 보는 것이 아니라, AI·금융·자산이 모두 연결되는 온체인 생태계의 핵심 인프라가 어디인지를 공부하는 것이 앞으로 가장 중요한 투자 관점이 될 것입니다.</p>
+  </div>
+</section>
+
+<section id="summary">
+  <div class="summary-box reveal">
+    <div class="summary-title">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      핵심 요약
+    </div>
+    <ul class="summary-list">
+      <li>산업의 중심은 <b>오프라인(제조) → 온라인(플랫폼) → 온체인(Web3)</b>으로 이동하고 있습니다.</li>
+      <li>온체인 경제의 세 가지 축은 <b>AI Agent 경제 · RWA/스테이블코인 · DePIN/DeAI</b>입니다.</li>
+      <li>AI는 계좌·카드를 가질 수 없어, <b>온체인 지갑과 스테이블코인</b>이 AI 시대의 금융 인프라가 될 가능성이 높습니다.</li>
+      <li>AI 에이전트·스테이블코인·RWA·DePIN은 서로 순환하며 <b>하나의 생태계</b>로 연결됩니다.</li>
+      <li>투자 관점의 핵심은 "어떤 코인이 오를까"가 아니라 <b>"온체인 핵심 인프라가 어디인가"</b>를 공부하는 것입니다.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>OFFLINE → ONLINE → ONCHAIN</footer>
+
+<script>
+  // scroll reveal
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.14, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // hero particles
+  const wrap = document.getElementById('heroParticles');
+  const n = 16;
+  for(let i=0;i<n;i++){
+    const s = document.createElement('span');
+    const size = 2 + Math.random()*3;
+    s.style.width = size+'px';
+    s.style.height = size+'px';
+    s.style.left = (Math.random()*100)+'%';
+    s.style.top = (40+Math.random()*55)+'%';
+    s.style.animationDelay = (Math.random()*7)+'s';
+    s.style.animationDuration = (5+Math.random()*4)+'s';
+    wrap.appendChild(s);
+  }
+</script>
+
+</body>
+</html>
