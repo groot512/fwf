@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클래리티 법안: 입법 전망 및 심층 분석</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #F1F5F9;
+            color: #0F172A;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+
+        .gradient-header {
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+        }
+
+        .card {
+            background: white;
+            border-radius: 1.25rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-badge {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 
+    [기획 및 시각화 설계 요약]
+    1. 서사 구조: 
+       - 도입: 8월 통과 무산에 따른 시장의 우려를 '실패가 아닌 진통'으로 재정의.
+       - 분석: 여야 간 대립 지점과 동시에 존재하는 전략적 공감대 시각화.
+       - 복잡성: 법안 처리를 늦추는 정치적/윤리적 이해관계 나열.
+       - 전망: 2026년 하반기 및 2027년 초까지의 타임라인 및 통과 확률 제시.
+    
+    2. 시각화 선택 (NO SVG 확인):
+       - 정당별 쟁점 비교: Chart.js 수평 바 차트 (Canvas).
+       - 초당적 합의 영역: Chart.js 레이더 차트 (Canvas).
+       - 통과 확률: Plotly.js 게이지 차트 (Canvas/WebGL).
+       - 타임라인: HTML/CSS 기반 수직 흐름도.
+    
+    3. 색상 팔레트: "브릴리언트 블루 & 앰버" (Vibrant Palette)
+       - 메인: #1E3A8A (Deep Blue), #3B82F6 (Bright Blue)
+       - 포인트: #F59E0B (Amber), #10B981 (Emerald)
+    -->
+
+    <div class="max-w-5xl mx-auto px-4 py-10">
+        
+        <!-- 헤더 영역 -->
+        <header class="gradient-header text-white rounded-3xl p-10 mb-10 shadow-xl relative overflow-hidden">
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="bg-amber-400 text-amber-950 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider status-badge">진행 중: 정치적 협상 단계</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-black mb-4 leading-tight">클래리티(CLARITY) 법안:<br>좌절이 아닌 인내의 시간</h1>
+                <p class="text-blue-100 text-lg md:text-xl font-light max-w-2xl">
+                    8월 휴회 전 통과 가능성은 낮아졌으나, 이는 법안의 무산이 아닌 '기준'을 정립하기 위한 마지막 진통입니다.
+                </p>
+                <div class="mt-8 pt-8 border-t border-blue-400/30 flex items-center justify-between">
+                    <span class="text-sm opacity-80">작성일: 2026.07.24</span>
+                    <span class="text-sm font-bold">미래자산 파운더 박수억 분석</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 섹션 1: 대립과 합의 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- 정당별 쟁점 비교 -->
+            <div class="card p-8">
+                <h3 class="text-xl font-bold mb-2 text-slate-800">여야 간 주요 쟁점 비교</h3>
+                <p class="text-sm text-slate-500 mb-6 italic">정치적 윤리와 소비자 보호를 둘러싼 입장 차이</p>
+                <div class="chart-container">
+                    <canvas id="frictionChart"></canvas>
+                </div>
+                <p class="mt-4 text-xs text-slate-400 leading-relaxed text-center">
+                    *백악관/공화당은 윤리 조항 양보를, 민주당은 더 강력한 소비자 보호 장치를 요구하고 있습니다.
+                </p>
+            </div>
+
+            <!-- 초당적 합의 영역 -->
+            <div class="card p-8">
+                <h3 class="text-xl font-bold mb-2 text-slate-800">초당적 공감대 형성 영역</h3>
+                <p class="text-sm text-slate-500 mb-6 italic">미국의 시장 주도권 사수를 위한 전략적 일치</p>
+                <div class="chart-container">
+                    <canvas id="consensusChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- 섹션 2: 복잡한 이해관계 (HTML/CSS Icons) -->
+        <section class="mb-12">
+            <div class="bg-slate-800 text-white rounded-3xl p-8 md:p-12">
+                <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-amber-400 rounded-full"></span>
+                    왜 지연되고 있는가? (복잡성 분석)
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 bg-slate-700/50 rounded-2xl border border-slate-600">
+                        <div class="text-3xl mb-4">⚖️</div>
+                        <h4 class="font-bold text-lg mb-2 text-amber-300">정치적 윤리 및 이해충돌</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed">트럼프 대통령 일가의 가상자산 사업과 관련된 윤리 규정 및 이해충돌 방지 조항 협상.</p>
+                    </div>
+                    <div class="p-6 bg-slate-700/50 rounded-2xl border border-slate-600">
+                        <div class="text-3xl mb-4">🏛️</div>
+                        <h4 class="font-bold text-lg mb-2 text-blue-300">연방-주 감독 권한</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed">연방 정부와 주 정부 간의 감독 권한 배분 및 SEC와 CFTC의 명확한 역할 분담 조율.</p>
+                    </div>
+                    <div class="p-6 bg-slate-700/50 rounded-2xl border border-slate-600">
+                        <div class="text-3xl mb-4">🛡️</div>
+                        <h4 class="font-bold text-lg mb-2 text-emerald-300">자금세탁 및 보안</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed">민주당이 요구하는 강력한 자금세탁 방지(AML) 및 소비자 보호 장치의 제도화 수준.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 섹션 3: 향후 전망 및 타임라인 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <!-- 통과 확률 게이지 -->
+            <div class="md:col-span-1 card p-8 flex flex-col items-center justify-center">
+                <h3 class="font-bold text-slate-800 mb-4">2026년 내 최종 통과 확률</h3>
+                <div id="probGauge" class="w-full h-48"></div>
+                <div class="mt-4 text-center">
+                    <span class="text-3xl font-black text-blue-600">75%</span>
+                    <p class="text-xs text-slate-500 mt-2">입법 방향에 대한 합의가 완료되어<br>폐기 가능성은 매우 낮음</p>
+                </div>
+            </div>
+
+            <!-- 타임라인 -->
+            <div class="md:col-span-2 card p-8">
+                <h3 class="font-bold text-slate-800 mb-8 flex items-center gap-2">
+                    향후 주요 일정 및 시나리오
+                </h3>
+                <div class="space-y-6 relative border-l-2 border-slate-100 ml-4 pl-8">
+                    <div class="relative">
+                        <div class="absolute -left-[41px] top-1 w-5 h-5 bg-slate-200 rounded-full border-4 border-white"></div>
+                        <h4 class="font-bold text-slate-500">8월: 의회 휴회기</h4>
+                        <p class="text-sm text-slate-500">공식 일정은 중단되나 수면 아래서 산업계 및 고문단의 세부 조율 지속.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[41px] top-1 w-5 h-5 bg-blue-600 rounded-full border-4 border-white"></div>
+                        <h4 class="font-bold text-blue-800 text-lg">9월 ~ 10월: 가을 회기 (Golden Time)</h4>
+                        <p class="text-sm text-slate-700 font-medium">수정 합의안 도출의 핵심 시기. 가장 이상적인 통과 시나리오 시점.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[41px] top-1 w-5 h-5 bg-amber-500 rounded-full border-4 border-white"></div>
+                        <h4 class="font-bold text-amber-800">11월: 레임덕 세션</h4>
+                        <p class="text-sm text-slate-700">중간선거 이후 연말 예산안 등과 연계하여 패키지 처리를 시도할 수 있는 시기.</p>
+                    </div>
+                    <div class="relative opacity-50">
+                        <div class="absolute -left-[41px] top-1 w-5 h-5 bg-slate-400 rounded-full border-4 border-white"></div>
+                        <h4 class="font-bold text-slate-600">2027년 초</h4>
+                        <p class="text-sm text-slate-500">중간선거 영향으로 모든 협상이 중단될 경우 차기 의회로 이월되는 시나리오.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 마무리 섹션 -->
+        <footer class="bg-white rounded-3xl p-8 border border-slate-200 text-center">
+            <blockquote class="text-xl md:text-2xl font-bold text-slate-800 mb-6 italic">
+                "시장은 뉴스를 따라 움직이지만,<br class="hidden md:block"> 큰 자산은 결국 제도의 완성과 시간이 만들어냅니다."
+            </blockquote>
+            <div class="inline-flex items-center gap-4 text-left p-4 bg-slate-50 rounded-2xl">
+                <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-black">PSU</div>
+                <div>
+                    <p class="font-bold text-slate-900 leading-none">박수억 (Park Soo-eok)</p>
+                    <p class="text-xs text-slate-500 mt-1">미래자산 파운더 / 전문 분석가</p>
+                </div>
+            </div>
+        </footer>
+
+        <p class="text-center text-slate-400 text-xs mt-8">
+            본 인포그래픽은 2026년 7월 24일 기준 사설 내용을 바탕으로 제작되었습니다. 가상자산 투자는 변동성이 크므로 본 자료를 참고로만 활용하시기 바랍니다.
+        </p>
+    </div>
+
+    <script>
+        // 라벨 워핑 로직 (16자 기준)
+        function wrapLabel(label) {
+            if (typeof label !== 'string') return label;
+            if (label.length <= 10) return label; // 한국어는 글자당 너비가 넓어 10자로 조정
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > 10) {
+                    lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            });
+            lines.push(currentLine.trim());
+            return lines;
+        }
+
+        // 공통 툴팁 설정
+        const tooltipOptions = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    return Array.isArray(label) ? label.join(' ') : label;
+                }
+            }
+        };
+
+        // 1. Friction Chart (Bar)
+        const frictionCtx = document.getElementById('frictionChart').getContext('2d');
+        new Chart(frictionCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    wrapLabel('윤리 및 이해충돌 방지'),
+                    wrapLabel('자금세탁 방지 기준'),
+                    wrapLabel('소비자 보호 장치'),
+                    wrapLabel('연방 감독 권한 수준')
+                ],
+                datasets: [
+                    {
+                        label: '공화당/백악관',
+                        data: [90, 60, 50, 85],
+                        backgroundColor: '#3B82F6',
+                        borderRadius: 8
+                    },
+                    {
+                        label: '민주당',
+                        data: [40, 95, 90, 65],
+                        backgroundColor: '#EF4444',
+                        borderRadius: 8
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
+                    tooltip: tooltipOptions
+                },
+                scales: {
+                    x: { max: 100, grid: { display: false }, ticks: { display: false } },
+                    y: { ticks: { font: { size: 11 } } }
+                }
+            }
+        });
+
+        // 2. Consensus Radar Chart
+        const consensusCtx = document.getElementById('consensusChart').getContext('2d');
+        new Chart(consensusCtx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    wrapLabel('미국 시장 주도권 사수'),
+                    wrapLabel('달러 스테이블코인 표준화'),
+                    wrapLabel('규제 명확성 확보'),
+                    wrapLabel('글로벌 혁신 허브 구축'),
+                    wrapLabel('경제 경쟁력 강화')
+                ],
+                datasets: [{
+                    label: '공감 지수',
+                    data: [98, 92, 88, 90, 95],
+                    fill: true,
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderColor: '#1E40AF',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#1E40AF',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: tooltipOptions
+                },
+                scales: {
+                    r: {
+                        angleLines: { display: true, color: '#E2E8F0' },
+                        suggestedMin: 60,
+                        suggestedMax: 100,
+                        ticks: { display: false },
+                        pointLabels: { font: { size: 10, weight: 'bold' } }
+                    }
+                }
+            }
+        });
+
+        // 3. Probability Gauge (Plotly) - Canvas rendering mode
+        const gaugeData = [{
+            type: "indicator",
+            mode: "gauge+number",
+            value: 75,
+            number: { suffix: "%", font: { size: 24, color: "#1E3A8A" } },
+            gauge: {
+                axis: { range: [0, 100], tickwidth: 1, tickcolor: "#64748B" },
+                bar: { color: "#3B82F6", thickness: 0.25 },
+                bgcolor: "white",
+                borderwidth: 0,
+                steps: [
+                    { range: [0, 50], color: "#F1F5F9" },
+                    { range: [50, 80], color: "#DBEAFE" },
+                    { range: [80, 100], color: "#D1FAE5" }
+                ],
+                threshold: {
+                    line: { color: "#F59E0B", width: 4 },
+                    thickness: 0.75,
+                    value: 75
+                }
+            }
+        }];
+
+        const gaugeLayout = {
+            width: 250,
+            height: 180,
+            margin: { t: 20, r: 30, l: 30, b: 20 },
+            paper_bgcolor: "rgba(0,0,0,0)",
+            font: { color: "#475569", family: "Noto Sans KR" }
+        };
+
+        const gaugeConfig = { responsive: true, displayModeBar: false };
+
+        Plotly.newPlot('probGauge', gaugeData, gaugeLayout, gaugeConfig);
+    </script>
+</body>
+</html>
