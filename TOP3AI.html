@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>박태웅 의장 대담집 - AI 문명 시대의 국가와 개인 전략</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Inter & Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans KR', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            bg: '#060D08',
+                            card: '#0D1711',
+                            cardHover: '#132119',
+                            border: 'rgba(52, 211, 153, 0.18)',
+                            mint: '#A7F3D0',
+                            emerald: '#10B981',
+                            lime: '#A3E635',
+                            sage: '#84A98C',
+                            muted: '#9CA3AF'
+                        }
+                    },
+                    boxShadow: {
+                        'glow-mint': '0 0 25px -5px rgba(52, 211, 153, 0.25)',
+                        'glow-lime': '0 0 25px -5px rgba(163, 230, 53, 0.25)',
+                        'apple-glass': '0 20px 40px -15px rgba(0, 0, 0, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #060D08;
+            color: #F3F4F6;
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism styling */
+        .glass-panel {
+            background: rgba(13, 23, 17, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(52, 211, 153, 0.15);
+        }
+
+        .glass-panel-hover:hover {
+            background: rgba(19, 33, 25, 0.85);
+            border-color: rgba(163, 230, 53, 0.35);
+            box-shadow: 0 10px 30px -10px rgba(52, 211, 153, 0.2);
+        }
+
+        /* Pastel Accent Text Gradient */
+        .text-gradient-pastel {
+            background: linear-gradient(135deg, #A7F3D0 0%, #A3E635 50%, #6EE7B7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060D08;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E3A2B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10B981;
+        }
+
+        /* Ambient Glow Backgrounds */
+        .ambient-glow-1 {
+            position: absolute;
+            top: 5%;
+            left: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(6, 13, 8, 0) 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ambient-glow-2 {
+            position: absolute;
+            top: 45%;
+            right: 5%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(163, 230, 53, 0.08) 0%, rgba(6, 13, 8, 0) 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Active Tab Indicator Animation */
+        .tab-active {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #34D399;
+            color: #A7F3D0;
+        }
+    </style>
+</head>
+<body class="relative antialiased selection:bg-brand-emerald selection:text-black">
+
+    <!-- Ambient Background Lighting -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- Sticky Navigation Bar -->
+    <header class="sticky top-0 z-50 w-full glass-panel border-b border-emerald-900/30 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-400 to-lime-500 flex items-center justify-center text-black font-extrabold text-lg shadow-glow-mint group-hover:scale-105 transition-transform">
+                    AI
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-brand-mint font-semibold block">MKTV × 박태웅</span>
+                    <span class="text-sm font-bold text-white tracking-tight">AI 문명 대담집 2026</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-6 text-xs font-medium text-gray-300">
+                <a href="#overview" class="hover:text-brand-mint transition-colors">AI 3위의 실제</a>
+                <a href="#layer-cake" class="hover:text-brand-mint transition-colors">5단 케이크</a>
+                <a href="#un-hub" class="hover:text-brand-mint transition-colors">UN 허브 이전</a>
+                <a href="#work-shift" class="hover:text-brand-mint transition-colors">일하는 방식</a>
+                <a href="#prompt-lab" class="hover:text-brand-mint transition-colors">프롬프트 대화법</a>
+                <a href="#diagnosis" class="hover:text-brand-mint transition-colors">AI 진단기</a>
+                <a href="#dialogue-content" class="hover:text-brand-mint transition-colors">대담 전문</a>
+            </nav>
+
+            <!-- Action Button -->
+            <div class="hidden sm:flex items-center gap-3">
+                <button onclick="copyDialogueSummary()" class="px-3.5 py-1.5 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-brand-mint border border-emerald-500/30 text-xs font-semibold flex items-center gap-1.5 transition-all">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span>요약복사</span>
+                </button>
+                <a href="#diagnosis" class="px-4 py-1.5 rounded-full bg-gradient-to-r from-emerald-400 to-lime-400 hover:from-emerald-300 hover:to-lime-300 text-black text-xs font-bold shadow-glow-mint transition-all transform hover:-translate-y-0.5">
+                    내 AI 점수 진단
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="md:hidden p-2 text-gray-400 hover:text-white">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobileDrawer" class="hidden md:hidden glass-panel border-b border-emerald-900/50 px-4 py-4 space-y-3">
+            <a href="#overview" class="block text-sm text-gray-300 hover:text-brand-mint py-1">AI 3위의 실제</a>
+            <a href="#layer-cake" class="block text-sm text-gray-300 hover:text-brand-mint py-1">5단 케이크 분석</a>
+            <a href="#un-hub" class="block text-sm text-gray-300 hover:text-brand-mint py-1">UN 허브 한국 이전</a>
+            <a href="#work-shift" class="block text-sm text-gray-300 hover:text-brand-mint py-1">문서 & 일하는 방식</a>
+            <a href="#prompt-lab" class="block text-sm text-gray-300 hover:text-brand-mint py-1">대화형 프롬프트 실습</a>
+            <a href="#diagnosis" class="block text-sm text-gray-300 hover:text-brand-mint py-1">AI 리터러시 셀프 진단</a>
+            <a href="#dialogue-content" class="block text-sm text-gray-300 hover:text-brand-mint py-1">대담 전문 읽기</a>
+            <div class="pt-2 flex items-center gap-2">
+                <button onclick="copyDialogueSummary()" class="w-full py-2 rounded-xl bg-emerald-500/10 text-brand-mint text-xs font-semibold border border-emerald-500/30 flex justify-center items-center gap-2">
+                    <i data-lucide="copy" class="w-4 h-4"></i> 요약 복사
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="overview" class="relative pt-12 pb-20 md:pt-20 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+        <!-- Top Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border border-brand-mint/30 text-xs font-medium text-brand-mint mb-6 shadow-glow-mint">
+            <span class="w-2 h-2 rounded-full bg-lime-400 animate-ping"></span>
+            <span>국가인공지능전략위원회 박태웅 공공AX분과장 대담</span>
+        </div>
+
+        <!-- Main Apple-style Headline -->
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight md:leading-none max-w-5xl mx-auto mb-6">
+            "대한민국은 이미 전 세계 <br class="hidden sm:inline"/>
+            <span class="text-gradient-pastel">TOP 3 AI 명문대생</span>입니다"
+        </h1>
+
+        <p class="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed mb-10">
+            기술의 도입을 넘어 <strong class="text-white font-semibold">새로운 수천년 문명이 열리는 시점.</strong><br class="hidden sm:inline"/>
+            추격국에서 글로벌 AI 리더로 부상한 한국의 실제 경쟁력과 개인이 생존하는 법을 파헤칩니다.
+        </p>
+
+        <!-- CTA Action Cards -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+            <a href="#layer-cake" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-400 via-emerald-500 to-lime-400 hover:from-emerald-300 hover:to-lime-300 text-black font-extrabold text-sm sm:text-base shadow-glow-mint transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                <span>5단 케이크 경쟁력 확인하기</span>
+                <i data-lucide="arrow-down-right" class="w-5 h-5"></i>
+            </a>
+            <a href="#dialogue-content" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel glass-panel-hover text-white font-bold text-sm sm:text-base border border-emerald-500/30 transition-all flex items-center justify-center gap-2">
+                <i data-lucide="book-open" class="w-5 h-5 text-brand-mint"></i>
+                <span>대담집 전문 펼치기</span>
+            </a>
+        </div>
+
+        <!-- Key Statistics Dashboard Grid -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <!-- Stat 1 -->
+            <div class="glass-panel glass-panel-hover p-5 rounded-3xl text-left border border-emerald-500/20">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-brand-mint mb-3">
+                    <i data-lucide="trophy" class="w-5 h-5"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black text-white mb-1">세계 <span class="text-gradient-pastel">3위</span></div>
+                <div class="text-xs text-gray-400">스탠퍼드 AI 인덱스 국가 순위 (미·중 다음)</div>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="glass-panel glass-panel-hover p-5 rounded-3xl text-left border border-emerald-500/20">
+                <div class="w-10 h-10 rounded-2xl bg-lime-500/10 flex items-center justify-center text-lime-400 mb-3">
+                    <i data-lucide="award" class="w-5 h-5"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black text-white mb-1">세계 <span class="text-gradient-pastel">1위</span></div>
+                <div class="text-xs text-gray-400">인구 대비 AI 분야 특허 출원 수</div>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="glass-panel glass-panel-hover p-5 rounded-3xl text-left border border-emerald-500/20">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-brand-mint mb-3">
+                    <i data-lucide="globe" class="w-5 h-5"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black text-white mb-1"><span class="text-gradient-pastel">9개</span> 기구</div>
+                <div class="text-xs text-gray-400">스위스 제네바 탈출 ➔ UN AI 허브 한국 집결</div>
+            </div>
+
+            <!-- Stat 4 -->
+            <div class="glass-panel glass-panel-hover p-5 rounded-3xl text-left border border-emerald-500/20">
+                <div class="w-10 h-10 rounded-2xl bg-lime-500/10 flex items-center justify-center text-lime-400 mb-3">
+                    <i data-lucide="cpu" class="w-5 h-5"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-black text-white mb-1">GPU <span class="text-gradient-pastel">50만장</span></div>
+                <div class="text-xs text-gray-400">정부 도입 26만장 (A100 환산 기준 파워)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: JENSEN HUANG'S 5-LAYER AI CAKE VISUALIZER -->
+    <section id="layer-cake" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
+        <div class="text-center mb-12">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-brand-mint mb-2">JENSEN HUANG'S FRAMEWORK</h2>
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-white">엔비디아 젠슨 황의 <span class="text-gradient-pastel">'AI 5단 케이크'</span></h3>
+            <p class="text-gray-400 text-sm sm:text-base mt-2 max-w-2xl mx-auto">
+                "AI 국가 경쟁력은 5개의 레이어가 결정합니다. 계층별로 접다 보면 마지막에 남는 나라는 손가락에 꼽힙니다."
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <!-- Left: Interactive Layer Visualizer Stack -->
+            <div class="lg:col-span-6 space-y-3">
+                <!-- Layer 5 -->
+                <button onclick="selectCakeLayer(5)" id="cakeLayerBtn-5" class="cake-layer-btn w-full p-4 rounded-2xl glass-panel border border-emerald-500/30 flex items-center justify-between transition-all transform hover:-translate-y-0.5 text-left">
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-lime-400/20 text-lime-400 font-bold flex items-center justify-center text-sm">L5</span>
+                        <div>
+                            <h4 class="text-white font-bold text-base">5단: AI 서비스 & 독자 포털</h4>
+                            <p class="text-xs text-gray-400">대규모 사용자 접점과 서비스 응용 생태계</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-brand-mint">한국 보유</span>
+                </button>
+
+                <!-- Layer 4 -->
+                <button onclick="selectCakeLayer(4)" id="cakeLayerBtn-4" class="cake-layer-btn w-full p-4 rounded-2xl glass-panel border border-emerald-500/30 flex items-center justify-between transition-all transform hover:-translate-y-0.5 text-left">
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-lime-400/20 text-lime-400 font-bold flex items-center justify-center text-sm">L4</span>
+                        <div>
+                            <h4 class="text-white font-bold text-base">4단: 독자 AI LLM 모델</h4>
+                            <p class="text-xs text-gray-400">소버린 AI 및 초거대 언어모델 자체 개발력</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-brand-mint">한국 보유</span>
+                </button>
+
+                <!-- Layer 3 -->
+                <button onclick="selectCakeLayer(3)" id="cakeLayerBtn-3" class="cake-layer-btn w-full p-4 rounded-2xl glass-panel border border-emerald-500/30 flex items-center justify-between transition-all transform hover:-translate-y-0.5 text-left">
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-lime-400/20 text-lime-400 font-bold flex items-center justify-center text-sm">L3</span>
+                        <div>
+                            <h4 class="text-white font-bold text-base">3단: 독자 데이터센터 (IDC)</h4>
+                            <p class="text-xs text-gray-400">하이퍼스케일 IDC 구축 및 안정적 운영 역량</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-brand-mint">한국 보유</span>
+                </button>
+
+                <!-- Layer 2 -->
+                <button onclick="selectCakeLayer(2)" id="cakeLayerBtn-2" class="cake-layer-btn w-full p-4 rounded-2xl glass-panel border border-emerald-500/30 flex items-center justify-between transition-all transform hover:-translate-y-0.5 text-left">
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-lime-400/20 text-lime-400 font-bold flex items-center justify-center text-sm">L2</span>
+                        <div>
+                            <h4 class="text-white font-bold text-base">2단: AI 반도체 & HBM</h4>
+                            <p class="text-xs text-gray-400">세계 최고 수준의 메모리 및 초고속 반도체</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-brand-mint">세계 최강</span>
+                </button>
+
+                <!-- Layer 1 -->
+                <button onclick="selectCakeLayer(1)" id="cakeLayerBtn-1" class="cake-layer-btn w-full p-4 rounded-2xl glass-panel border border-emerald-500/30 flex items-center justify-between transition-all transform hover:-translate-y-0.5 text-left">
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-xl bg-lime-400/20 text-lime-400 font-bold flex items-center justify-center text-sm">L1</span>
+                        <div>
+                            <h4 class="text-white font-bold text-base">1단: 에너지 & 고압 변압기 인프라</h4>
+                            <p class="text-xs text-gray-400">전력망, 초고압 변압기, 해저케이블 공급망</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-brand-mint">세계 최강</span>
+                </button>
+            </div>
+
+            <!-- Right: Dynamic Analysis Panel -->
+            <div class="lg:col-span-6">
+                <div id="cakeDetailPanel" class="glass-panel p-6 sm:p-8 rounded-3xl border border-emerald-500/30 relative min-h-[380px] flex flex-col justify-between">
+                    <!-- Dynamic Content Inserted Here by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: UN GLOBAL AI HUB & GENEVA SHIFT -->
+    <section id="un-hub" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-emerald-500/30 relative overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-brand-mint text-xs font-semibold mb-4 border border-emerald-500/30">
+                        <i data-lucide="plane-landing" class="w-3.5 h-3.5"></i>
+                        <span>글로벌 질서의 재편</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-4xl font-extrabold text-white leading-tight mb-4">
+                        스위스 제네바를 버리고 <br/>
+                        <span class="text-gradient-pastel">UN 기구 9개</span>가 한국으로 몰려드는 이유
+                    </h3>
+                    <p class="text-gray-300 text-sm sm:text-base font-light leading-relaxed mb-6">
+                        제네바가 지원금을 제시하며 잡았지만 기구들은 차갑게 거절했습니다.<br/>
+                        <span class="text-emerald-300 font-semibold">"너희는 AI를 모른다. 새로운 패러다임과 K-소프트파워가 있는 한국으로 간다."</span>
+                    </p>
+
+                    <!-- Feature bullets -->
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-brand-mint flex items-center justify-center text-xs mt-0.5">✓</div>
+                            <p class="text-xs sm:text-sm text-gray-300"><strong class="text-white">신뢰할 수 있는 리더십:</strong> 패권 경쟁의 미국도, 감시국가인 중국도 아닌 중립적 독자 포용력</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-brand-mint flex items-center justify-center text-xs mt-0.5">✓</div>
+                            <p class="text-xs sm:text-sm text-gray-300"><strong class="text-white">APEC 최초 미·중 공동 서명:</strong> 경주 APEC에서 아시아태평양 AI 센터 한국 구축 합의</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-5 h-5 rounded-full bg-emerald-500/20 text-brand-mint flex items-center justify-center text-xs mt-0.5">✓</div>
+                            <p class="text-xs sm:text-sm text-gray-300"><strong class="text-white">구글 데미스 허사비스도 서명:</strong> 글로벌 빅테크가 한국 허브 입주 확정</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategic Warning Box -->
+                <div class="lg:col-span-5 glass-panel p-6 rounded-2xl border border-lime-500/30 bg-emerald-950/30">
+                    <div class="flex items-center gap-3 text-lime-400 font-bold text-sm mb-3">
+                        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                        <span>박태웅 의장의 핵심 경고</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-4">
+                        "UN 기구가 들어온다고 단순히 건물만 예쁘게 지어주고 월세나 받는 <strong class="text-lime-300">'임대업자'</strong>가 되면 망합니다. 우리가 돈을 대는 대신 지분과 의장직, 청년 인턴십 쿼터를 강력히 요구하여 <strong class="text-white">'의제 설정자(Agenda Setter)'</strong>가 되어야 합니다."
+                    </p>
+                    <div class="pt-3 border-t border-emerald-800/40 flex justify-between text-[11px] text-gray-400">
+                        <span>단순 건물 임대 (X)</span>
+                        <span class="text-brand-mint font-bold">글로벌 규범 지분 확보 (O)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: 2ND INDUSTRIAL REVOLUTION & WORK CULTURE SHIFT -->
+    <section id="work-shift" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-brand-mint mb-2">PARADIGM SHIFT</h2>
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-white">2차 산업혁명과 <span class="text-gradient-pastel">문서·일하는 방식의 지각변동</span></h3>
+            <p class="text-gray-400 text-sm sm:text-base mt-2 max-w-2xl mx-auto">
+                1차 혁명이 육체를 대체했다면, 2차 혁명은 정신 노동을 대체합니다. 단순 개선이 아닌 사회 전체 시스템이 새로 짜여집니다.
+            </p>
+        </div>
+
+        <!-- Comparison Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <!-- Old Work Style -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-red-500/20 bg-red-950/10">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-bold">과거 방식 (지워야 할 것)</span>
+                    <i data-lucide="x-circle" class="w-5 h-5 text-red-400"></i>
+                </div>
+                <h4 class="text-lg font-bold text-white mb-3">1페이지 압축 요약 & 예쁜 PPT 꾸미기</h4>
+                <ul class="space-y-2.5 text-xs sm:text-sm text-gray-300">
+                    <li class="flex items-start gap-2">
+                        <span class="text-red-400 font-bold">•</span>
+                        <span>주어가 생략된 '음체' 문장 남발 (AI 학습 불가능한 맹탕 데이터)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-red-400 font-bold">•</span>
+                        <span>"이 사업 해볼게요" 파워포인트 기획서 작성에 수일~수주 소요</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-red-400 font-bold">•</span>
+                        <span>신입 사원에게 석 달 전 만들어진 안내 문서 전달 (매일 업데이트 불가능)</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- New AI Work Style -->
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-emerald-500/40 bg-emerald-950/20 shadow-glow-mint">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-brand-mint text-xs font-bold">미래 AI 방식 (도입할 것)</span>
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-mint"></i>
+                </div>
+                <h4 class="text-lg font-bold text-white mb-3">완전체 정보 운반체 & 3시간 만의 프로토타입</h4>
+                <ul class="space-y-2.5 text-xs sm:text-sm text-gray-300">
+                    <li class="flex items-start gap-2">
+                        <span class="text-brand-mint font-bold">•</span>
+                        <span>주어·술어가 완벽한 풍부한 데이터 작성 (요약은 AI 버튼 하나로 해결)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-brand-mint font-bold">•</span>
+                        <span>PPT 발표 생략 ➔ 당일 오후 3시에 **실제 작동하는 웹 프로토타입**으로 회의</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-brand-mint font-bold">•</span>
+                        <span>문서 대신 **'질문 리스트'**만 전달 (AI가 늘 최신 사규와 정보로 자동 응답)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Youth 3-Year Valley of Death Concept -->
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-lime-500/30">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-500/10 text-lime-400 text-xs font-bold">
+                        <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                        <span>청년 세대 보호 정책</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white">청년들의 <span class="text-gradient-pastel">'3년 죽음의 계곡'</span> 사회적 안전판 구축</h4>
+                    <p class="text-xs sm:text-sm text-gray-300 max-w-2xl">
+                        AI를 제대로 활용하려면 도메인 전문성과 회사 내부 사정을 알아야 합니다. 하지만 기업은 신입이 이 2~3년을 견딜 숙련 기회를 주지 않으려 합니다. 이 3년의 도메인 숙련 비용을 사회와 국가가 대주어야 한국의 10년 뒤를 책임질 전문가가 탄생합니다.
+                    </p>
+                </div>
+                <a href="#diagnosis" class="px-6 py-3 rounded-2xl bg-brand-mint text-black font-extrabold text-xs whitespace-nowrap shadow-glow-mint hover:bg-emerald-300 transition-colors">
+                    사회적 안전제도 보기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: INTERACTIVE PROMPT LAB ("철물점 비유") -->
+    <section id="prompt-lab" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-brand-mint mb-2">PROMPT LAB</h2>
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-white">박태웅 의장의 <span class="text-gradient-pastel">'철물점 비유' 대화실습</span></h3>
+            <p class="text-gray-400 text-sm sm:text-base mt-2 max-w-2xl mx-auto">
+                AI는 단순 검색창이 아니라 최고급 컨설턴트입니다. 맥락 없이 물어보는 손님과, 내 맥락을 상세히 밝히는 손님의 결과는 하늘과 땅 차이입니다.
+            </p>
+        </div>
+
+        <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-emerald-500/30">
+            <!-- Mode Switcher Tabs -->
+            <div class="flex justify-center mb-8">
+                <div class="p-1 rounded-2xl bg-emerald-950/60 border border-emerald-800/50 flex gap-2">
+                    <button onclick="setPromptMode('bad')" id="promptTabBad" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-400 hover:text-white">
+                        ❌ 하수: 맥락 없는 단발 질문
+                    </button>
+                    <button onclick="setPromptMode('good')" id="promptTabGood" class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-emerald-500/20 text-brand-mint border border-emerald-500/30 shadow-glow-mint">
+                        ✨ 고수: 맥락 중심 철물점 대화법
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Prompt Display Container -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <!-- User Question Input Box mockup -->
+                <div class="glass-panel p-6 rounded-2xl border border-emerald-500/20 bg-black/40">
+                    <div class="flex items-center gap-2 text-xs font-bold text-gray-400 mb-3">
+                        <i data-lucide="user" class="w-4 h-4 text-brand-mint"></i>
+                        <span>사용자 입력 (질문 방식)</span>
+                    </div>
+                    <div id="promptUserInput" class="text-sm font-medium text-white leading-relaxed min-h-[140px] whitespace-pre-line">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+
+                <!-- AI Response Box mockup -->
+                <div class="glass-panel p-6 rounded-2xl border border-emerald-500/30 bg-emerald-950/20">
+                    <div class="flex items-center gap-2 text-xs font-bold text-brand-mint mb-3">
+                        <i data-lucide="bot" class="w-4 h-4 text-lime-400"></i>
+                        <span>AI 철물점 주인의 답변 결과</span>
+                    </div>
+                    <div id="promptAiOutput" class="text-sm text-gray-200 leading-relaxed min-h-[140px] whitespace-pre-line">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Insight Callout -->
+            <div id="promptInsight" class="mt-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs sm:text-sm text-brand-mint flex items-center gap-3">
+                <i data-lucide="lightbulb" class="w-5 h-5 flex-shrink-0 text-lime-400"></i>
+                <span id="promptInsightText">핵심: AI에게 나의 사정과 환경(아파트 동수, 벽 구조, 무게)을 설명할수록 비교할 수 없는 고급 솔루션을 얻습니다.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: AI LITERACY SELF-DIAGNOSIS QUIZ -->
+    <section id="diagnosis" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-brand-mint mb-2">SELF ASSESSMENT</h2>
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-white">나의 <span class="text-gradient-pastel">AI 문명 준비도 & 리터러시 진단</span></h3>
+            <p class="text-gray-400 text-sm sm:text-base mt-2 max-w-2xl mx-auto">
+                5개 질문에 솔직하게 답하고, 나의 현재 위치와 구체적인 실천 가이드를 받아보세요.
+            </p>
+        </div>
+
+        <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-emerald-500/30 max-w-4xl mx-auto">
+            <!-- Quiz Form Container -->
+            <div id="quizContainer" class="space-y-8">
+                <!-- Q1 -->
+                <div class="space-y-3">
+                    <label class="text-sm sm:text-base font-bold text-white block">1. 나는 유료 AI 서비스(ChatGPT Plus, Claude Pro 등)를 직접 결제하여 사용하는가?</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button type="button" onclick="selectQuizAnswer(1, 20, this)" class="q-btn-1 p-3 rounded-xl glass-panel text-xs sm:text-sm text-left hover:border-emerald-400 text-gray-300">네, 유료 서비스를 업무/일상 인프라로 씁니다. (20점)</button>
+                        <button type="button" onclick="selectQuizAnswer(1, 0, this)" class="q-btn-1 p-3 rounded-xl glass-panel text-xs sm:text-sm text-left hover:border-emerald-400 text-gray-300">아니오, 무료 버전만 쓰거나 거의 쓰지 않습니다. (0점)</button>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="space-y-3">
+                    <label class="text-sm sm:text-base font-bold text-white block">2. AI 질문 시 단발성 키워드가 아닌 나의 배경/맥락(Context)을 대화로 풀어서 입력하는가?</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button type="button" onclick="selectQuizAnswer(2, 20, this)" class="q-btn-2 p-3 rounded-xl glass-panel text-xs sm:text-sm text-left hover:border-emerald-400 text-gray-300">네, 제 사정과 제약 조건을 대화하듯 길게 전달합니다. (20점)</button>
+                        <button type="button" onclick="selectQuizAnswer(2, 0, this)" class="q-btn-2 p-3 rounded-xl glass-panel text-xs sm:text-sm text-left hover:border-emerald-400 text-gray-300">아니오, 포털 검색창처럼 단어 위주로 입력합니다. (0점)</button>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="space-y-3">
+                    <label class="text-sm sm:text-base font-bold text-white block">3. 보고서/문서 작성 시 예쁜 꾸미기보다 주어가 확실한 '완전체 데이터'를 만드는가?</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button type="button" onclick="selectQuizAnswer(3, 20, this)" class="q-btn-3 p-3 rounded-xl glass-panel text-xs sm:text-sm text-left hover:border-emerald-400 text-gray-300">네, AI 학습 가치가 높은 완전체 서술문으로 씁니다. (20점)</button>
+                        <button type="button" onclick="selectQuizAnswer(3, 0, this)" class="q-btn-3 p-3 rounded-xl glass-panel text-xs sm:text-sm text-left hover:border-emerald-400 text-gray-300">아니오, 줄임말이나 PPT 장표 요약에 주력합니다. (0점)</button>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="space-y-3">
+                    <label class="text-sm sm:text-base font-bold text-white block">4. AI 기술 발전에 따른 일자리 감소 및 청년층 대책 등 '시민적 요구'에 관심이 있는가?</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button type="button" onclick="selectQuizAnswer(4, 20, this)" class="q-btn-4 p-3 rounded-xl glass-panel text-xs sm:text-sm text-left hover:border-emerald-400 text-gray-300">네, AI 공공재화 및 사회 안전판 구축 요구를 지지합니다. (20점)</button>
+                        <button type="button" onclick="selectQuizAnswer(4, 0, this)" class="q-btn-4 p-3 rounded-xl glass-panel text-xs sm:text-sm text-left hover:border-emerald-400 text-gray-300">아니오, 국가나 사회적 정책 문제까지는 생각 안 해봤습니다. (0점)</button>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="space-y-3">
+                    <label class="text-sm sm:text-base font-bold text-white block">5. 새로운 아이디어가 생겼을 때 PPT 기획서 대신 즉시 프로토타입을 만들어 보는가?</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button type="button" onclick="selectQuizAnswer(5, 20, this)" class="q-btn-5 p-3 rounded-xl glass-panel text-xs sm:text-sm text-left hover:border-emerald-400 text-gray-300">네, AI 코딩/웹앱 도구로 당일 실행본을 띄워봅니다. (20점)</button>
+                        <button type="button" onclick="selectQuizAnswer(5, 0, this)" class="q-btn-5 p-3 rounded-xl glass-panel text-xs sm:text-sm text-left hover:border-emerald-400 text-gray-300">아니오, 여전히 파워포인트 발표 자료부터 만듭니다. (0점)</button>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="button" onclick="calculateQuizScore()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-400 to-lime-400 text-black font-extrabold text-base shadow-glow-mint hover:opacity-90 transition-opacity">
+                    내 AI 진단 결과 보기
+                </button>
+            </div>
+
+            <!-- Quiz Result Card (Hidden by default) -->
+            <div id="quizResult" class="hidden text-center space-y-6">
+                <div class="inline-flex p-4 rounded-full bg-emerald-500/20 text-brand-mint mb-2">
+                    <i data-lucide="award" class="w-12 h-12"></i>
+                </div>
+                <h4 class="text-2xl sm:text-3xl font-extrabold text-white">당신의 AI 리터러시 점수는 <span id="quizScoreText" class="text-gradient-pastel">0점</span>입니다!</h4>
+                <p id="quizFeedbackText" class="text-sm sm:text-base text-gray-300 max-w-xl mx-auto leading-relaxed">
+                    <!-- Dynamic Feedback -->
+                </p>
+                <div class="pt-4 flex justify-center gap-4">
+                    <button onclick="resetQuiz()" class="px-6 py-2.5 rounded-xl glass-panel text-xs text-brand-mint border border-emerald-500/30">
+                        다시 진단하기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: FULL DIALOGUE CHAPTER TRANSCRIPT READER -->
+    <section id="dialogue-content" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+            <div>
+                <h2 class="text-xs font-bold uppercase tracking-widest text-brand-mint mb-2">FULL DIALOGUE COLLECTION</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">대담집 <span class="text-gradient-pastel">전체 장별 전문</span></h3>
+            </div>
+
+            <!-- Search & Filter Bar -->
+            <div class="relative w-full md:w-80">
+                <input type="text" id="chapterSearchInput" onkeyup="filterChapters()" placeholder="대담 내용 키워드 검색 (예: GPU, 유니세프...)" class="w-full pl-10 pr-4 py-2.5 rounded-2xl glass-panel border border-emerald-500/30 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-emerald-400">
+                <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3.5 top-3"></i>
+            </div>
+        </div>
+
+        <!-- Chapters Accordion List -->
+        <div id="chaptersList" class="space-y-4">
+            <!-- Chapter 1 -->
+            <div class="chapter-card glass-panel rounded-3xl border border-emerald-500/20 overflow-hidden">
+                <button onclick="toggleChapter(1)" class="w-full p-6 text-left flex items-center justify-between hover:bg-emerald-950/20 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="px-3 py-1 rounded-xl bg-emerald-500/10 text-brand-mint text-xs font-bold border border-emerald-500/20">장면 1</span>
+                        <div>
+                            <h4 class="text-base sm:text-lg font-bold text-white">국가인공지능전략위원회의 출범과 3대 AX 목표</h4>
+                            <span class="text-xs text-gray-400">[00:01:21] 대통령 직속 기구 설립 배경 및 목표</span>
+                        </div>
+                    </div>
+                    <i id="chapterIcon-1" data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform"></i>
+                </button>
+                <div id="chapterBody-1" class="hidden p-6 border-t border-emerald-900/40 text-xs sm:text-sm text-gray-300 leading-relaxed space-y-4 bg-black/20">
+                    <p><strong class="text-brand-mint">김미경:</strong> 박태웅 의장님, 이번에 국가인공지능전략위원회 공공AX분과장을 맡으셨는데 어떤 일을 하나요?</p>
+                    <p><strong class="text-white">박태웅:</strong> 대통령 직속 위원회로 세 가지 이유 때문에 생겼습니다. 첫째, 공무원 중 AI 전문가가 적으므로 민간 최고 전문가와 지혜를 모으기 위함입니다. 둘째, 각 부처의 칸막이를 없애고 범국가적 통합 전략을 짜기 위함입니다. 셋째, 장기적 호흡으로 AI 전략만 전담하기 위함입니다.</p>
+                    <div class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-800/40 text-xs">
+                        <strong class="text-lime-300 block mb-1">💡 공공AX 3대 목표:</strong>
+                        1. 세계 최고 AI 정부 구축 / 2. 최고의 공공서비스 제공 / 3. 정부 조달을 통한 혁신 벤처 마중물 역할
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 2 -->
+            <div class="chapter-card glass-panel rounded-3xl border border-emerald-500/20 overflow-hidden">
+                <button onclick="toggleChapter(2)" class="w-full p-6 text-left flex items-center justify-between hover:bg-emerald-950/20 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="px-3 py-1 rounded-xl bg-emerald-500/10 text-brand-mint text-xs font-bold border border-emerald-500/20">장면 2</span>
+                        <div>
+                            <h4 class="text-base sm:text-lg font-bold text-white">젠슨 황의 'AI 5단 케이크'와 한국의 실제 경쟁력</h4>
+                            <span class="text-xs text-gray-400">[00:03:52] 피지컬 AI와 글로벌 빅테크의 한국 집결 이유</span>
+                        </div>
+                    </div>
+                    <i id="chapterIcon-2" data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform"></i>
+                </button>
+                <div id="chapterBody-2" class="hidden p-6 border-t border-emerald-900/40 text-xs sm:text-sm text-gray-300 leading-relaxed space-y-4 bg-black/20">
+                    <p><strong class="text-brand-mint">김미경:</strong> 한국이 세계 3위라는 숫자가 사실인가요?</p>
+                    <p><strong class="text-white">박태웅:</strong> 우리는 후발 추격국에서 선진국이 된 기간이 너무 짧아 우리 몸집을 잘 모릅니다. 젠슨 황의 5단 케이크(에너지, 반도체, 데이터센터, AI 모델, AI 서비스) 기준으로 걸러보면 손가락에 꼽힐 나라만 남는데 한국은 이를 모두 갖췄습니다. 고압 변압기와 전력망, 반도체, 자체 포털(네이버)을 모두 가진 거의 유일한 나라입니다.</p>
+                </div>
+            </div>
+
+            <!-- Chapter 3 -->
+            <div class="chapter-card glass-panel rounded-3xl border border-emerald-500/20 overflow-hidden">
+                <button onclick="toggleChapter(3)" class="w-full p-6 text-left flex items-center justify-between hover:bg-emerald-950/20 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="px-3 py-1 rounded-xl bg-emerald-500/10 text-brand-mint text-xs font-bold border border-emerald-500/20">장면 3</span>
+                        <div>
+                            <h4 class="text-base sm:text-lg font-bold text-white">제네바 탈출 ➔ UN AI 허브 한국 이전 내막</h4>
+                            <span class="text-xs text-gray-400">[00:08:19] 포용적 AI 리터러시와 의제 설정자의 역할</span>
+                        </div>
+                    </div>
+                    <i id="chapterIcon-3" data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform"></i>
+                </button>
+                <div id="chapterBody-3" class="hidden p-6 border-t border-emerald-900/40 text-xs sm:text-sm text-gray-300 leading-relaxed space-y-4 bg-black/20">
+                    <p><strong class="text-brand-mint">김미경:</strong> 한국이 글로벌 리더가 된 적이 없는데 어떤 플레이어가 되어야 하나요?</p>
+                    <p><strong class="text-white">박태웅:</strong> 미국은 리더십 혼돈, 중국은 감시국가를 만들었습니다. 인류에게 이로운 '포용적 AI' 리더십을 발휘할 곳은 한국뿐입니다. UN 산하 9개 기구와 구글 등이 한국에 글로벌 AI 허브를 짓기로 합의했습니다. 우리는 건물만 대주는 임대업자가 아니라, 한국 인재의 지분과 보직을 확보하는 리더가 되어야 합니다.</p>
+                </div>
+            </div>
+
+            <!-- Chapter 4 -->
+            <div class="chapter-card glass-panel rounded-3xl border border-emerald-500/20 overflow-hidden">
+                <button onclick="toggleChapter(4)" class="w-full p-6 text-left flex items-center justify-between hover:bg-emerald-950/20 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="px-3 py-1 rounded-xl bg-emerald-500/10 text-brand-mint text-xs font-bold border border-emerald-500/20">장면 4</span>
+                        <div>
+                            <h4 class="text-base sm:text-lg font-bold text-white">2차 산업혁명과 문서의 본질 변화</h4>
+                            <span class="text-xs text-gray-400">[00:13:40] PPT 보고의 종말과 작동하는 프로토타입</span>
+                        </div>
+                    </div>
+                    <i id="chapterIcon-4" data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform"></i>
+                </button>
+                <div id="chapterBody-4" class="hidden p-6 border-t border-emerald-900/40 text-xs sm:text-sm text-gray-300 leading-relaxed space-y-4 bg-black/20">
+                    <p><strong class="text-white">박태웅:</strong> 문서는 주어와 술어가 명확한 완전체 정보 운반체로 바뀌어야 합니다. 예쁘게 꾸미거나 요약하는 일은 AI가 다 해냅니다. 이제 회의는 PPT 발표 대신 당일 오후에 실제 작동하는 프로토타입(Working Prototype)을 들고 와서 진행됩니다.</p>
+                </div>
+            </div>
+
+            <!-- Chapter 5 -->
+            <div class="chapter-card glass-panel rounded-3xl border border-emerald-500/20 overflow-hidden">
+                <button onclick="toggleChapter(5)" class="w-full p-6 text-left flex items-center justify-between hover:bg-emerald-950/20 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="px-3 py-1 rounded-xl bg-emerald-500/10 text-brand-mint text-xs font-bold border border-emerald-500/20">장면 5</span>
+                        <div>
+                            <h4 class="text-base sm:text-lg font-bold text-white">노동의 재정립과 청년세대의 '3년 계곡' 극복</h4>
+                            <span class="text-xs text-gray-400">[00:19:30] 노동시간 감축 및 자아실현 중심 변모</span>
+                        </div>
+                    </div>
+                    <i id="chapterIcon-5" data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform"></i>
+                </button>
+                <div id="chapterBody-5" class="hidden p-6 border-t border-emerald-900/40 text-xs sm:text-sm text-gray-300 leading-relaxed space-y-4 bg-black/20">
+                    <p><strong class="text-white">박태웅:</strong> 이번 혁명은 15년 내외로 압축 진행됩니다. 일자리를 나누기 위해 지속적으로 노동시간을 줄여야 하며, 신입 청년들이 회사 숙련 전문가로 성장하는 2~3년의 '죽음의 계곡' 기간 비용을 국가가 보존해 주어야 합니다.</p>
+                </div>
+            </div>
+
+            <!-- Chapter 6 -->
+            <div class="chapter-card glass-panel rounded-3xl border border-emerald-500/20 overflow-hidden">
+                <button onclick="toggleChapter(6)" class="w-full p-6 text-left flex items-center justify-between hover:bg-emerald-950/20 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <span class="px-3 py-1 rounded-xl bg-emerald-500/10 text-brand-mint text-xs font-bold border border-emerald-500/20">장면 6</span>
+                        <div>
+                            <h4 class="text-base sm:text-lg font-bold text-white">AI 기본권과 인지 능력 격차 방지책</h4>
+                            <span class="text-xs text-gray-400">[00:28:51] 능력의 상속 방지 및 AI 바우처 공공화</span>
+                        </div>
+                    </div>
+                    <i id="chapterIcon-6" data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform"></i>
+                </button>
+                <div id="chapterBody-6" class="hidden p-6 border-t border-emerald-900/40 text-xs sm:text-sm text-gray-300 leading-relaxed space-y-4 bg-black/20">
+                    <p><strong class="text-brand-mint">김미경:</strong> 부자들만 비싼 AI를 쓰면 지능의 격차가 계급화되지 않을까요?</p>
+                    <p><strong class="text-white">박태웅:</strong> 미국은 이미 '능력이 상속되는 시대'라 부릅니다. 스마트폰이 기본권이 되어 통신비를 보조하듯, AI 접근권과 인지 능력 보장도 헌법적 기본권으로 다루어져야 합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: PLANNER'S STRATEGY MATRIX -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-brand-mint mb-2">FOR STRATEGISTS</h2>
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-white">기획자(Planner)를 위한 <span class="text-gradient-pastel">핵심 실천 매트릭스</span></h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Box 1 -->
+            <div class="glass-panel p-6 rounded-3xl border border-emerald-500/20 hover:border-emerald-400 transition-all">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 text-brand-mint flex items-center justify-center font-bold mb-4">01</div>
+                <h4 class="text-base font-bold text-white mb-2">사업 & 서비스 기획</h4>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    파워포인트 요약 기획 탈피. AI 학습이 용이하도록 완전체 데이터 구조화 및 당일 구현 프로토타입 중심 테스트.
+                </p>
+            </div>
+
+            <!-- Box 2 -->
+            <div class="glass-panel p-6 rounded-3xl border border-emerald-500/20 hover:border-emerald-400 transition-all">
+                <div class="w-10 h-10 rounded-2xl bg-lime-500/10 text-lime-400 flex items-center justify-center font-bold mb-4">02</div>
+                <h4 class="text-base font-bold text-white mb-2">조직 & HR 기획</h4>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    신입 사원 온보딩 시 '질문 리스트' 중심 AI 인터페이스 제공. 1인당 수개의 AI 에이전트를 오케스트레이션하는 조직 재편.
+                </p>
+            </div>
+
+            <!-- Box 3 -->
+            <div class="glass-panel p-6 rounded-3xl border border-emerald-500/20 hover:border-emerald-400 transition-all">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 text-brand-mint flex items-center justify-center font-bold mb-4">03</div>
+                <h4 class="text-base font-bold text-white mb-2">국가 & 공공AX 정책</h4>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    UN 기구 유치 시 단순 건물 임대가 아닌 글로벌 규범 수립 의장직 및 청년 인턴 쿼터 등 핵심 지분 확보.
+                </p>
+            </div>
+
+            <!-- Box 4 -->
+            <div class="glass-panel p-6 rounded-3xl border border-emerald-500/20 hover:border-emerald-400 transition-all">
+                <div class="w-10 h-10 rounded-2xl bg-lime-500/10 text-lime-400 flex items-center justify-center font-bold mb-4">04</div>
+                <h4 class="text-base font-bold text-white mb-2">개인 프롬프트 커뮤니케이션</h4>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    단발성 명령(Command) 지양. 철물점 비유처럼 내 맥락, 배경, 목적을 대화형으로 상세히 제공하는 유료 AI 활용.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-emerald-900/40 py-12 glass-panel mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-sm font-bold text-white">MKTV × 박태웅 의장 대담집</span>
+                    <span class="text-xs text-brand-mint px-2 py-0.5 rounded-md bg-emerald-500/10">2026 AI Civilization</span>
+                </div>
+                <p class="text-xs text-gray-500">본 인터뷰 웹사이트는 유튜브 MKTV '박태웅 의장 풀버전 20분 AI과외' 영상을 기반으로 제작되었습니다.</p>
+            </div>
+
+            <div class="flex items-center gap-4 text-xs text-gray-400">
+                <button onclick="copyDialogueSummary()" class="hover:text-brand-mint flex items-center gap-1 transition-colors">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> 요약본 복사
+                </button>
+                <a href="https://youtu.be/U88DLM7u0nA" target="_blank" rel="noopener" class="hover:text-brand-mint flex items-center gap-1 transition-colors">
+                    <i data-lucide="youtube" class="w-3.5 h-3.5 text-red-500"></i> 원본 영상 보기
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification for Copy -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 hidden glass-panel border border-emerald-400/50 px-5 py-3 rounded-2xl text-xs font-bold text-brand-mint shadow-glow-mint flex items-center gap-2.5 z-50">
+        <i data-lucide="check-circle" class="w-4 h-4 text-lime-400"></i>
+        <span id="toastMsg">대담집 핵심 요약이 클립보드에 복사되었습니다!</span>
+    </div>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // Initialize Lucide Icons
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            selectCakeLayer(5); // Default load top layer
+            setPromptMode('good'); // Default load good prompt
+        });
+
+        // Mobile Menu Drawer Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileDrawer.classList.toggle('hidden');
+        });
+
+        // 5-LAYER AI CAKE DATA & LOGIC
+        const cakeData = {
+            5: {
+                title: "5단: AI 서비스 & 독자 포털 (Applications & Portals)",
+                koreaStatus: "세계적 경쟁력 보유 (네이버, 카카오 등 독자 포털보유국)",
+                desc: "사용자가 실생활에서 AI를 활용하는 플랫폼 계층입니다. 자체 포털과 검색 인프라를 지닌 나라는 전 세계에 미국, 중국, 한국, 러시아 정도에 불과합니다.",
+                insight: "네이버 하이퍼클로바X 등 자체 검색 및 유저 데이터를 보유하고 있어 미국 빅테크의 데이터 종속에 빠지지 않는 강력한 방어선 역할을 합니다."
+            },
+            4: {
+                title: "4단: 독자 AI LLM 모델 (AI Sovereign Models)",
+                koreaStatus: "독자 거대언어모델(LLM) 보유국",
+                desc: "한국어 문화권과 독자적 행정·법률 데이터를 반영할 수 있는 소버린 AI 기술력을 보유하고 있습니다.",
+                insight: "정부에서 최고 사양 GPU 26만 장(A100 기준 50만 장 파워)을 구매하여 연구진에게 공급함에 따라 독자 모델 개발 격차가 급격히 해소되고 있습니다."
+            },
+            3: {
+                title: "3단: 데이터센터 (IDC & Infra)",
+                koreaStatus: "독자 구축 및 안정적 운영 역량 완비",
+                desc: "AI 모델 학습과 추론을 견디는 하이퍼스케일 데이터센터를 자체 기술로 구축하고 지속 운영할 수 있는 국가입니다.",
+                insight: "네이버 '각 세종' 등 초대형 데이터센터 인프라가 전국에 구축되어 있어 글로벌 빅테크의 클라우드 거점으로 주목받고 있습니다."
+            },
+            2: {
+                title: "2단: AI 반도체 & HBM (Hardware & Memory)",
+                koreaStatus: "세계 최강 (SK하이닉스, 삼성전자)",
+                desc: "엔비디아 GPU의 필수 요소인 초고속 메모리 HBM 시장을 한국 기업들이 압도적으로 점유하고 있습니다.",
+                insight: "젠슨 황 엔비디아 CEO가 한국에 러브콜을 보낼 수밖에 없는 핵심 이유입니다. 한국 반도체 없이는 AI 생태계 자체가 구동되지 않습니다."
+            },
+            1: {
+                title: "1단: 에너지 & 고압 변압기 (Power Grid & Energy)",
+                koreaStatus: "세계 최강 (HD현대일렉트릭, LS일렉트릭)",
+                desc: "AI 데이터센터 폭증으로 전 세계적인 전력 난과 고압 변압기 쇼티지가 발생했습니다. 한국은 세계 최고의 전력 기기 제조 및 전력망 공급망을 보유했습니다.",
+                insight: "미국 및 유럽 시장의 초고압 변압기는 한국 산이 필수적입니다. 에너지부터 서비스까지 완벽한 5단 케이크를 갖춘 유일무이한 국가입니다."
+            }
+        };
+
+        function selectCakeLayer(layerNum) {
+            // Reset active styles on layer buttons
+            document.querySelectorAll('.cake-layer-btn').forEach(btn => {
+                btn.classList.remove('border-lime-400', 'shadow-glow-mint', 'bg-emerald-900/30');
+            });
+
+            // Highlight selected button
+            const selectedBtn = document.getElementById(`cakeLayerBtn-${layerNum}`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('border-lime-400', 'shadow-glow-mint', 'bg-emerald-900/30');
+            }
+
+            // Update Detail Panel Content
+            const data = cakeData[layerNum];
+            const panel = document.getElementById('cakeDetailPanel');
+            panel.innerHTML = `
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 rounded-full bg-lime-400/20 text-lime-300 text-xs font-bold border border-lime-400/30">
+                            Layer ${layerNum} 상세 분석
+                        </span>
+                        <span class="text-xs text-brand-mint font-semibold">${data.koreaStatus}</span>
+                    </div>
+                    <h4 class="text-xl sm:text-2xl font-black text-white mb-3">${data.title}</h4>
+                    <p class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">${data.desc}</p>
+                    
+                    <div class="p-4 rounded-2xl bg-black/40 border border-emerald-500/20">
+                        <span class="text-xs font-bold text-lime-400 block mb-1">💡 박태웅 의장의 핵심 인사이트:</span>
+                        <p class="text-xs text-gray-300 leading-relaxed">${data.insight}</p>
+                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-emerald-900/40 flex justify-between items-center text-[11px] text-gray-400">
+                    <span>5단 케이크 프레임워크</span>
+                    <span class="text-brand-mint">한국 경쟁력 평가: Top Tier</span>
+                </div>
+            `;
+        }
+
+        // PROMPT LAB LOGIC
+        const promptData = {
+            bad: {
+                user: "철물점 가서: '벽에 걸 못 좀 주세요.'",
+                output: "철물점 주인: (아무 못이나 쥐어주며) '여기 있습니다.'\n\n➔ [결과]: 집 거실 벽에 박다가 콘크리트 내력벽이라 못은 구부러지고 벽에 구멍만 5개 생김. 아내에게 온갖 욕을 먹고 실패함.",
+                insight: "단발성 키워드 질문은 AI를 단순 검색엔진 수준으로 떨어뜨립니다."
+            },
+            good: {
+                user: "철물점 가서: '저기 사장님, 제가 아파트 303동 거실 벽에 이번에 선물 받은 5kg짜리 캔버스 그림을 걸고 싶은데요, 거실 벽이 단단한 내력벽인 것 같은데 안 망가지게 걸 수 있는 최선의 방법과 재료 좀 추천해주세요.'",
+                output: "철물점 주인: '아, 303동 거실은 내력벽이라 일반 시멘트못으로 박으면 벽 다 상합니다! 차라리 손상 안 가는 이 특수 핀 고리를 쓰시거나 2mm 콘크리트 전용 앵커를 쓰세요.'\n\n➔ [결과]: 벽 손상 없이 완벽하게 그림 설치 완료! 완벽한 솔루션 획득.",
+                insight: "AI에게 내 사정, 환경, 제한 조건(Context)을 대화로 상세히 제공해야 최고 수준의 맞춤 솔루션을 얻습니다."
+            }
+        };
+
+        function setPromptMode(mode) {
+            const badTab = document.getElementById('promptTabBad');
+            const goodTab = document.getElementById('promptTabGood');
+
+            if (mode === 'bad') {
+                badTab.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-red-500/20 text-red-400 border border-red-500/30";
+                goodTab.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-400 hover:text-white";
+            } else {
+                goodTab.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all bg-emerald-500/20 text-brand-mint border border-emerald-500/30 shadow-glow-mint";
+                badTab.className = "px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all text-gray-400 hover:text-white";
+            }
+
+            const data = promptData[mode];
+            document.getElementById('promptUserInput').innerText = data.user;
+            document.getElementById('promptAiOutput').innerText = data.output;
+            document.getElementById('promptInsightText').innerText = data.insight;
+        }
+
+        // QUIZ LOGIC
+        const userQuizAnswers = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+        function selectQuizAnswer(qNum, score, btnElem) {
+            userQuizAnswers[qNum] = score;
+            // Highlight selected button in this row
+            const buttons = document.querySelectorAll(`.q-btn-${qNum}`);
+            buttons.forEach(b => {
+                b.classList.remove('border-brand-mint', 'bg-emerald-500/20', 'text-white');
+                b.classList.add('text-gray-300');
+            });
+            btnElem.classList.add('border-brand-mint', 'bg-emerald-500/20', 'text-white');
+        }
+
+        function calculateQuizScore() {
+            let total = 0;
+            for (let q in userQuizAnswers) {
+                total += userQuizAnswers[q];
+            }
+
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('quizResult').classList.remove('hidden');
+            document.getElementById('quizScoreText').innerText = `${total}점`;
+
+            let feedback = "";
+            if (total >= 80) {
+                feedback = "🎉 [최우수 AI 리더] 당신은 AI 문명 시대를 완벽히 이해하고 활용하는 프론티어입니다! 유료 도구 활용부터 맥락 중심 대화, 완전체 데이터 문화까지 앞서나가고 계십니다. 국가와 사회의 AI 의제 설정자로 활약해보세요!";
+            } else if (total >= 40) {
+                feedback = "⚡ [AI 적응기] AI 도구를 접하고 있으나 아직 이전의 습관(검색창 스타일 질문, PPT 장표 요약)이 일부 남아있습니다. 유료 AI 도구를 내 비서처럼 두고 맥락 중심의 대화식 활용을 늘려보세요!";
+            } else {
+                feedback = "🌱 [AI 입문 필요] 아직 AI를 문명이 아닌 단편적 도구나 남의 일로 느끼고 계신 단계입니다. 박태웅 의장의 조언대로 유료 AI 구독을 시작하고, 일상 및 업무 문제부터 대화로 풀어보세요!";
+            }
+
+            document.getElementById('quizFeedbackText').innerText = feedback;
+        }
+
+        function resetQuiz() {
+            document.getElementById('quizResult').classList.add('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+        }
+
+        // CHAPTER ACCORDION TOGGLE
+        function toggleChapter(num) {
+            const body = document.getElementById(`chapterBody-${num}`);
+            const icon = document.getElementById(`chapterIcon-${num}`);
+            
+            if (body.classList.contains('hidden')) {
+                body.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                body.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // CHAPTER SEARCH FILTER
+        function filterChapters() {
+            const query = document.getElementById('chapterSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.chapter-card');
+
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // COPY SUMMARY LOGIC
+        function copyDialogueSummary() {
+            const summaryText = `[박태웅 의장 대담집 - AI 문명 시대 요약]\n\n1. 한국 경쟁력: 미국, 중국에 이은 글로벌 AI 3위 (5단 케이크 전 인프라 완비)\n2. UN AI 허브: 제네바 탈출 후 UN 산하 9개 기구 한국 집결 (포용적 AI 리더십)\n3. 일하는 방식: PPT 및 음체 요약 폐지 ➔ 맥락이 담긴 완전체 문서 & 3시간 만의 프로토타입 회의\n4. AI 대화법: 단발 질문 금지, 철물점 비유처럼 사정과 제한 조건을 상세히 대화식 전달\n5. 정책 필요성: 청년층 3년 숙련 계곡 지원 및 AI 기본권 인지 격차 방지\n\n자세히 보기: 박태웅의 AI 대담집 2026`;
+
+            // Copy via text area
+            const tempInput = document.createElement('textarea');
+            tempInput.value = summaryText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // Toast feedback
+            const toast = document.getElementById('toastNotification');
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
