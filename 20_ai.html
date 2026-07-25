@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>박태웅의 20분 AI 과외 | 대한민국 AI의 미래와 소버린 AI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Apple-style sleek icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nude: {
+                            50: '#FAF6F2',
+                            100: '#EFE5DC',
+                            200: '#E4D3C6',
+                            300: '#D2BBB0',
+                        },
+                        taupe: {
+                            300: '#B5ACAA',
+                            500: '#8A7F7D',
+                            700: '#544A48',
+                            900: '#2C2524',
+                        },
+                        terracotta: {
+                            100: '#F7E9E4',
+                            300: '#DE8B72',
+                            500: '#A94326', // Primary accent from image
+                            600: '#92361B',
+                            700: '#732712',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans KR', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -5px rgba(84, 74, 72, 0.05)',
+                        'hover': '0 20px 40px -10px rgba(169, 67, 38, 0.12)',
+                        'glass': '0 8px 32px 0 rgba(169, 67, 38, 0.04)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F8F5F1;
+            color: #2C2524;
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            overflow-x: hidden;
+            letter-spacing: -0.015em;
+        }
+
+        /* Apple-style Glassmorphism */
+        .glass-nav {
+            background: rgba(248, 245, 241, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(228, 211, 198, 0.5);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(228, 211, 198, 0.6);
+        }
+
+        /* Arch design motifs from reference image */
+        .arch-top {
+            border-top-left-radius: 120px;
+            border-top-right-radius: 120px;
+        }
+
+        .arch-card {
+            border-radius: 28px;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F8F5F1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D2BBB0;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A94326;
+        }
+
+        /* Pulse Subtle Effect */
+        @keyframes subtleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+            animation: subtleFloat 6s ease-in-out infinite;
+        }
+
+        /* Layer Highlight transition */
+        .layer-transition {
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-terracotta-100 selection:text-terracotta-700">
+
+    <!-- Sticky Glass Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5 group">
+                <span class="w-8 h-8 rounded-full bg-terracotta-500 text-white flex items-center justify-center font-bold text-sm shadow-md group-hover:scale-105 transition-transform">AI</span>
+                <span class="font-bold text-base tracking-tight text-taupe-900">박태웅의 AI과외</span>
+            </a>
+            
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-taupe-700">
+                <a href="#why-korea" class="hover:text-terracotta-500 transition-colors">왜 대한민국인가</a>
+                <a href="#ai-cake" class="hover:text-terracotta-500 transition-colors">5단 AI 케이크</a>
+                <a href="#sovereign-ai" class="hover:text-terracotta-500 transition-colors">소버린 AI</a>
+                <a href="#public-ax" class="hover:text-terracotta-500 transition-colors">공공 AX & FAIR</a>
+                <a href="#action-plan" class="hover:text-terracotta-500 transition-colors">행동 강령</a>
+            </nav>
+
+            <button onclick="scrollToSummary()" class="px-4 py-2 text-xs md:text-sm font-semibold text-terracotta-500 bg-terracotta-100 hover:bg-terracotta-500 hover:text-white rounded-full transition-all duration-300 border border-terracotta-300/30">
+                요약 복사하기
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-20">
+
+        <!-- HERO SECTION -->
+        <section class="max-w-5xl mx-auto px-6 pt-12 pb-20 text-center relative">
+            <!-- Decorative Arch Background Blur -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] md:w-[600px] h-[340px] md:h-[450px] bg-nude-200/50 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-nude-100 text-terracotta-600 text-xs md:text-sm font-semibold mb-6 border border-nude-200 shadow-sm animate-float">
+                <i class="fa-solid fa-sparkles text-terracotta-500"></i> MKTV 20분 AI과외 풀버전 인터랙티브 인사이트
+            </div>
+
+            <h1 class="text-3xl md:text-6xl font-extrabold text-taupe-900 tracking-tight leading-tight md:leading-none mb-6">
+                스위스 대신 대한민국을<br class="hidden md:block"> 
+                <span class="bg-gradient-to-r from-terracotta-600 via-terracotta-500 to-terracotta-300 bg-clip-text text-transparent">선택하는 진짜 이유</span>
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-taupe-700 text-base md:text-xl font-normal leading-relaxed mb-10">
+                글로벌 빅테크, UN 및 국제기구가 한국에 주목하는 글로벌 AI 생태계 지형 변동.<br class="hidden md:block"> 
+                대한민국의 독보적 위상과 소버린 AI 시대를 대비하는 국가·개인 종합 가이드.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="#ai-cake" class="px-7 py-3.5 bg-terracotta-500 text-white font-semibold rounded-full shadow-lg hover:bg-terracotta-600 hover:shadow-hover transition-all duration-300 flex items-center gap-2">
+                    5단 AI 케이크 탐색하기 <i class="fa-solid fa-arrow-down text-xs"></i>
+                </a>
+                <a href="https://youtu.be/U88DLM7u0nA?si=aq0i-ABCqwIXkS_8" target="_blank" class="px-7 py-3.5 glass-card text-taupe-900 font-semibold rounded-full hover:bg-white transition-all duration-300 flex items-center gap-2 border border-nude-200">
+                    <i class="fa-brands fa-youtube text-red-600 text-lg"></i> 원본 영상 시청
+                </a>
+            </div>
+
+            <!-- Key Metrics Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 text-left">
+                <div class="glass-card p-5 arch-card border border-nude-200">
+                    <div class="text-xs text-taupe-500 font-semibold mb-1">글로벌 독점 수혜</div>
+                    <div class="text-xl md:text-2xl font-bold text-taupe-900">세계 3대 강국</div>
+                    <div class="text-xs text-taupe-700 mt-1">풀스택 AI 생태계 자급자족</div>
+                </div>
+                <div class="glass-card p-5 arch-card border border-nude-200">
+                    <div class="text-xs text-taupe-500 font-semibold mb-1">인프라 완성도</div>
+                    <div class="text-xl md:text-2xl font-bold text-terracotta-500">5 / 5 Layers</div>
+                    <div class="text-xs text-taupe-700 mt-1">전력부터 최첨단 제조까지</div>
+                </div>
+                <div class="glass-card p-5 arch-card border border-nude-200">
+                    <div class="text-xs text-taupe-500 font-semibold mb-1">핵심 전략 키워드</div>
+                    <div class="text-xl md:text-2xl font-bold text-taupe-900">Sovereign AI</div>
+                    <div class="text-xs text-taupe-700 mt-1">기술 주권 및 거버넌스</div>
+                </div>
+                <div class="glass-card p-5 arch-card border border-nude-200">
+                    <div class="text-xs text-taupe-500 font-semibold mb-1">공공 데이터 혁신</div>
+                    <div class="text-xl md:text-2xl font-bold text-terracotta-500">FAIR 원칙</div>
+                    <div class="text-xs text-taupe-700 mt-1">Machine-Readable 구조화</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: 5-LAYER AI CAKE (INTERACTIVE) -->
+        <section id="ai-cake" class="max-w-5xl mx-auto px-6 py-16">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold text-terracotta-500 uppercase tracking-widest bg-terracotta-100 px-3 py-1 rounded-full">NVIDIA Jensen Huang Framework</span>
+                <h2 class="text-2xl md:text-4xl font-bold text-taupe-900 mt-3">젠슨 황이 정의한 '5단 AI 케이크'</h2>
+                <p class="text-taupe-700 text-sm md:text-base mt-2">대한민국은 이 5개 층을 모두 완벽히 갖춘 지구상 극소수 국가입니다. 각 레이어를 클릭해 보세요.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Interactive Layer Stack Controls -->
+                <div class="lg:col-span-5 flex flex-col gap-3">
+                    
+                    <button onclick="selectLayer(5)" id="layer-btn-5" class="layer-btn w-full p-4 text-left arch-card glass-card border border-nude-200 hover:border-terracotta-500 transition-all flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-terracotta-100 text-terracotta-600 font-bold flex items-center justify-center text-sm group-hover:bg-terracotta-500 group-hover:text-white transition-colors">5단</span>
+                            <div>
+                                <h3 class="font-bold text-taupe-900 text-sm md:text-base">서비스 & 전 제조 생태계</h3>
+                                <p class="text-xs text-taupe-500">철강·화학·반도체·자동차·조선</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-taupe-300 text-xs group-hover:text-terracotta-500 group-hover:translate-x-1 transition-all"></i>
+                    </button>
+
+                    <button onclick="selectLayer(4)" id="layer-btn-4" class="layer-btn w-full p-4 text-left arch-card glass-card border border-nude-200 hover:border-terracotta-500 transition-all flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-nude-200 text-taupe-700 font-bold flex items-center justify-center text-sm group-hover:bg-terracotta-500 group-hover:text-white transition-colors">4단</span>
+                            <div>
+                                <h3 class="font-bold text-taupe-900 text-sm md:text-base">AI 독자 모델 (LLM)</h3>
+                                <p class="text-xs text-taupe-500">자국어 독자 언어모델 보유</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-taupe-300 text-xs group-hover:text-terracotta-500 group-hover:translate-x-1 transition-all"></i>
+                    </button>
+
+                    <button onclick="selectLayer(3)" id="layer-btn-3" class="layer-btn w-full p-4 text-left arch-card glass-card border border-nude-200 hover:border-terracotta-500 transition-all flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-nude-200 text-taupe-700 font-bold flex items-center justify-center text-sm group-hover:bg-terracotta-500 group-hover:text-white transition-colors">3단</span>
+                            <div>
+                                <h3 class="font-bold text-taupe-900 text-sm md:text-base">데이터센터 인프라</h3>
+                                <p class="text-xs text-taupe-500">자체 IDC 구축 및 안정적 운영</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-taupe-300 text-xs group-hover:text-terracotta-500 group-hover:translate-x-1 transition-all"></i>
+                    </button>
+
+                    <button onclick="selectLayer(2)" id="layer-btn-2" class="layer-btn w-full p-4 text-left arch-card glass-card border border-nude-200 hover:border-terracotta-500 transition-all flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-nude-200 text-taupe-700 font-bold flex items-center justify-center text-sm group-hover:bg-terracotta-500 group-hover:text-white transition-colors">2단</span>
+                            <div>
+                                <h3 class="font-bold text-taupe-900 text-sm md:text-base">초정밀 반도체 (HBM)</h3>
+                                <p class="text-xs text-taupe-500">글로벌 고대역폭 메모리 주도</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-taupe-300 text-xs group-hover:text-terracotta-500 group-hover:translate-x-1 transition-all"></i>
+                    </button>
+
+                    <button onclick="selectLayer(1)" id="layer-btn-1" class="layer-btn w-full p-4 text-left arch-card glass-card border border-nude-200 hover:border-terracotta-500 transition-all flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-full bg-nude-200 text-taupe-700 font-bold flex items-center justify-center text-sm group-hover:bg-terracotta-500 group-hover:text-white transition-colors">1단</span>
+                            <div>
+                                <h3 class="font-bold text-taupe-900 text-sm md:text-base">에너지 & 전력 인프라</h3>
+                                <p class="text-xs text-taupe-500">변압기, HVDC, 해저케이블, 배터리</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-taupe-300 text-xs group-hover:text-terracotta-500 group-hover:translate-x-1 transition-all"></i>
+                    </button>
+
+                </div>
+
+                <!-- Layer Detail Visual Canvas -->
+                <div class="lg:col-span-7">
+                    <div id="layer-display" class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl border border-nude-200 shadow-soft min-h-[360px] flex flex-col justify-between transition-all">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span id="layer-tag" class="text-xs font-bold text-terracotta-600 bg-terracotta-100 px-3 py-1 rounded-full">Top Layer 5</span>
+                                <span id="layer-number" class="text-4xl font-extrabold text-nude-300">05</span>
+                            </div>
+                            <h3 id="layer-title" class="text-2xl font-bold text-taupe-900 mb-3">5단: 서비스 & 제조업 연계 생태계</h3>
+                            <p id="layer-desc" class="text-taupe-700 text-sm md:text-base leading-relaxed mb-6">
+                                한국은 중화학공업부터 고도화된 전자 및 첨단 IT 산업까지 **전 산업군 생산 라인을 보유한 세계 유일급 제조 강국**입니다. AI를 실제 물리적 제조 현장(Physical AI) 및 공공 서비스에 즉각 이식할 수 있는 최적의 테스트베드입니다.
+                            </p>
+                        </div>
+
+                        <div class="bg-nude-50 p-4 rounded-2xl border border-nude-200">
+                            <div class="flex items-center gap-2 text-xs font-bold text-terracotta-600 mb-1">
+                                <i class="fa-solid fa-lightbulb"></i> 박태웅 의장의 핵심 통찰
+                            </div>
+                            <p id="layer-insight" class="text-xs md:text-sm text-taupe-700">
+                                "AI 모델만 가진 국가나 반도체만 제조하는 국가는 많지만, AI를 적용할 완성형 중공업·제조업 기반을 완비한 나라는 한국이 유일합니다."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: WHY UN & GLOBAL CAPITAL CHOOSE KOREA -->
+        <section id="why-korea" class="max-w-5xl mx-auto px-6 py-16">
+            <div class="bg-gradient-to-br from-nude-100/70 via-nude-200/40 to-terracotta-100/30 p-8 md:p-12 rounded-3xl border border-nude-200">
+                <div class="max-w-2xl mb-10">
+                    <span class="text-xs font-bold text-terracotta-600 uppercase tracking-wider">Inclusive AI & Geopolitics</span>
+                    <h2 class="text-2xl md:text-4xl font-bold text-taupe-900 mt-2">스위스에서 한국으로:<br>UN 및 글로벌 기구가 한국으로 오는 이유</h2>
+                    <p class="text-taupe-700 text-sm md:text-base mt-3">
+                        미·중 AI 패권 갈등이 격화되는 가운데, 왜 세계적 기관들은 중립적 협력 기지로 한국을 지목할까요?
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl border border-white/60 hover:shadow-hover transition-all">
+                        <div class="w-10 h-10 rounded-full bg-terracotta-500 text-white flex items-center justify-center mb-4 text-base">
+                            <i class="fa-solid fa-handshake"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-taupe-900 mb-2">지정학적 비적대성 (Inclusive AI)</h3>
+                        <p class="text-sm text-taupe-700 leading-relaxed">
+                            한국은 미국이나 중국처럼 기술을 무기화할 우려가 적은 신뢰할 수 있는 국가입니다. 국제사회에서 중립적이며 누구나 안심하고 협력할 수 있는 **'기술 중립 지대'** 역할을 수행합니다.
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border border-white/60 hover:shadow-hover transition-all">
+                        <div class="w-10 h-10 rounded-full bg-taupe-700 text-white flex items-center justify-center mb-4 text-base">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-taupe-900 mb-2">디지털 격차 해소의 리더</h3>
+                        <p class="text-sm text-taupe-700 leading-relaxed">
+                            개발도상국의 데이터 디지털화와 독자적 AI 시스템(소버린 AI) 구축을 적극 지원할 수 있는 포용적 AI 오케스트레이터로서 최적의 지위를 보유하고 있습니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: SOVEREIGN AI VS FOREIGN AI -->
+        <section id="sovereign-ai" class="max-w-5xl mx-auto px-6 py-16">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold text-terracotta-500 uppercase tracking-widest bg-terracotta-100 px-3 py-1 rounded-full">National Sovereignty</span>
+                <h2 class="text-2xl md:text-4xl font-bold text-taupe-900 mt-3">소버린 AI (Sovereign AI) 왜 필수인가?</h2>
+                <p class="text-taupe-700 text-sm md:text-base mt-2">외산 AI 프런티어 모델에만 의존할 때 발생할 수 있는 치명적 위험과 대안</p>
+            </div>
+
+            <!-- Comparison Table / Toggle Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Foreign AI Risk Card -->
+                <div class="bg-white/60 p-7 rounded-3xl border border-red-100 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-red-100/50 rounded-full blur-2xl -z-10"></div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-3 py-1 bg-red-100 text-red-700 font-bold text-xs rounded-full">의존의 위험</span>
+                        <h3 class="font-bold text-xl text-taupe-900">외산 프런티어 AI 독점</h3>
+                    </div>
+                    <ul class="space-y-4 text-sm text-taupe-700">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-xmark text-red-500 mt-1"></i>
+                            <div>
+                                <strong class="text-taupe-900 block">블랙박스(Black Box) 문제</strong>
+                                학습 데이터와 내부 가중치가 비공개되어 왜 그런 답변이 나왔는지 원인 추적 불가능.
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-xmark text-red-500 mt-1"></i>
+                            <div>
+                                <strong class="text-taupe-900 block">국가 주권 및 종속 위험</strong>
+                                서비스 중단이나 라이선스 정책 변경 시 국방·행정·법률 등 국가 핵심 시스템 마비.
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-xmark text-red-500 mt-1"></i>
+                            <div>
+                                <strong class="text-taupe-900 block">설명 책임성 상실</strong>
+                                공공 정책 수립 시 국민에게 결과를 설명하고 법적 책임을 질 수 없음.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Sovereign AI Solution Card -->
+                <div class="bg-white p-7 rounded-3xl border-2 border-terracotta-500/30 shadow-soft relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-terracotta-100/60 rounded-full blur-2xl -z-10"></div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="px-3 py-1 bg-terracotta-500 text-white font-bold text-xs rounded-full">한국의 대안</span>
+                        <h3 class="font-bold text-xl text-taupe-900">소버린 AI & 맨해튼 프로젝트 방식</h3>
+                    </div>
+                    <ul class="space-y-4 text-sm text-taupe-700">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-terracotta-500 mt-1"></i>
+                            <div>
+                                <strong class="text-taupe-900 block">설명 가능성과 신뢰성 확보</strong>
+                                가중치와 데이터를 통제하여 투명하고 가치 중립적인 국가 자산으로 운용.
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-terracotta-500 mt-1"></i>
+                            <div>
+                                <strong class="text-taupe-900 block">국가급 연구 인프라 결집</strong>
+                                국내외 최고 수준의 인재를 모아 GPU 인프라를 대규모 지원하는 '맨해튼 프로젝트' 방식 추진.
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-check text-terracotta-500 mt-1"></i>
+                            <div>
+                                <strong class="text-taupe-900 block">글로벌 포용적 리더십</strong>
+                                자체 AI가 없는 제3세계 국가와 AI 인프라 및 기술을 공유하는 동반 성장 리더십.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: PUBLIC AX & FAIR DATA -->
+        <section id="public-ax" class="max-w-5xl mx-auto px-6 py-16">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold text-terracotta-500 uppercase tracking-widest bg-terracotta-100 px-3 py-1 rounded-full">Public Data Standard</span>
+                <h2 class="text-2xl md:text-4xl font-bold text-taupe-900 mt-3">공공 AX와 Machine-Readable 데이터</h2>
+                <p class="text-taupe-700 text-sm md:text-base mt-2">AI 도입의 성패는 단순 모델이 아닌 '기계가 즉시 읽을 수 있는 데이터'가 결정합니다.</p>
+            </div>
+
+            <!-- FAIR Interactive Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="glass-card p-5 arch-card border border-nude-200 hover:border-terracotta-500 transition-all group">
+                    <span class="text-3xl font-extrabold text-terracotta-500 group-hover:scale-110 block transition-transform">F</span>
+                    <h4 class="font-bold text-taupe-900 mt-2 mb-1">Findable (검색성)</h4>
+                    <p class="text-xs text-taupe-700">표준 메타데이터를 적용해 AI가 필요한 데이터의 위치를 즉각 파악 가능.</p>
+                </div>
+
+                <div class="glass-card p-5 arch-card border border-nude-200 hover:border-terracotta-500 transition-all group">
+                    <span class="text-3xl font-extrabold text-terracotta-500 group-hover:scale-110 block transition-transform">A</span>
+                    <h4 class="font-bold text-taupe-900 mt-2 mb-1">Accessible (접근성)</h4>
+                    <p class="text-xs text-taupe-700">시스템 간 가림막 없이 안정적인 프로토콜로 데이터에 결합 접근.</p>
+                </div>
+
+                <div class="glass-card p-5 arch-card border border-nude-200 hover:border-terracotta-500 transition-all group">
+                    <span class="text-3xl font-extrabold text-terracotta-500 group-hover:scale-110 block transition-transform">I</span>
+                    <h4 class="font-bold text-taupe-900 mt-2 mb-1">Interoperable (상호운용성)</h4>
+                    <p class="text-xs text-taupe-700">부처 간/산업 간 벽을 허물고 표준 포맷으로 상호 호환 작성.</p>
+                </div>
+
+                <div class="glass-card p-5 arch-card border border-nude-200 hover:border-terracotta-500 transition-all group">
+                    <span class="text-3xl font-extrabold text-terracotta-500 group-hover:scale-110 block transition-transform">R</span>
+                    <h4 class="font-bold text-taupe-900 mt-2 mb-1">Reusable (재사용성)</h4>
+                    <p class="text-xs text-taupe-700">명확한 저작권과 라이선스로 반복 가공 및 학습에 즉시 재활용.</p>
+                </div>
+            </div>
+
+            <!-- Architecture Box -->
+            <div class="bg-white p-6 md:p-8 rounded-3xl border border-nude-200 flex flex-col md:flex-row items-center gap-6">
+                <div class="w-16 h-16 rounded-2xl bg-terracotta-100 text-terracotta-600 flex items-center justify-center shrink-0 text-2xl font-bold">
+                    sLLM
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg text-taupe-900 mb-1">소형 특화 모델(30B) + 에이전트 오케스트레이션</h3>
+                    <p class="text-xs md:text-sm text-taupe-700 leading-relaxed">
+                        비싼 초대형 프런티어 모델을 매번 호출할 필요가 없습니다. 분야별로 정밀 훈련된 소형 특화 AI 모델들(sLLM)을 유기적으로 연결(Orchestration)하면 **비용은 10분의 1 수준으로 줄이고, 보안 및 실용 업무 정확도는 80% 이상 획기적으로 향상**시킬 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: ACTION BLUEPRINT & SELF CHECK -->
+        <section id="action-plan" class="max-w-5xl mx-auto px-6 py-16">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold text-terracotta-500 uppercase tracking-widest bg-terracotta-100 px-3 py-1 rounded-full">Action Blueprint</span>
+                <h2 class="text-2xl md:text-4xl font-bold text-taupe-900 mt-3">개인과 기업의 AI 시대 행동 강령</h2>
+                <p class="text-taupe-700 text-sm md:text-base mt-2">우리는 지금 어떤 태도와 지식 구조로 대응해야 하는가?</p>
+            </div>
+
+            <!-- 3 Strategy Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="glass-card p-6 rounded-3xl border border-nude-200">
+                    <div class="w-8 h-8 rounded-lg bg-terracotta-500 text-white font-bold flex items-center justify-center text-sm mb-4">1</div>
+                    <h3 class="font-bold text-taupe-900 text-base mb-2">AI를 '파트너 / OS'로 재인식</h3>
+                    <p class="text-xs text-taupe-700 leading-relaxed">
+                        단순 검색창이나 보조 도구가 아닙니다. 내 모든 업무와 일상 리듬을 다시 구성하는 차세대 운영체제(OS)로 받아들여야 합니다.
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-3xl border border-nude-200">
+                    <div class="w-8 h-8 rounded-lg bg-taupe-700 text-white font-bold flex items-center justify-center text-sm mb-4">2</div>
+                    <h3 class="font-bold text-taupe-900 text-base mb-2">도메인 지식(Domain) 극대화</h3>
+                    <p class="text-xs text-taupe-700 leading-relaxed">
+                        AI 시대의 가장 큰 무기는 '본업에 대한 깊은 이해'입니다. 질문의 수준이 결과의 질을 좌우하므로 본인 분야의 전문성이 핵심입니다.
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-3xl border border-nude-200">
+                    <div class="w-8 h-8 rounded-lg bg-terracotta-500 text-white font-bold flex items-center justify-center text-sm mb-4">3</div>
+                    <h3 class="font-bold text-taupe-900 text-base mb-2">지속적 AI 리터러시 실험</h3>
+                    <p class="text-xs text-taupe-700 leading-relaxed">
+                        새로운 에이전트와 도구를 두려움 없이 지속적으로 테스트하며 업무 프로세스에 연결하는 습관을 가져야 합니다.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interactive AI Readiness Self-Checker -->
+            <div class="bg-white p-8 rounded-3xl border border-nude-200 shadow-soft">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="font-bold text-lg text-taupe-900">나의 AI 자생력 자가 진단</h3>
+                        <p class="text-xs text-taupe-500">체크박스를 선택해 본인의 AI 준비도를 측정해보세요.</p>
+                    </div>
+                    <span id="score-badge" class="px-4 py-1.5 rounded-full bg-nude-100 text-terracotta-600 font-bold text-sm">
+                        0 / 3 준비됨
+                    </span>
+                </div>
+
+                <div class="space-y-3">
+                    <label class="flex items-center gap-3 p-4 rounded-2xl bg-nude-50 border border-nude-200 cursor-pointer hover:bg-nude-100/50 transition-colors">
+                        <input type="checkbox" onchange="updateChecklist()" class="checklist-item w-5 h-5 accent-terracotta-500 rounded">
+                        <span class="text-xs md:text-sm text-taupe-900">나는 업무에서 단순 키워드 검색 대신 AI에게 구체적 컨텍스트를 부여해 질문한다.</span>
+                    </label>
+
+                    <label class="flex items-center gap-3 p-4 rounded-2xl bg-nude-50 border border-nude-200 cursor-pointer hover:bg-nude-100/50 transition-colors">
+                        <input type="checkbox" onchange="updateChecklist()" class="checklist-item w-5 h-5 accent-terracotta-500 rounded">
+                        <span class="text-xs md:text-sm text-taupe-900">내 본업(도메인 지식)에서 정확한 문제와 지시 사항을 정의할 수 있다.</span>
+                    </label>
+
+                    <label class="flex items-center gap-3 p-4 rounded-2xl bg-nude-50 border border-nude-200 cursor-pointer hover:bg-nude-100/50 transition-colors">
+                        <input type="checkbox" onchange="updateChecklist()" class="checklist-item w-5 h-5 accent-terracotta-500 rounded">
+                        <span class="text-xs md:text-sm text-taupe-900">매주 새로운 AI 에이전트 및 자동화 툴을 최소 1개 이상 실험한다.</span>
+                    </label>
+                </div>
+
+                <div id="check-result" class="mt-6 p-4 rounded-2xl bg-terracotta-100/50 text-terracotta-700 text-xs md:text-sm font-medium hidden">
+                    🎉 놀랍습니다! 당신은 AI 시대를 앞서가는 리더십을 갖추고 있습니다.
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER & COPY BANNER -->
+    <footer class="border-t border-nude-200 bg-white/50 py-12">
+        <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="w-6 h-6 rounded-full bg-terracotta-500 text-white flex items-center justify-center font-bold text-xs">AI</span>
+                    <span class="font-bold text-taupe-900 text-sm">박태웅의 20분 AI과외 핵심 요약</span>
+                </div>
+                <p class="text-xs text-taupe-500">원출처: MKTV 김미경TV | 강연: 박태웅 한빛미디어 의장</p>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button onclick="scrollToSummary()" class="px-5 py-2.5 bg-terracotta-500 text-white font-semibold text-xs rounded-full hover:bg-terracotta-600 transition-all shadow-md">
+                    <i class="fa-regular fa-copy mr-1.5"></i> 요약 텍스트 전체 복사
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification for Copying -->
+    <div id="toast" class="fixed bottom-6 right-6 px-5 py-3 rounded-2xl bg-taupe-900 text-white text-xs font-semibold shadow-xl translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2 z-50">
+        <i class="fa-solid fa-circle-check text-terracotta-300"></i>
+        <span>요약 내용이 클립보드에 복사되었습니다!</span>
+    </div>
+
+    <!-- Hidden Raw Summary for Easy Copying -->
+    <textarea id="raw-summary" class="hidden">
+[영상 요약] 스위스 버리고 한국 오는 유엔 기구들 — 박태웅 의장의 '20분 AI과외' 풀버전 핵심 요약
+
+1. 엔비디아 젠슨 황의 '5단 AI 케이크'와 한국의 위상
+- 1단: 에너지/전력 인프라 (변압기, HVDC, 배터리)
+- 2단: 초정밀 반도체 (HBM 메모리 독점적 리더십)
+- 3단: 데이터센터 (자체 IDC 기술력)
+- 4단: AI 독자 모델 (자국어 독자 LLM 보유국)
+- 5단: 서비스 & 전 제조업 생태계 (철강·화학·조선·자동차 완비)
+
+2. UN 및 글로벌 기구가 한국을 찾는 이유
+- 지정학적 비적대성 (Inclusive AI): 미중 갈등 속 신뢰할 수 있는 기술 중립 플랫폼
+- 디지털 격차 해소: 글로벌 소버린 AI 오케스트레이터 역할 수행
+
+3. 소버린 AI (Sovereign AI)의 필요성
+- 외산 모델의 블랙박스 문제와 거버넌스 종속 위험 차단
+- 설명 책임성이 필요한 공공/국가 시스템의 필수 주권 확보
+
+4. 공공 AX 및 FAIR 데이터 표준
+- FAIR 원칙 (Findable, Accessible, Interoperable, Reusable) 준수
+- Machine-Readable 데이터 변환과 sLLM(30B급) 오케스트레이션 구조 구축
+
+5. 행동 강령
+- AI를 차세대 OS로 재인식
+- 본업에 대한 도메인 지식(Domain Knowledge) 극대화
+- 지속적인 리터러시 실험 습관화
+    </textarea>
+
+    <script>
+        // 5-Layer AI Cake Interactive Content Data
+        const layerData = {
+            1: {
+                tag: "Bottom Layer 1",
+                num: "01",
+                title: "1단: 에너지 & 전력 인프라",
+                desc: "AI 데이터센터 운영의 필수 전제조건인 변압기, 고압직류송전(HVDC), 해저케이블, 대용량 배터리 등 전력 기기 제조업 라인을 완비하고 있습니다.",
+                insight: `"전력망 구축 없이는 AI 데이터센터도 불가능합니다. 한국은 이 전력 기기 공급망의 핵심 축입니다."`
+            },
+            2: {
+                tag: "Layer 2",
+                num: "02",
+                title: "2단: 초정밀 메모리 반도체 (HBM)",
+                desc: "AI 연산의 병목을 해결하는 고대역폭 메모리(HBM) 및 최첨단 반도체 공급망을 글로벌 시장 최고 수준으로 이끌고 있습니다.",
+                insight: `"엔비디아 GPU의 핵심 파트너로서 한국의 반도체 경쟁력은 대체 불가능한 국가적 자산입니다."`
+            },
+            3: {
+                tag: "Layer 3",
+                num: "03",
+                title: "3단: 데이터센터 인프라 (IDC)",
+                desc: "대규모 AI 연산을 안정적으로 소화할 수 있는 독자적인 데이터센터 설계, 구축, 열 관리 및 시공 기술 역량을 보유하고 있습니다.",
+                insight: `"초거대 데이터센터를 안정적으로 다룰 수 있는 인프라 구축 능력 역시 강점입니다."`
+            },
+            4: {
+                tag: "Layer 4",
+                num: "04",
+                title: "4단: AI 독자 모델 (LLM)",
+                desc: "미국, 중국, 한국, 러시아 정도만 보유한 자국어 기반 포털 및 독자적 거대언어모델(LLM) 생태계를 구축하고 운영하는 몇 안 되는 국가입니다.",
+                insight: `"자국어 포털과 자체 모델을 보유한 국가라는 점이 소버린 AI 주권의 핵심 토대입니다."`
+            },
+            5: {
+                tag: "Top Layer 5",
+                num: "05",
+                title: "5단: 서비스 & 전 제조업 생태계",
+                desc: "철강, 화학, 반도체, 자동차, 조선 등 전 산업 분야의 생산 인프라를 완벽히 갖춘 세계 유일급 제조 강국으로, 피지컬 AI의 최적 기지입니다.",
+                insight: `"AI 모델만 있거나 반도체만 제조하는 국가는 많지만, AI를 이식할 전 산업 라인을 가진 곳은 한국이 유일합니다."`
+            }
+        };
+
+        function selectLayer(layerNum) {
+            // Reset all buttons styling
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.getElementById(`layer-btn-${i}`);
+                if (btn) {
+                    btn.classList.remove('border-terracotta-500', 'bg-terracotta-50/50');
+                    btn.classList.add('border-nude-200');
+                    const numSpan = btn.querySelector('span');
+                    if (numSpan) {
+                        numSpan.classList.remove('bg-terracotta-500', 'text-white');
+                        numSpan.classList.add('bg-nude-200', 'text-taupe-700');
+                    }
+                }
+            }
+
+            // Highlight selected button
+            const activeBtn = document.getElementById(`layer-btn-${layerNum}`);
+            if (activeBtn) {
+                activeBtn.classList.add('border-terracotta-500', 'bg-terracotta-50/50');
+                activeBtn.classList.remove('border-nude-200');
+                const numSpan = activeBtn.querySelector('span');
+                if (numSpan) {
+                    numSpan.classList.add('bg-terracotta-500', 'text-white');
+                    numSpan.classList.remove('bg-nude-200', 'text-taupe-700');
+                }
+            }
+
+            // Update display content
+            const data = layerData[layerNum];
+            const display = document.getElementById('layer-display');
+            
+            // Subtle fade animation
+            display.style.opacity = '0.4';
+            setTimeout(() => {
+                document.getElementById('layer-tag').innerText = data.tag;
+                document.getElementById('layer-number').innerText = data.num;
+                document.getElementById('layer-title').innerText = data.title;
+                document.getElementById('layer-desc').innerHTML = data.desc;
+                document.getElementById('layer-insight').innerText = data.insight;
+                display.style.opacity = '1';
+            }, 150);
+        }
+
+        // Checklist Readiness Score Calculator
+        function updateChecklist() {
+            const checkboxes = document.querySelectorAll('.checklist-item');
+            let checkedCount = 0;
+            checkboxes.forEach(cb => {
+                if (cb.checked) checkedCount++;
+            });
+
+            const badge = document.getElementById('score-badge');
+            const result = document.getElementById('check-result');
+
+            badge.innerText = `${checkedCount} / 3 준비됨`;
+
+            if (checkedCount === 3) {
+                badge.className = "px-4 py-1.5 rounded-full bg-terracotta-500 text-white font-bold text-sm shadow-md";
+                result.classList.remove('hidden');
+            } else if (checkedCount > 0) {
+                badge.className = "px-4 py-1.5 rounded-full bg-terracotta-100 text-terracotta-700 font-bold text-sm";
+                result.classList.add('hidden');
+            } else {
+                badge.className = "px-4 py-1.5 rounded-full bg-nude-100 text-terracotta-600 font-bold text-sm";
+                result.classList.add('hidden');
+            }
+        }
+
+        // Copy Text Functionality
+        function scrollToSummary() {
+            const rawText = document.getElementById('raw-summary').value;
+
+            // Fallback clipboard logic
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = rawText;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                console.error('Failed to copy text', err);
+            }
+            
+            document.body.removeChild(tempTextArea);
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Initialize default layer view
+        window.onload = function() {
+            selectLayer(5);
+        }
+    </script>
+</body>
+</html>
