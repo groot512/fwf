@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20조 원의 서명식: 본질과 신념이 자본을 이기는 법</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans KR', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                    },
+                    colors: {
+                        pastel: {
+                            bg: '#FBFBFD',
+                            card: '#FFFFFF',
+                            accent: '#6E62E4',
+                            accentLight: '#EEECFB',
+                            softBlue: '#EAF3FF',
+                            softGreen: '#EBF8F2',
+                            softRose: '#FFF0F3',
+                            softOrange: '#FFF6ED',
+                            textPrimary: '#1D1D1F',
+                            textSecondary: '#86868B',
+                        }
+                    },
+                    boxShadow: {
+                        apple: '0 8px 30px rgba(0, 0, 0, 0.04)',
+                        appleHover: '0 14px 40px rgba(0, 0, 0, 0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Fade-in scroll animations */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FBFBFD;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D2D2D7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+    </style>
+</head>
+<body class="bg-pastel-bg text-pastel-textPrimary antialiased selection:bg-pastel-accentLight selection:text-pastel-accent">
+
+    <!-- Fixed Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-100/60 transition-all duration-300">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <span class="text-xs font-semibold tracking-wider text-pastel-textSecondary uppercase">미래자산포럼 • DIGITAL COLUMN</span>
+            <a href="#subtraction-tool" class="text-xs font-medium bg-pastel-accent text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-all shadow-sm">
+                나의 뺄셈 지수 측정
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="pt-28 pb-20 px-6 max-w-4xl mx-auto">
+
+        <!-- HERO SECTION -->
+        <section class="text-center py-16 md:py-24 reveal-on-scroll">
+            <div class="inline-block px-4 py-1.5 mb-6 text-xs font-medium text-pastel-accent bg-pastel-accentLight rounded-full">
+                2026. 07. 25 • 파운더 박수억
+            </div>
+            <h1 class="text-3xl md:text-5xl md:leading-tight font-extrabold tracking-tight mb-8 text-pastel-textPrimary">
+                20조 원의 서명식,<br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500">
+                    본질과 신념이 자본을 이기는 법
+                </span>
+            </h1>
+            <p class="text-lg md:text-xl text-pastel-textSecondary leading-relaxed max-w-2xl mx-auto font-light">
+                세상을 바꾸는 사람들은 무언가를 더하는 이들이 아니라,<br class="hidden sm:inline"/>
+                가장 중요한 본질만 남을 때까지 덜어내는 사람들이다.
+            </p>
+
+            <div class="mt-12 flex justify-center items-center gap-2 text-pastel-textSecondary text-sm animate-bounce">
+                <span>아래로 스크롤하여 읽기</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </div>
+        </section>
+
+        <!-- CHAPTER 1: 가난과 거절 -->
+        <section class="my-20 reveal-on-scroll">
+            <div class="bg-pastel-card rounded-3xl p-8 md:p-12 shadow-apple hover:shadow-appleHover transition-all border border-gray-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-8 h-8 rounded-full bg-pastel-softBlue flex items-center justify-center text-blue-600 text-sm font-bold">01</span>
+                    <h2 class="text-xl md:text-2xl font-bold">시련과 거절, 그리고 재해석</h2>
+                </div>
+                <div class="space-y-6 text-slate-700 leading-relaxed font-normal text-base md:text-lg">
+                    <p>
+                        1992년, 소련 시절 우크라이나의 가난과 반유대주의 탄압을 피해 미국 땅을 밟은 열여섯 살 소년의 손에는 낡은 공책 몇 권과 연필이 전부였다. 캘리포니아 마운틴뷰의 사회복지 사무소 앞에서 무료 식품 쿠폰을 받기 위해 어머니와 줄을 서던 극빈층 소년.
+                    </p>
+                    <p class="p-4 bg-pastel-softBlue/60 rounded-2xl text-blue-900 text-sm md:text-base border border-blue-100/50">
+                        어머니는 암 투병 끝에 세상을 떠났고, 소년은 기부받은 책으로 홀로 프로그래밍을 배웠다. 그가 바로 훗날 왓츠앱(WhatsApp)을 만든 <strong>얀 쿰(Jan Koum)</strong>이다.
+                    </p>
+                    <p>
+                        IT 공룡 야후에서 9년간 일한 뒤 페이스북과 트위터에 입사를 지원했지만, 모두 거절당했다. 대부분이라면 좌절했겠지만, 그는 거절을 실패로 받아들이지 않았다.
+                    </p>
+                    <div class="font-medium text-pastel-accent bg-pastel-accentLight/40 p-4 rounded-2xl border-l-4 border-pastel-accent text-center md:text-left">
+                        "내가 가야 할 길은 따로 있다"는 명확한 신호로 받아들인 것이다.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 2: 3가지 '없음'의 철학 -->
+        <section class="my-20 reveal-on-scroll">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-3xl font-bold mb-3">왓츠앱 책상 위 한 줄의 원칙</h2>
+                <p class="text-pastel-textSecondary">복잡성을 더하는 대신 본질만 남긴 뺄셈의 철학</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div class="bg-pastel-softRose p-8 rounded-3xl text-center shadow-sm border border-red-100 hover:scale-105 transition-transform">
+                    <div class="text-3xl mb-3">🚫</div>
+                    <h3 class="font-bold text-lg text-red-900 mb-1">광고 없음</h3>
+                    <p class="text-xs text-red-600/80">사용자의 주의를 빼앗는 상업성 제거</p>
+                </div>
+                <div class="bg-pastel-softOrange p-8 rounded-3xl text-center shadow-sm border border-orange-100 hover:scale-105 transition-transform">
+                    <div class="text-3xl mb-3">🎮</div>
+                    <h3 class="font-bold text-lg text-orange-900 mb-1">게임 없음</h3>
+                    <p class="text-xs text-orange-600/80">본질을 흐리는 부가 기능 배제</p>
+                </div>
+                <div class="bg-pastel-softGreen p-8 rounded-3xl text-center shadow-sm border border-emerald-100 hover:scale-105 transition-transform">
+                    <div class="text-3xl mb-3">✨</div>
+                    <h3 class="font-bold text-lg text-emerald-900 mb-1">속임수 없음</h3>
+                    <p class="text-xs text-emerald-600/80">오직 빠르고 안전한 소통에만 집중</p>
+                </div>
+            </div>
+
+            <div class="bg-pastel-card p-8 md:p-10 rounded-3xl shadow-apple border border-gray-100 text-center">
+                <p class="text-xl md:text-2xl font-bold text-gray-800 leading-snug">
+                    "마케팅 조직 하나 없이 <span class="text-indigo-600">단 55명의 직원</span>만으로 수억 명을 연결하고,<br class="hidden sm:inline"/>
+                    2014년 페이스북에 <span class="underline decoration-indigo-300 decoration-wavy">190억 달러(약 20조 원)</span>에 인수되다."
+                </p>
+            </div>
+        </section>
+
+        <!-- CHAPTER 3: 상징적 서명식 & 신념 -->
+        <section class="my-20 reveal-on-scroll">
+            <div class="bg-pastel-card rounded-3xl p-8 md:p-12 shadow-apple border border-gray-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-8 h-8 rounded-full bg-pastel-softGreen flex items-center justify-center text-emerald-600 text-sm font-bold">02</span>
+                    <h2 class="text-xl md:text-2xl font-bold">20조 원의 서명식, 그리고 돈보다 큰 신념</h2>
+                </div>
+                <div class="space-y-6 text-slate-700 leading-relaxed font-normal text-base md:text-lg">
+                    <p>
+                        20조 원 인수 계약 당시, 얀 쿰은 화려한 연회장 대신 <strong>16세 때 어머니와 무료 식품 쿠폰을 받기 위해 줄을 서던 낡은 사회복지 사무소</strong>를 찾아갔다. 그리고 폐허가 된 그 건물 벽에 계약서를 올려놓고 서명했다. 자신이 어디에서 시작했는지를 평생 잊지 않기 위해서였다.
+                    </p>
+                    <div class="p-6 bg-slate-900 text-white rounded-3xl space-y-3">
+                        <div class="text-xs text-slate-400 font-mono uppercase">Principle Over Profit</div>
+                        <p class="text-base md:text-lg font-light leading-relaxed">
+                            이후 페이스북이 왓츠앱의 개인정보 정책을 변경하려 하자, 그는 남아 있던 <span class="text-amber-300 font-semibold">수천억 원 규모의 스톡옵션을 미련 없이 포기하고 회사를 떠났다.</span>
+                        </p>
+                        <p class="text-xs text-slate-400">
+                            * 감시와 통제가 일상이던 어린 시절을 보낸 그에게 개인정보 보호는 전략이 아닌 '인간의 자유'였기 때문.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 4: 거장들의 통찰 -->
+        <section class="my-20 reveal-on-scroll">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-10">위대한 거장들의 뺄셈 철학</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Bill Gates -->
+                <div class="bg-white p-6 rounded-3xl shadow-apple border border-slate-100 flex flex-col justify-between hover:-translate-y-1 transition-all">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center mb-4">BG</div>
+                        <h3 class="font-bold text-gray-900">빌 게이츠</h3>
+                        <p class="text-xs text-gray-400 mb-4">Microsoft Founder</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            "복잡한 문제를 가장 단순한 구조로 바꾸는 능력이야말로 최고의 경쟁력이다."
+                        </p>
+                    </div>
+                </div>
+                <!-- Steve Jobs -->
+                <div class="bg-white p-6 rounded-3xl shadow-apple border border-slate-100 flex flex-col justify-between hover:-translate-y-1 transition-all">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-800 font-bold flex items-center justify-center mb-4">SJ</div>
+                        <h3 class="font-bold text-gray-900">스티브 잡스</h3>
+                        <p class="text-xs text-gray-400 mb-4">Apple Founder</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            "무엇을 만들 것인가보다 무엇을 만들지 않을 것인가를 결정하는 일이 더 중요하다."
+                        </p>
+                    </div>
+                </div>
+                <!-- Elon Musk -->
+                <div class="bg-white p-6 rounded-3xl shadow-apple border border-slate-100 flex flex-col justify-between hover:-translate-y-1 transition-all">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 font-bold flex items-center justify-center mb-4">EM</div>
+                        <h3 class="font-bold text-gray-900">일론 머스크</h3>
+                        <p class="text-xs text-gray-400 mb-4">Tesla / SpaceX</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            "제1원리 사고를 통해 불필요한 공정과 비용을 덜어내야 비로소 판이 바뀐다."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE HOOK TOOL: 뺄셈 지수 테스트 -->
+        <section id="subtraction-tool" class="my-24 reveal-on-scroll">
+            <div class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-8 md:p-12 rounded-3xl border border-indigo-100/80 shadow-lg">
+                <div class="text-center max-w-xl mx-auto mb-8">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-white px-3 py-1 rounded-full border border-indigo-100">Interactive Tool</span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-4 mb-2">내 인생 & 제품의 '뺄셈 지수' 측정하기</h2>
+                    <p class="text-sm text-slate-600">지금 내 삶과 프로젝트에서 덜어낼 수 있는 항목들을 체크해보세요.</p>
+                </div>
+
+                <div class="space-y-3 max-w-lg mx-auto" id="checklist">
+                    <label class="flex items-center p-4 bg-white rounded-2xl cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                        <input type="checkbox" class="sub-item w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 border-gray-300" onchange="calculateScore()">
+                        <span class="ml-3 text-sm font-medium text-slate-700">남들의 시선과 비교하는 마음 덜어내기</span>
+                    </label>
+                    <label class="flex items-center p-4 bg-white rounded-2xl cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                        <input type="checkbox" class="sub-item w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 border-gray-300" onchange="calculateScore()">
+                        <span class="ml-3 text-sm font-medium text-slate-700">기획/제품에서 불필요하게 복잡한 기능 덜어내기</span>
+                    </label>
+                    <label class="flex items-center p-4 bg-white rounded-2xl cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                        <input type="checkbox" class="sub-item w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 border-gray-300" onchange="calculateScore()">
+                        <span class="ml-3 text-sm font-medium text-slate-700">막연한 실패에 대한 두려움 덜어내기</span>
+                    </label>
+                    <label class="flex items-center p-4 bg-white rounded-2xl cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                        <input type="checkbox" class="sub-item w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 border-gray-300" onchange="calculateScore()">
+                        <span class="ml-3 text-sm font-medium text-slate-700">익숙함에 안주하려는 보수적인 태도 덜어내기</span>
+                    </label>
+                    <label class="flex items-center p-4 bg-white rounded-2xl cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+                        <input type="checkbox" class="sub-item w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 border-gray-300" onchange="calculateScore()">
+                        <span class="ml-3 text-sm font-medium text-slate-700">본질과 맞지 않는 과도한 물질적 욕심 덜어내기</span>
+                    </label>
+                </div>
+
+                <!-- Result Gauge -->
+                <div class="mt-8 pt-8 border-t border-indigo-100 text-center max-w-lg mx-auto">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-semibold text-slate-500">본질 몰입도 (Essential Score)</span>
+                        <span id="score-text" class="text-lg font-bold text-indigo-600">0%</span>
+                    </div>
+                    <div class="w-full bg-white rounded-full h-3 p-0.5 shadow-inner">
+                        <div id="score-bar" class="bg-gradient-to-r from-indigo-500 to-pink-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p id="feedback-msg" class="text-xs text-slate-500 mt-4 italic">
+                        덜어낼 준비가 되셨나요? 체크박스를 선택해보세요.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- USER REFLECTION INTERACTION -->
+        <section class="my-20 reveal-on-scroll">
+            <div class="bg-pastel-card rounded-3xl p-8 md:p-10 shadow-apple border border-gray-100 text-center">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">오늘 당신이 덜어낼 '한 가지'는 무엇인가요?</h3>
+                <p class="text-xs text-slate-500 mb-6">생각만 하는 것보다 한 줄로 작성할 때 본질이 명확해집니다.</p>
+
+                <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input type="text" id="user-resolution" placeholder="예: 의미 없는 소셜미디어 확인, 불필요한 회의..." 
+                           class="flex-1 px-4 py-3 rounded-2xl border border-gray-200 text-sm focus:outline-none focus:border-indigo-500 transition-colors">
+                    <button onclick="commitResolution()" class="px-6 py-3 bg-slate-900 text-white font-medium text-sm rounded-2xl hover:bg-slate-800 transition-all shadow-sm">
+                        다짐 저장하기
+                    </button>
+                </div>
+
+                <div id="resolution-card" class="hidden mt-6 p-6 bg-pastel-accentLight/50 rounded-2xl border border-indigo-100 text-left animate-fade-in">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-1">My Commitment</span>
+                    <p id="resolution-text" class="text-base font-medium text-slate-800"></p>
+                    <p class="text-xs text-slate-400 mt-2">"인생의 품격은 무엇을 더했느냐가 아니라, 무엇을 끝까지 지켜냈느냐로 결정된다."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCLUSION & OUTRO -->
+        <section class="my-20 text-center reveal-on-scroll">
+            <div class="max-w-2xl mx-auto space-y-6">
+                <blockquote class="text-2xl md:text-3xl font-light text-slate-800 italic leading-snug">
+                    "결국 성공은 더 많이 가지는 사람에게 오는 것이 아니다.<br/>
+                    <span class="font-bold text-indigo-600 not-italic">끝까지 본질을 지키는 사람</span>에게 온다."
+                </blockquote>
+                <p class="text-sm text-pastel-textSecondary leading-relaxed">
+                    20조 원의 계약서보다 더 위대한 것은 그 돈이 아니라,<br/>
+                    가난했던 소년이 끝까지 잃지 않았던 가치였습니다.<br/>
+                    본질은 단순합니다. 그리고 세상을 바꾸는 힘은 언제나 그 단순함에서 시작됩니다.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-100 py-12 px-6">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-pastel-textSecondary">
+            <div>
+                <p class="font-semibold text-gray-700">미래자산포럼 (Future Asset Forum)</p>
+                <p class="mt-1">파운더 박 수 억 | 2026년 07월 25일 토요일 칼럼</p>
+            </div>
+            <div class="text-center md:text-right">
+                <p>© 2026 Future Asset Forum. All rights reserved.</p>
+                <p class="mt-1 text-gray-400">Essentialism & Principles Over Capital</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // Scroll Reveal Observer
+        document.addEventListener("DOMContentLoaded", function () {
+            const observerOptions = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll(".reveal-on-scroll").forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Subtraction Calculator Logic
+        function calculateScore() {
+            const items = document.querySelectorAll('.sub-item');
+            let checkedCount = 0;
+            items.forEach(item => {
+                if (item.checked) checkedCount++;
+            });
+
+            const total = items.length;
+            const percentage = Math.round((checkedCount / total) * 100);
+
+            const scoreBar = document.getElementById('score-bar');
+            const scoreText = document.getElementById('score-text');
+            const feedbackMsg = document.getElementById('feedback-msg');
+
+            scoreBar.style.width = percentage + '%';
+            scoreText.innerText = percentage + '%';
+
+            if (percentage === 0) {
+                feedbackMsg.innerText = "덜어낼 준비가 되셨나요? 체크박스를 선택해보세요.";
+            } else if (percentage <= 40) {
+                feedbackMsg.innerText = "좋은 출발입니다! 불필요한 것들을 하나씩 시원하게 덜어내보세요.";
+            } else if (percentage <= 80) {
+                feedbackMsg.innerText = "놀라운 몰입도입니다. 본질에 매우 가까워지고 있습니다.";
+            } else {
+                feedbackMsg.innerText = "완벽한 뺄셈의 철학! 당신은 본질만을 남긴 최고의 기획자/리더입니다.";
+            }
+        }
+
+        // Commit Resolution Logic
+        function commitResolution() {
+            const input = document.getElementById('user-resolution');
+            const val = input.value.trim();
+            const card = document.getElementById('resolution-card');
+            const text = document.getElementById('resolution-text');
+
+            if (!val) {
+                alert('덜어낼 한 가지를 작성해 주세요!');
+                return;
+            }
+
+            text.innerText = ` 오늘 내가 덜어낼 것: "${val}"`;
+            card.classList.remove('hidden');
+            input.value = '';
+        }
+    </script>
+</body>
+</html>
