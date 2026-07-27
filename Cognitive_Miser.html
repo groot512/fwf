@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[디지털 칼럼] 혁신의 뿌리는 어디에 있는가</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', 'sans-serif'],
+                    },
+                    colors: {
+                        palette: {
+                            1: '#cadadd', // Light dusty blue
+                            2: '#93adbc', // Muted steel blue
+                            3: '#5d7d8c', // Darker slate blue
+                            4: '#734750', // Muted maroon
+                            5: '#7d5a46', // Muted brown
+                            6: '#374a4d', // Dark slate grey
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* 기본 리셋 및 부드러운 스크롤 */
+        html { scroll-behavior: smooth; }
+        body { 
+            background-color: #fdfdfd; 
+            color: #374a4d; /* palette-6 */
+            overflow-x: hidden;
+        }
+
+        /* 텍스트 드래그 색상 지정 */
+        ::selection {
+            background: #cadadd;
+            color: #374a4d;
+        }
+
+        /* 상단 스크롤 진행바 */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #734750; /* palette-4 */
+            width: 0%;
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* 인터랙티브 스크롤 애니메이션 클래스 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.2s; }
+        .reveal-delay-2 { transition-delay: 0.4s; }
+
+        /* 블러 페이드인 효과 (애플 스타일) */
+        .blur-reveal {
+            opacity: 0;
+            filter: blur(10px);
+            transform: scale(0.98);
+            transition: all 1.2s ease-out;
+        }
+        .blur-reveal.active {
+            opacity: 1;
+            filter: blur(0);
+            transform: scale(1);
+        }
+
+        /* 텍스트 하이라이트 애니메이션 */
+        .highlight-text {
+            background: linear-gradient(120deg, rgba(202, 218, 221, 0.5) 0%, rgba(202, 218, 221, 0.5) 100%);
+            background-repeat: no-repeat;
+            background-size: 0% 100%;
+            background-position: 0% 80%;
+            transition: background-size 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .highlight-text.active {
+            background-size: 100% 100%;
+        }
+
+        /* 그라데이션 텍스트 */
+        .text-gradient {
+            background: linear-gradient(90deg, #5d7d8c, #734750);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased leading-relaxed tracking-tight">
+
+    <div id="progress-bar"></div>
+
+    <header class="relative min-h-screen flex flex-col justify-center items-center px-6 text-center overflow-hidden" style="background: linear-gradient(135deg, #cadadd 0%, #fdfdfd 100%);">
+        <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#93adbc 1px, transparent 1px); background-size: 40px 40px;"></div>
+        
+        <div class="z-10 blur-reveal">
+            <p class="text-palette-3 font-semibold tracking-widest uppercase mb-4 text-sm md:text-base">Digital Column</p>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-palette-6 leading-tight mb-8 break-keep">
+                혁신의 뿌리는 <br class="hidden md:block">어디에 있는가
+            </h1>
+            <div class="flex flex-col items-center gap-2 mt-8">
+                <span class="w-12 h-1 bg-palette-4 rounded-full mb-4"></span>
+                <p class="text-palette-5 font-medium text-lg">2026년 07월 27일</p>
+                <p class="text-palette-6 font-bold text-xl">박 수 억</p>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 animate-bounce text-palette-3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-24 md:py-32 space-y-32">
+        
+        <section class="reveal">
+            <h2 class="text-2xl md:text-4xl font-bold text-palette-6 mb-10 leading-snug break-keep">
+                메타인지에서 Web 3.0 시대의 철학으로 <br>
+                <span class="text-palette-4">우리는 혁신을 이야기할 때 늘 결과부터 본다.</span>
+            </h2>
+            <p class="text-lg md:text-xl text-palette-6 mb-6 leading-loose break-keep">
+                아이폰을 만든 스티브 잡스, 전기차를 바꾼 일론 머스크, AI를 만든 오픈AI와 구글, 그리고 블록체인과 Web 3.0.
+            </p>
+            <p class="text-lg md:text-xl text-palette-6 mb-6 leading-loose break-keep">
+                하지만 조금만 깊이 들어가 보면 혁신은 기술에서 시작되지 않았다. <br class="hidden md:block">
+                항상 <strong class="text-palette-3">사고의 변화</strong>가 먼저였고, 기술은 그 결과였다.
+            </p>
+            <p class="text-xl md:text-2xl font-semibold text-palette-6 mt-12 leading-loose break-keep">
+                세상을 바꾼 사람들은 남들과 다른 기술을 먼저 가진 것이 아니라, <br class="hidden md:block">
+                남들과 다른 질문을 먼저 던진 사람들이었다. <br>
+                <span class="highlight-text inline-block mt-2">그 질문의 시작이 바로 메타인지(Metacognition)다.</span>
+            </p>
+        </section>
+
+        <section class="reveal">
+            <div class="border-l-4 border-palette-4 pl-6 md:pl-10 py-2 mb-12">
+                <h3 class="text-3xl md:text-5xl font-bold text-palette-6 leading-tight">
+                    혁신은 <br> <span class="text-gradient">"내가 틀릴 수도 있다"</span>에서 <br>시작된다
+                </h3>
+            </div>
+            
+            <p class="text-lg md:text-xl text-palette-6 mb-10 leading-loose break-keep">
+                인간은 원래 자신이 옳다고 믿는다. <br>
+                노벨경제학상 수상자인 대니얼 카너먼은 인간을 <strong class="text-palette-4">'인지적 구두쇠(Cognitive Miser)'</strong>라고 표현했다. 뇌는 새로운 생각보다 익숙한 생각을 훨씬 좋아한다. 그래서 사람은 대부분 기존 방식대로 살아간다.
+            </p>
+
+            <div class="bg-palette-1 bg-opacity-20 rounded-3xl p-8 md:p-12 space-y-12">
+                <div class="reveal reveal-delay-1">
+                    <p class="text-2xl font-bold text-palette-6 mb-4">"정말 이 방법밖에 없을까?"</p>
+                    <p class="text-lg text-palette-6 leading-relaxed break-keep">
+                        이 질문 하나가 세상을 바꾸기 시작한다. <br>
+                        <strong>도요타</strong>는 모두가 재고를 많이 쌓아야 안전하다고 믿던 시대에 정반대로 생각했다. 재고는 자산이 아니라 낭비라는 발상의 전환. 그것이 JIT 시스템이었다.
+                    </p>
+                </div>
+
+                <div class="reveal reveal-delay-2">
+                    <p class="text-lg text-palette-6 leading-relaxed break-keep">
+                        <strong>삼성</strong>의 신경영도 마찬가지다. <br>
+                        <em class="text-palette-4 not-italic font-semibold">"마누라와 자식 빼고 다 바꿔라."</em> <br>
+                        그 말의 핵심은 사람을 바꾸자는 것이 아니라 생각을 바꾸자는 선언이었다. 양을 버리고 질을 선택한 순간 삼성은 세계 기업으로 도약했다.
+                    </p>
+                </div>
+
+                <div class="reveal">
+                    <p class="text-lg text-palette-6 leading-relaxed break-keep">
+                        <strong>포드</strong>는 자동차만 만든 것이 아니다. 부품을 사오는 시스템 자체를 의심했다. 그래서 철광석부터 제철소, 물류, 생산까지 하나로 연결하는 수직통합을 만들었다.
+                    </p>
+                </div>
+
+                <div class="reveal">
+                    <p class="text-lg text-palette-6 leading-relaxed break-keep">
+                        <strong>일론 머스크</strong>도 마찬가지다. 배터리가 비싼 이유를 시장가격에서 찾지 않았다. 배터리를 원자재 단위까지 분해해 다시 계산했다. 이것이 그가 말하는 <span class="highlight-text font-bold">제1원리 사고(First Principles Thinking)</span>다.
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-xl md:text-2xl font-medium text-palette-6 mt-12 text-center leading-loose break-keep reveal">
+                겉으로 보면 모두 다른 이야기다. 그러나 본질은 하나다. <br>
+                <strong>기존의 상식을 의심했다는 것. 그리고 그것이 메타인지다.</strong>
+            </p>
+        </section>
+
+        <section class="reveal">
+            <h3 class="text-2xl md:text-4xl font-bold text-palette-6 mb-8 leading-snug break-keep text-center">
+                메타인지는 <span class="text-palette-3">'어떻게'</span>를 묻고, <br>
+                철학은 <span class="text-palette-4">'왜'</span>를 묻는다
+            </h3>
+            
+            <p class="text-lg md:text-xl text-palette-6 text-center mb-12">
+                메타인지는 자신의 생각을 객관적으로 바라보는 능력이다.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="p-8 rounded-2xl bg-white shadow-lg shadow-palette-1/30 border border-palette-1/50 reveal">
+                    <p class="text-lg leading-relaxed text-palette-6">
+                        자신이 틀릴 수도 있다는 사실을 인정하는 순간 사람은 성장하기 시작한다. <br><br>
+                        "천주교의 내 탓이요. 소크라테스의 너 자신을 알라." 라는 이야기가 그 말이다. 실패는 자존심의 상처가 아니라 가설을 수정하는 과정이 된다.
+                    </p>
+                </div>
+                <div class="p-8 rounded-2xl bg-white shadow-lg shadow-palette-1/30 border border-palette-1/50 reveal reveal-delay-1">
+                    <p class="text-lg leading-relaxed text-palette-6">
+                        그래서 혁신가는 실패를 두려워하지 않는다. 하지만 여기에서 한 걸음 더 나아가야 한다.<br><br>
+                        메타인지가 '어떻게 바꿀 것인가'를 묻는다면, 철학은 '왜 바꾸는가'를 묻는다.
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-2xl md:text-3xl font-bold text-center text-palette-6 leading-loose reveal">
+                기술은 방향을 알려주지 않는다. <br>
+                <span class="text-palette-5">속도만 높여줄 뿐이다.</span> <br>
+                <span class="highlight-text">방향은 결국 철학이 결정한다.</span>
+            </p>
+        </section>
+
+        <section class="reveal">
+            <h3 class="text-3xl md:text-4xl font-bold text-palette-6 mb-8 text-center break-keep">
+                Web 3.0 시대는 기술보다 <span class="text-palette-4">철학</span>을 요구한다
+            </h3>
+            
+            <p class="text-lg md:text-xl text-palette-6 mb-6 leading-loose break-keep">
+                우리는 지금 Web 3.0이라는 새로운 시대를 만나고 있다. 블록체인, 탈중앙화, AI, 디지털 자산. 많은 사람은 이것을 새로운 기술 정도로 이해한다. 그러나 나는 그렇게 보지 않는다.
+            </p>
+            
+            <blockquote class="my-12 text-xl md:text-2xl font-medium text-palette-3 text-center border-y border-palette-2 py-10 leading-loose break-keep reveal">
+                이것은 소유와 신뢰, 가치와 인간의 관계를 <br class="hidden md:block">
+                다시 정의하는 철학적 전환이라고 생각한다.
+            </blockquote>
+
+            <p class="text-lg md:text-xl text-palette-6 mb-6 leading-loose break-keep text-center reveal">
+                앞으로 필요한 사람은 코딩만 잘하는 사람이 아니다. 차트만 잘 보는 사람도 아니다. <br>
+                <strong class="text-palette-4 text-xl md:text-2xl inline-block mt-4">기존의 금융과 자산, 권력과 소유의 구조를 다시 질문할 수 있는 사람이다.</strong>
+            </p>
+
+            <p class="text-xl md:text-2xl font-bold text-palette-6 text-center mt-12 reveal">
+                기술을 이해하면서도 인간을 이해하는 사람. <br>
+                바로 그런 사람이 <span class="text-palette-3">Web 3.0 시대의 인재</span>다.
+            </p>
+        </section>
+
+        <section class="reveal bg-palette-6 text-white rounded-3xl p-8 md:p-16 shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-palette-4 rounded-full opacity-20 blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-palette-2 rounded-full opacity-20 blur-3xl pointer-events-none"></div>
+
+            <h3 class="text-3xl md:text-5xl font-bold mb-10 leading-tight relative z-10 text-center">
+                미래를 만드는 것은 <br>
+                <span class="text-palette-1">기술이 아니라 사고다</span>
+            </h3>
+            
+            <p class="text-lg md:text-xl mb-12 text-center text-gray-300 font-light relative z-10">
+                우리의 미래자산포럼이 만들고 싶은 것도 바로 이런 사람이다.
+            </p>
+
+            <div class="space-y-6 text-center text-lg md:text-2xl font-medium relative z-10 mb-16">
+                <p class="reveal">기술을 배우는 사람보다 <strong class="text-palette-1">사고를 바꾸는 사람.</strong></p>
+                <p class="reveal reveal-delay-1">투자를 배우는 사람보다 <strong class="text-palette-1">시대를 읽는 사람.</strong></p>
+                <p class="reveal reveal-delay-2">그리고 돈을 버는 사람보다 <strong class="text-palette-1">미래를 설계하는 사람.</strong></p>
+            </div>
+
+            <p class="text-lg md:text-xl leading-loose font-light text-gray-300 text-center mb-12 relative z-10 break-keep">
+                포드와 도요타, 삼성과 테슬라가 그랬듯, <br>
+                다가오는 Web 3.0 시대 역시 새로운 기술이 아니라 <strong>새로운 사고가 세상을 바꾸게 될 것</strong>이다.
+            </p>
+
+            <div class="border-t border-gray-600 pt-10 text-center relative z-10">
+                <p class="text-xl md:text-2xl mb-8 leading-loose break-keep">
+                    혁신은 언제나 기술보다 먼저 인간의 생각 속에서 시작된다.<br>
+                    그리고 그 생각의 출발점은 <span class="text-palette-1 font-bold">메타인지</span>이며, <br>
+                    그 생각이 끝내 도달해야 할 곳은 인간을 향한 <span class="text-palette-4 font-bold">철학</span>이다.
+                </p>
+                <p class="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                    디지털은 도구다.<br>
+                    철학은 방향이다.<br>
+                    <span class="text-palette-1">그리고 혁신은, 그 둘이 만나는 지점에서 시작된다.</span>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-16 text-center bg-white border-t border-palette-1">
+        <p class="text-palette-3 font-medium text-lg">2026년 07월 17일 월요일</p>
+        <p class="text-2xl font-bold text-palette-6 mt-2">파운더 박 수 억</p>
+        <p class="mt-8 text-sm text-palette-2">Designed carefully for immersive reading.</p>
+    </footer>
+
+    <script>
+        // 상단 스크롤 프로그레스 바
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+
+        // Intersection Observer를 활용한 스크롤 애니메이션
+        document.addEventListener("DOMContentLoaded", function() {
+            // 첫 화면 블러 애니메이션 즉시 실행
+            setTimeout(() => {
+                const blurElements = document.querySelectorAll('.blur-reveal');
+                blurElements.forEach(el => el.classList.add('active'));
+            }, 100);
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        
+                        // 타겟 내부에 텍스트 하이라이트가 있다면 같이 활성화
+                        const highlights = entry.target.querySelectorAll('.highlight-text');
+                        highlights.forEach(h => h.classList.add('active'));
+                        
+                        observer.unobserve(entry.target); // 한 번만 실행
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal, .highlight-text');
+            revealElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
