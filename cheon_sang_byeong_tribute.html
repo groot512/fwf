@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>귀천(歸天) - 천상병 시인의 소풍</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #fdfbf7;
+            color: #2c2c2c;
+            scroll-behavior: smooth;
+        }
+        .serif { font-family: 'Noto Serif KR', serif; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .story-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .poem-bg {
+            background: linear-gradient(to bottom, #fdfbf7, #f5f0e6);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-stone-200">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <h1 class="text-xl font-bold tracking-tight text-stone-800">귀천(歸天)</h1>
+            <div class="space-x-6 text-sm font-medium text-stone-600">
+                <button onclick="scrollToSection('hero')" class="hover:text-stone-900">도입</button>
+                <button onclick="scrollToSection('stories')" class="hover:text-stone-900">삶의 조각</button>
+                <button onclick="scrollToSection('tax')" class="hover:text-stone-900">시인의 세금</button>
+                <button onclick="scrollToSection('poem')" class="hover:text-stone-900">시 '귀천'</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="pt-32 pb-20 px-6 max-w-5xl mx-auto text-center">
+        <div class="fade-in">
+            <span class="inline-block px-3 py-1 bg-stone-100 text-stone-500 text-xs rounded-full mb-4">당대 최고의 천재 시인</span>
+            <h2 class="serif text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                "이 세상 소풍 끝내는 날,<br>아름다웠다고 말하리라."
+            </h2>
+            <p class="text-stone-600 leading-relaxed max-w-2xl mx-auto">
+                가장 가난했으나 가장 맑은 영혼을 가졌던 시인 천상병. <br>
+                버스 안내양도 알아보던 그의 해학적이고 순수한 삶의 궤적을 따라가 봅니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- Introductory Paragraph for Stories -->
+    <div class="max-w-5xl mx-auto px-6 mb-8">
+        <h3 class="text-2xl font-bold mb-4 serif border-l-4 border-stone-400 pl-4">천상병의 기인(奇人) 같은 삶</h3>
+        <p class="text-stone-600 leading-relaxed">
+            천상병 시인은 단순한 문학가를 넘어, 시대의 고통 속에서도 천진난만함을 잃지 않았던 상징적인 인물입니다. 아래의 일화들은 그가 세상과 소통하던 독특한 방식과, 주변 사람들이 그를 얼마나 사랑하고 아꼈는지를 보여줍니다. 각 카드를 클릭하여 시인만의 따뜻한 유머를 확인해 보세요.
+        </p>
+    </div>
+
+    <!-- Stories Section -->
+    <section id="stories" class="py-12 bg-stone-50">
+        <div class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Story 1 -->
+            <div class="story-card bg-white p-8 rounded-2xl border border-stone-200" onclick="showDetail(0)">
+                <div class="text-stone-300 text-3xl font-serif mb-4">01</div>
+                <h4 class="text-xl font-bold mb-3">버스 안내양의 '시인 대우'</h4>
+                <p class="text-stone-500 text-sm line-clamp-3">
+                    의정부행 113번 버스 안내양들은 시인을 정중히 모시는 법을 교육받았습니다. 아저씨도 할아버지도 아닌, 꼭 '시인'이라고 불러야 했던 그의 자부심...
+                </p>
+                <button class="mt-4 text-stone-800 font-bold text-sm underline decoration-stone-300">자세히 보기</button>
+            </div>
+            <!-- Story 2 -->
+            <div class="story-card bg-white p-8 rounded-2xl border border-stone-200" onclick="showDetail(1)">
+                <div class="text-stone-300 text-3xl font-serif mb-4">02</div>
+                <h4 class="text-xl font-bold mb-3">막걸리와 조니 워커</h4>
+                <p class="text-stone-500 text-sm line-clamp-3">
+                    비싼 양주 선물을 받아도 "팔아서 막걸리나 실컷 마시라"는 아내의 말을 따랐던 천진난만한 시인의 막걸리 사랑 이야기...
+                </p>
+                <button class="mt-4 text-stone-800 font-bold text-sm underline decoration-stone-300">자세히 보기</button>
+            </div>
+            <!-- Story 3 -->
+            <div class="story-card bg-white p-8 rounded-2xl border border-stone-200" onclick="showDetail(2)">
+                <div class="text-stone-300 text-3xl font-serif mb-4">03</div>
+                <h4 class="text-xl font-bold mb-3">사후의 포장마차 약속</h4>
+                <p class="text-stone-500 text-sm line-clamp-3">
+                    "빌린 돈 언제 갚을 거냐"는 물음에 "천국 갈림길에서 포장마차를 할 테니 공짜 술로 갚겠다"던 그의 호쾌한 대답...
+                </p>
+                <button class="mt-4 text-stone-800 font-bold text-sm underline decoration-stone-300">자세히 보기</button>
+            </div>
+            <!-- Story 4 -->
+            <div class="story-card bg-white p-8 rounded-2xl border border-stone-200" onclick="showDetail(3)">
+                <div class="text-stone-300 text-3xl font-serif mb-4">04</div>
+                <h4 class="text-xl font-bold mb-3">천재의 뒷모습</h4>
+                <p class="text-stone-500 text-sm line-clamp-3">
+                    서울대 경제학부 중퇴, 서양 문학사를 통째로 외웠던 천재성. 그리고 그를 지켰던 천사 같은 아내 목순옥 여사...
+                </p>
+                <button class="mt-4 text-stone-800 font-bold text-sm underline decoration-stone-300">자세히 보기</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Detail Modal (Logic handled by JS) -->
+    <div id="modal" class="fixed inset-0 bg-black/50 z-[100] hidden items-center justify-center p-6 backdrop-blur-sm">
+        <div class="bg-white max-w-lg w-full rounded-3xl p-8 shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-900 text-2xl">×</button>
+            <h5 id="modal-title" class="text-2xl font-bold mb-4 serif"></h5>
+            <p id="modal-content" class="text-stone-600 leading-relaxed whitespace-pre-line"></p>
+        </div>
+    </div>
+
+    <!-- Section Intro: Tax & Stats -->
+    <div class="max-w-5xl mx-auto px-6 py-16 text-center">
+        <h3 class="text-2xl font-bold mb-4 serif">시인만의 특별한 '세금 징수'</h3>
+        <p class="text-stone-600 leading-relaxed max-w-2xl mx-auto">
+            천상병 시인은 지인들에게 아주 특별한 방식으로 돈을 받았습니다. 그는 이것을 '구걸'이 아닌 '세금'이라 불렀으며, 시인 나름의 엄격한 징수 기준이 있었습니다.
+        </p>
+    </div>
+
+    <!-- Interactive Tax Section -->
+    <section id="tax" class="pb-20 px-6 max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-stone-100 rounded-3xl p-8 md:p-12">
+            <div>
+                <h4 class="text-lg font-bold mb-6">시인의 징수 기준 체험하기</h4>
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-sm text-stone-500 mb-2">당신은 시인과 친한 사이입니까?</p>
+                        <div class="flex gap-4">
+                            <button onclick="setTaxState('isFriend', true)" id="btn-friend-yes" class="px-4 py-2 rounded-lg border border-stone-300 bg-white hover:bg-stone-200 transition-colors">네, 친합니다</button>
+                            <button onclick="setTaxState('isFriend', false)" id="btn-friend-no" class="px-4 py-2 rounded-lg border border-stone-300 bg-white hover:bg-stone-200 transition-colors">아니요, 모릅니다</button>
+                        </div>
+                    </div>
+                    <div id="marriage-option" class="opacity-100 transition-opacity">
+                        <p class="text-sm text-stone-500 mb-2">결혼을 하셨나요?</p>
+                        <div class="flex gap-4">
+                            <button onclick="setTaxState('isMarried', true)" id="btn-married-yes" class="px-4 py-2 rounded-lg border border-stone-300 bg-white hover:bg-stone-200 transition-colors">기혼 (어른)</button>
+                            <button onclick="setTaxState('isMarried', false)" id="btn-married-no" class="px-4 py-2 rounded-lg border border-stone-300 bg-white hover:bg-stone-200 transition-colors">미혼 (아이)</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-10 p-6 bg-white rounded-2xl border border-stone-200 text-center">
+                    <p class="text-stone-500 text-sm mb-1">시인에게 낼 세금</p>
+                    <div id="tax-result" class="text-4xl font-bold text-stone-800 font-serif">0원</div>
+                    <p id="tax-message" class="text-xs text-stone-400 mt-2">지인이 아니라면 시인은 돈을 받지 않습니다.</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-center">
+                <h4 class="text-sm font-medium text-stone-500 mb-4">지인별 징수 기준 분포 (80년대 기준)</h4>
+                <div class="chart-container">
+                    <canvas id="taxChart"></canvas>
+                </div>
+                <p class="text-[10px] text-stone-400 mt-4 text-center">
+                    바둑 국수 김인 기사가 "나는 국수니까 2,000원을 내겠다"고 하자,<br>
+                    시인은 "넌 아직 천 원짜리밖에 안 돼!"라며 일침을 가했다고 합니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Poem Section Intro -->
+    <div class="max-w-5xl mx-auto px-6 py-20 text-center">
+        <h3 class="text-3xl font-bold mb-4 serif">아름다웠던 소풍의 기록</h3>
+        <p class="text-stone-600 leading-relaxed max-w-2xl mx-auto">
+            그의 삶 자체가 하나의 시였지만, '귀천'은 죽음을 앞둔 두려움 대신 소풍을 마치고 돌아가는 여행자의 평온함을 노래한 그의 걸작입니다.
+        </p>
+    </div>
+
+    <!-- The Poem: Gwi-cheon -->
+    <section id="poem" class="poem-bg py-32 px-6">
+        <div class="max-w-xl mx-auto text-center border-y border-stone-200 py-16">
+            <h2 class="serif text-4xl font-bold mb-12 tracking-widest">귀 천 (歸 天)</h2>
+            <div class="serif space-y-16 text-xl md:text-2xl text-stone-700 leading-loose">
+                <div class="fade-in" style="animation-delay: 0.2s;">
+                    <p>나 하늘로 돌아가리라.</p>
+                    <p>새벽빛 와 닿으면 스러지는</p>
+                    <p>이슬 더불어 손에 손을 잡고.</p>
+                </div>
+                
+                <div class="fade-in" style="animation-delay: 1s;">
+                    <p>나 하늘로 돌아가리라.</p>
+                    <p>노을빛 함께 단 둘이서</p>
+                    <p>기슭에서 놀다가 구름 손짓 하며는.</p>
+                </div>
+
+                <div class="fade-in" style="animation-delay: 1.8s;">
+                    <p>나 하늘로 돌아가리라.</p>
+                    <p>아름다운 이 세상 소풍 끝내는 날.</p>
+                    <p>가서, 아름다웠다고 말하리라!</p>
+                </div>
+            </div>
+            <p class="mt-20 text-stone-400 font-serif">— 천 상 병</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-16 px-6">
+        <div class="max-w-5xl mx-auto text-center">
+            <p class="serif text-white text-lg mb-4">천상병 시인 (1930 ~ 1993)</p>
+            <p class="text-sm leading-relaxed max-w-md mx-auto mb-8">
+                그는 천재였고, 부인이었던 목순옥 씨는 천사였습니다.<br>
+                이제 하늘나라에서 두 분은 그토록 좋아하던 막걸리를 나누며<br>
+                영원한 소풍을 즐기고 있을 것입니다.
+            </p>
+            <div class="h-px bg-stone-800 w-24 mx-auto mb-8"></div>
+            <p class="text-[10px] uppercase tracking-widest">Tribute to Cheon Sang-byeong</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data for anecdotes
+        const anecdotes = [
+            {
+                title: "버스 안내양의 '시인 대우'",
+                content: "종로 5가에서 의정부까지 운행하는 113번 버스 안내양들은 천상병 시인을 모를 수 없었습니다. 늘 취해있고 차비가 없었기에 정중히 모시는 것이 규칙이었죠.\n\n특히 그를 깨울 때 '아저씨'나 '할아버지'라고 부르면 절대 일어나지 않으셨습니다. 오직 '시인 아저씨' 혹은 '시인 할아버지'라고 불러야만 당당하게 하차하셨다고 합니다. 버스 회사는 그를 모시는 것이 '국익 차원에서 바람직하다'고 판단할 만큼 시인을 아꼈습니다."
+            },
+            {
+                title: "막걸리와 조니 워커",
+                content: "김동길 교수가 좋은 술을 마시라며 비싼 '조니 워커' 위스키를 선물했을 때의 일입니다. 나중에 시인을 만나 안부를 묻자 그는 이렇게 답했습니다.\n\n\"교수님이 주신 비싼 양주는 입도 대보지 못했네. 아내가 비싼 술이니 팔아서 막걸리나 실컷 마시라고 해서, 팔아서 막걸리를 마셨지!\"\n\n비싼 외제 술보다 아내의 실속 있는 조언과 시원한 막걸리 한 사발을 더 사랑했던 순수한 시인의 모습입니다."
+            },
+            {
+                title: "사후의 포장마차 약속",
+                content: "언젠가 누군가 시인에게 빌린 돈을 언제 갚을 거냐고 묻자 시인은 웃으며 대답했습니다.\n\n\"허허, 내가 죽으면 천국과 지옥 갈림길에서 포장마차를 하고 있을 테니, 찾아오면 갚을 만큼 공짜 술을 주겠네.\"\n\n이 해학적인 대답은 일본의 '세계 유명인의 명대사'라는 책자에도 실릴 만큼 전 세계적으로 사랑받는 일화가 되었습니다."
+            },
+            {
+                title: "천재의 뒷모습과 천사 목순옥",
+                content: "서울대 경제학부 중퇴, 서양 문학사를 통째로 외웠던 천재적인 지성. 그는 지독한 가난과 고문 후유증 속에서도 아이 같은 순수함을 잃지 않았습니다.\n\n그런 그를 평생 지켰던 부인 목순옥 여사는 시인에게는 없어서는 안 될 수호천사였습니다. 시인은 늘 자신이 우리나라에서 제일 유명한 시인이라 자부했고, 사람들은 그의 그 순수한 자신감을 기꺼이 받아주었습니다."
+            }
+        ];
+
+        // Modal Logic
+        function showDetail(index) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+            
+            title.innerText = anecdotes[index].title;
+            content.innerText = anecdotes[index].content;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Navigation
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Tax Calculator Logic
+        let taxState = {
+            isFriend: false,
+            isMarried: false
+        };
+
+        function setTaxState(key, value) {
+            taxState[key] = value;
+            updateTaxUI();
+        }
+
+        function updateTaxUI() {
+            const resultEl = document.getElementById('tax-result');
+            const messageEl = document.getElementById('tax-message');
+            const marriageOption = document.getElementById('marriage-option');
+
+            // Reset button styles
+            const btns = ['btn-friend-yes', 'btn-friend-no', 'btn-married-yes', 'btn-married-no'];
+            btns.forEach(id => {
+                document.getElementById(id).classList.remove('bg-stone-800', 'text-white');
+                document.getElementById(id).classList.add('bg-white', 'text-stone-800');
+            });
+
+            // Set active styles
+            if (taxState.isFriend) {
+                document.getElementById('btn-friend-yes').classList.replace('bg-white', 'bg-stone-800');
+                document.getElementById('btn-friend-yes').classList.add('text-white');
+                marriageOption.classList.remove('opacity-30');
+                marriageOption.style.pointerEvents = 'auto';
+            } else {
+                document.getElementById('btn-friend-no').classList.replace('bg-white', 'bg-stone-800');
+                document.getElementById('btn-friend-no').classList.add('text-white');
+                marriageOption.classList.add('opacity-30');
+                marriageOption.style.pointerEvents = 'none';
+            }
+
+            if (taxState.isMarried) {
+                document.getElementById('btn-married-yes').classList.replace('bg-white', 'bg-stone-800');
+                document.getElementById('btn-married-yes').classList.add('text-white');
+            } else {
+                document.getElementById('btn-married-no').classList.replace('bg-white', 'bg-stone-800');
+                document.getElementById('btn-married-no').classList.add('text-white');
+            }
+
+            // Calculate amount
+            if (!taxState.isFriend) {
+                resultEl.innerText = "0원";
+                messageEl.innerText = "시인은 친하지 않은 사람에겐 돈을 걷지 않습니다.";
+            } else {
+                if (taxState.isMarried) {
+                    resultEl.innerText = "1,000원";
+                    messageEl.innerText = "당신은 어른이시군요. 세금 1,000원입니다.";
+                } else {
+                    resultEl.innerText = "500원";
+                    messageEl.innerText = "미혼은 아직 아이니, 500원만 받겠습니다.";
+                }
+            }
+        }
+
+        // Chart Implementation
+        function initChart() {
+            const ctx = document.getElementById('taxChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['기혼 (1,000원)', '미혼 (500원)', '예외 (김인 국수 등)'],
+                    datasets: [{
+                        data: [60, 30, 10],
+                        backgroundColor: ['#44403c', '#a8a29e', '#d6d3d1'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 11 },
+                                padding: 20
+                            }
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        // Initialize on load
+        window.onload = () => {
+            initChart();
+            updateTaxUI();
+        };
+
+        // Scroll animation observer
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.story-card').forEach(card => observer.observe(card));
+    </script>
+</body>
+</html>
