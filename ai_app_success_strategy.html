@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 앱 성공 전략 플레이북 - 마일드코드 핵심 요약</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #FDFBF7;
+            color: #2D3748;
+            scroll-behavior: smooth;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .tab-active {
+            border-bottom: 3px solid #ED8936;
+            color: #ED8936;
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .section-intro {
+            border-left: 4px solid #ED8936;
+            padding-left: 1rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-morphism shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="font-bold text-xl text-gray-800">AI Playbook <span class="text-orange-500">Master</span></div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#hero" class="hover:text-orange-500 transition">성공사례</a>
+                <a href="#playbook" class="hover:text-orange-500 transition">3단계 전략</a>
+                <a href="#simulator" class="hover:text-orange-500 transition">수익 시뮬레이터</a>
+                <a href="#korea" class="hover:text-orange-500 transition">한국 시장 적용</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="py-16 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+                AI로 월 매출 <span class="text-orange-500">14억</span> 어플,<br>그들은 어떻게 만들었는가?
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                비전공자 블레이크 앤더슨이 코딩 한 줄 몰라도 연 200억 매출을 달성한 비결. 
+                단순한 개발이 아닌 <strong>'시장-운영-유통'</strong>의 플레이북을 공개합니다.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-center bg-white p-8 rounded-3xl shadow-xl">
+            <div>
+                <div class="section-intro">
+                    <h2 class="text-2xl font-bold">성공 지표: Cal AI & Umax</h2>
+                    <p class="text-gray-600 mt-2">
+                        단순한 기능으로 시작했지만, 사용자의 욕망을 정확히 타격하여 월 매출 최대 28억 원을 기록했습니다.
+                    </p>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="bg-orange-100 text-orange-600 rounded-full px-3 py-1 text-xs font-bold mr-3 mt-1">Umax</span>
+                        <div>
+                            <p class="font-semibold text-gray-800">셀카 분석 및 외모 점수 앱</p>
+                            <p class="text-sm text-gray-500">연 매출 약 74억 원 기록</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-100 text-blue-600 rounded-full px-3 py-1 text-xs font-bold mr-3 mt-1">Cal AI</span>
+                        <div>
+                            <p class="font-semibold text-gray-800">사진 기반 음식 칼로리 계산 앱</p>
+                            <p class="text-sm text-gray-500">월 매출 19억~28억 원, 2026년 대규모 인수 합병</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="chart-container">
+                <canvas id="growthChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Playbook Section -->
+    <section id="playbook" class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 italic">The 3-Step Playbook</h2>
+                <p class="text-gray-600">누구나 따라 할 수 있는 3단계 성공 방정식과 절대 빠져선 안 될 함정들.</p>
+            </div>
+
+            <div class="flex justify-center mb-8 border-b">
+                <button onclick="switchTab(1)" id="tab1" class="px-6 py-3 font-bold transition tab-active">STEP 1. 시장 선택</button>
+                <button onclick="switchTab(2)" id="tab2" class="px-6 py-3 font-bold transition text-gray-400">STEP 2. 빌드 & 운영</button>
+                <button onclick="switchTab(3)" id="tab3" class="px-6 py-3 font-bold transition text-gray-400">STEP 3. 유통(유입)</button>
+            </div>
+
+            <div id="tabContent" class="bg-white p-8 rounded-2xl shadow-sm min-h-[400px]">
+                <!-- Dynamic Content Loaded by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Profit Simulator -->
+    <section id="simulator" class="py-16 max-w-6xl mx-auto px-4">
+        <div class="section-intro">
+            <h2 class="text-2xl font-bold italic">Profit & Cost Simulator</h2>
+            <p class="text-gray-600 mt-2">
+                영상에서 강조한 가장 중요한 포인트! 유저가 늘어날수록 적자가 날 수도 있습니다. 
+                여러분의 서비스 원가를 시뮬레이션해 보세요.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-6">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">유료 구독료 (월/원)</label>
+                    <input type="number" id="subPrice" value="30000" step="5000" onchange="calculateProfit()" class="w-full p-3 bg-gray-50 border rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">유저당 월 AI 호출 횟수</label>
+                    <input type="number" id="apiCalls" value="100" step="10" onchange="calculateProfit()" class="w-full p-3 bg-gray-50 border rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">1회 호출 원가 (원)</label>
+                    <input type="number" id="apiCost" value="1000" step="100" onchange="calculateProfit()" class="w-full p-3 bg-gray-50 border rounded-lg">
+                </div>
+                <div class="pt-4 border-t">
+                    <p class="text-xs text-gray-400">※ API 비용은 토큰 사용량에 따라 기하급수적으로 늘어날 수 있습니다.</p>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 bg-white p-6 rounded-2xl shadow-lg flex flex-col items-center">
+                <div class="w-full mb-4 flex justify-between items-center">
+                    <h3 class="font-bold text-lg">유저수 대비 수익/비용 추이</h3>
+                    <div id="profitResult" class="text-xl font-bold"></div>
+                </div>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="profitChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Korea Market Matrix -->
+    <section id="korea" class="py-16 bg-gray-900 text-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">한국 시장 적용 매트릭스</h2>
+                <p class="text-gray-400">미국의 성공 모델을 한국의 '욕망' 키워드로 치환하면 답이 보입니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 border border-gray-700 rounded-xl hover:border-orange-500 transition">
+                    <div class="text-orange-500 text-2xl font-bold mb-2">01. 사주/운세</div>
+                    <p class="text-sm text-gray-400 mb-4 italic">"미국의 리즈(작업멘트)는 한국의 사주다"</p>
+                    <p class="text-gray-300">2030 세대의 불안과 호기심을 AI 분석으로 풀어내는 시장. 런칭 한 달 만에 18만 유저를 모은 사례가 존재합니다.</p>
+                </div>
+                <div class="p-6 border border-gray-700 rounded-xl hover:border-orange-500 transition">
+                    <div class="text-orange-500 text-2xl font-bold mb-2">02. 퍼스널 컬러/MBTI</div>
+                    <p class="text-sm text-gray-400 mb-4 italic">"나를 정의하고 싶은 욕구"</p>
+                    <p class="text-gray-300">기존의 수동적인 검사를 사진 한 장으로 자동 분석해 주는 AI 솔루션. 바이럴 효과가 매우 강력합니다.</p>
+                </div>
+                <div class="p-6 border border-gray-700 rounded-xl hover:border-orange-500 transition">
+                    <div class="text-orange-500 text-2xl font-bold mb-2">03. AI 캐릭터 챗</div>
+                    <p class="text-sm text-gray-400 mb-4 italic">"외로움과 대화의 가치"</p>
+                    <p class="text-gray-300">특정 장르(웹툰, 웹소설) 팬덤을 겨냥한 AI 챗봇 시장. 유료 결제 전환율이 매우 높은 니치 영역입니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section class="py-20 px-4 max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6 italic">"만드는 것은 누구나 하는 시대입니다."</h2>
+        <p class="text-gray-600 mb-10 text-lg">
+            지금 즉시 Claude를 켜고 작은 프로토타입부터 시작해 보세요. 
+            진짜 승부는 보안, 원가 설계, 그리고 유통망에서 갈립니다.
+        </p>
+        <div class="bg-orange-50 border-2 border-orange-200 p-8 rounded-3xl inline-block text-left max-w-full">
+            <h4 class="font-bold mb-2 flex items-center">💡 초보자를 위한 프롬프트 한 줄</h4>
+            <code class="text-orange-700 break-all">
+                "음식 사진을 업로드하면 칼로리와 탄단지 비율을 자동으로 분석해서 대시보드 형태로 보여주는 웹 앱을 HTML/JS/Tailwind 코드로 작성해줘."
+            </code>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t text-center text-gray-400 text-sm">
+        <p>© 2024 AI App Strategy. Based on MildCode Video Insight.</p>
+    </footer>
+
+    <script>
+        // Data for Playbook
+        const playbookData = {
+            1: {
+                title: "STEP 1. 시장 선택: 이미 터진 '욕망'에 올라타기",
+                desc: "새로운 기술을 발명하려 하지 마세요. 10대와 20대가 이미 돈과 시간을 쓰고 있는 곳을 찾아야 합니다.",
+                keyPoints: ["기존 유행 키워드 분석 (작업멘트, 외모, 건강)", "사용자의 즉각적인 해결책 제시", "프로토타입은 AI로 30분 만에 가능"],
+                trap: "데모와 실제 상용 제품의 격차를 무시하면 안 됩니다. 정확도 고도화가 진짜 수익의 핵심입니다."
+            },
+            2: {
+                title: "STEP 2. 빌드 & 운영: 보안과 원가의 싸움",
+                desc: "앱을 띄우는 것과 돈을 받는 서비스를 운영하는 것은 완전히 다른 차원의 이야기입니다.",
+                keyPoints: ["API 키 노출 방지(백엔드 필수)", "로그인, 결제 검증, 사용량 제한 로직 구현", "정적 코드 분석을 통한 보안성 10.5% 극복"],
+                trap: "헤비 유저로 인한 API 비용 폭증은 사업을 즉시 중단시킬 수 있는 가장 큰 리스크입니다."
+            },
+            3: {
+                title: "STEP 3. 유통: 10만 원으로 불씨 지피기",
+                desc: "좋은 제품이 팔리는 것이 아닙니다. 유통망(Distribution)을 가진 제품이 팔립니다.",
+                keyPoints: ["저평가된 마이크로 크리에이터 활용", "초기 10~20만 원의 시드 바이럴", "틱톡/릴스/쇼츠를 통한 기하급수적 확산"],
+                trap: "유통 해자(Moat)가 없는 제품은 4개월을 공들여 만들어도 유료 고객 0명을 기록할 수 있습니다."
+            }
+        };
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`tab${i}`).classList.remove('tab-active', 'text-gray-800');
+                document.getElementById(`tab${i}`).classList.add('text-gray-400');
+            }
+            document.getElementById(`tab${tabId}`).classList.add('tab-active', 'text-gray-800');
+            document.getElementById(`tab${tabId}`).classList.remove('text-gray-400');
+
+            const content = playbookData[tabId];
+            document.getElementById('tabContent').innerHTML = `
+                <div class="animate-fadeIn">
+                    <h3 class="text-2xl font-bold mb-4 text-orange-600">${content.title}</h3>
+                    <p class="text-gray-700 mb-6 text-lg">${content.desc}</p>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-3 border-b pb-2">✓ 핵심 실행 전략</h4>
+                            <ul class="space-y-3">
+                                ${content.keyPoints.map(p => `<li class="flex items-center text-gray-600"><span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>${p}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-5 rounded-xl border border-red-100">
+                            <h4 class="font-bold text-red-700 mb-3">⚠️ 반드시 주의할 함정</h4>
+                            <p class="text-sm text-red-600 leading-relaxed">${content.trap}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize Growth Chart
+        const growthCtx = document.getElementById('growthChart').getContext('2d');
+        new Chart(growthCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Cal AI 월 매출 추이 (억 원)',
+                    data: [2, 5, 12, 19, 25, 28],
+                    backgroundColor: 'rgba(237, 137, 54, 0.7)',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                },
+                plugins: {
+                    legend: { display: true, position: 'bottom' }
+                }
+            }
+        });
+
+        // Profit Simulator Logic
+        let profitChart;
+        function calculateProfit() {
+            const price = parseInt(document.getElementById('subPrice').value);
+            const calls = parseInt(document.getElementById('apiCalls').value);
+            const costPerCall = parseInt(document.getElementById('apiCost').value);
+            
+            const costPerUser = calls * costPerCall;
+            const netProfitPerUser = price - costPerUser;
+
+            const userCounts = [100, 500, 1000, 2000, 5000];
+            const revenues = userCounts.map(u => u * price);
+            const costs = userCounts.map(u => u * costPerUser);
+            const profits = userCounts.map(u => u * netProfitPerUser);
+
+            const resultDiv = document.getElementById('profitResult');
+            if (netProfitPerUser > 0) {
+                resultDiv.innerHTML = `<span class="text-green-500">유저당 수익: +${netProfitPerUser.toLocaleString()}원</span>`;
+            } else {
+                resultDiv.innerHTML = `<span class="text-red-500">유저당 손실: ${netProfitPerUser.toLocaleString()}원</span>`;
+            }
+
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            
+            if (profitChart) profitChart.destroy();
+
+            profitChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: userCounts.map(u => u + '명'),
+                    datasets: [
+                        {
+                            label: '총 매출',
+                            data: revenues,
+                            borderColor: '#4A5568',
+                            borderDash: [5, 5],
+                            fill: false
+                        },
+                        {
+                            label: '총 AI 비용',
+                            data: costs,
+                            borderColor: '#F56565',
+                            fill: false
+                        },
+                        {
+                            label: '순이익',
+                            data: profits,
+                            borderColor: '#48BB78',
+                            backgroundColor: 'rgba(72, 187, 120, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { intersect: false, mode: 'index' },
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        }
+
+        // Initialize App
+        window.onload = () => {
+            switchTab(1);
+            calculateProfit();
+        };
+    </script>
+</body>
+</html>
