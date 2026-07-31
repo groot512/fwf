@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클로드 코드 바이브 코딩 마스터 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background-color: #fdfbf7;
+            color: #2d3436;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .step-active {
+            border-color: #6366f1;
+            background-color: #eef2ff;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-card border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">C</div>
+                    <span class="font-bold text-lg tracking-tight text-indigo-900">Vibe Coding Guide</span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium">
+                    <button onclick="scrollToSection('intro')" class="hover:text-indigo-600 transition">개요</button>
+                    <button onclick="scrollToSection('pillars')" class="hover:text-indigo-600 transition">4대 핵심 전략</button>
+                    <button onclick="scrollToSection('commands')" class="hover:text-indigo-600 transition">명령어 사전</button>
+                    <button onclick="scrollToSection('workflow')" class="hover:text-indigo-600 transition">워크플로우</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="intro" class="pt-32 pb-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+                AI를 팀원처럼 다루는 기술,<br><span class="text-indigo-600">바이브 코딩(Vibe Coding)</span>
+            </h1>
+            <p class="text-lg text-gray-600 mb-10 leading-relaxed">
+                단순히 코드를 짜게 하지 마세요. AI에게 시스템의 맥락과 의사결정 기준을 부여하여 <br class="hidden md:block">
+                성장하는 개발 시스템을 구축하는 고수들의 4단계 워크플로우를 공개합니다.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-12 bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <div class="text-left">
+                    <h3 class="text-xl font-bold mb-4">왜 바이브 코딩인가?</h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                        일반적인 AI 코딩은 프로젝트가 커질수록 일관성을 잃고 버그를 양산합니다. 바이브 코딩은 AI의 확률적 답변을 명확한 '좌표'로 고정하여 고품질의 결과물을 보장합니다.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-center gap-2"><span>✅</span> 일관된 코드 스타일 유지</li>
+                        <li class="flex items-center gap-2"><span>✅</span> 세션을 넘나드는 지식 축적</li>
+                        <li class="flex items-center gap-2"><span>✅</span> 자동화된 품질 검증 시스템</li>
+                    </ul>
+                </div>
+                <div class="chart-container">
+                    <canvas id="efficiencyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4 Pillars Section -->
+    <section id="pillars" class="py-20 bg-gray-50 border-y border-gray-100">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">고수의 4단계 워크플로우</h2>
+                <p class="text-gray-600">각 단계를 클릭하여 상세 전략과 핵심 인사이트를 확인하세요.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <!-- Pillar 1 -->
+                <button onclick="showPillar(0)" class="pillar-btn p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:border-indigo-400 hover:shadow-md transition text-left">
+                    <div class="text-2xl mb-4">🎯</div>
+                    <h3 class="font-bold text-lg mb-2">1. 의사결정 기준 세팅</h3>
+                    <p class="text-xs text-gray-500">AI에게 판단을 위한 '좌표'를 제공하는 단계</p>
+                </button>
+                <!-- Pillar 2 -->
+                <button onclick="showPillar(1)" class="pillar-btn p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:border-indigo-400 hover:shadow-md transition text-left">
+                    <div class="text-2xl mb-4">🧪</div>
+                    <h3 class="font-bold text-lg mb-2">2. 피드백 루프 구축</h3>
+                    <p class="text-xs text-gray-500">실수를 스스로 수정하는 자동화 환경</p>
+                </button>
+                <!-- Pillar 3 -->
+                <button onclick="showPillar(2)" class="pillar-btn p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:border-indigo-400 hover:shadow-md transition text-left">
+                    <div class="text-2xl mb-4">📝</div>
+                    <h3 class="font-bold text-lg mb-2">3. 계획(Plan) 우선</h3>
+                    <p class="text-xs text-gray-500">코드 작성 전 청사진을 검토하는 습관</p>
+                </button>
+                <!-- Pillar 4 -->
+                <button onclick="showPillar(3)" class="pillar-btn p-6 rounded-2xl bg-white border border-gray-200 shadow-sm hover:border-indigo-400 hover:shadow-md transition text-left">
+                    <div class="text-2xl mb-4">🧠</div>
+                    <h3 class="font-bold text-lg mb-2">4. 지식 축적 시스템</h3>
+                    <p class="text-xs text-gray-500">경험과 의사결정을 기록하여 성장</p>
+                </button>
+            </div>
+
+            <!-- Detail Display Area -->
+            <div id="pillarDetail" class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 fade-in">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Command Center -->
+    <section id="commands" class="py-20 px-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
+                <div class="text-left">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">실전 커맨드 센터</h2>
+                    <p class="text-gray-600">템플릿 기반 프로젝트의 주요 명령어를 상황별로 찾아보세요.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="filterCommands('all')" class="px-4 py-2 rounded-full text-sm font-medium bg-indigo-100 text-indigo-700 hover:bg-indigo-200">전체</button>
+                    <button onclick="filterCommands('start')" class="px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200">시작</button>
+                    <button onclick="filterCommands('verify')" class="px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 hover:bg-gray-200">검증/배포</button>
+                </div>
+            </div>
+
+            <div class="overflow-hidden rounded-2xl border border-gray-200 shadow-sm bg-white">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">명령어</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">주요 역할</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">권장 실행 시점</th>
+                        </tr>
+                    </thead>
+                    <tbody id="commandTableBody" class="divide-y divide-gray-200">
+                        <!-- Table rows injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Simulator -->
+    <section id="workflow" class="py-20 bg-indigo-900 text-white overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">인터랙티브 워크플로우</h2>
+                <p class="text-indigo-200 text-sm">실제 프로젝트를 시작할 때 따르는 최적의 프로세스입니다.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-indigo-700 -translate-y-1/2"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                    <!-- Step 1 -->
+                    <div class="relative z-10 text-center">
+                        <div class="w-12 h-12 bg-white text-indigo-900 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 border-4 border-indigo-500">1</div>
+                        <h4 class="font-bold mb-2">환경 초기화</h4>
+                        <p class="text-xs text-indigo-300">템플릿 클론 후 <code class="bg-indigo-800 px-1">/init</code> 실행</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="relative z-10 text-center">
+                        <div class="w-12 h-12 bg-white text-indigo-900 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 border-4 border-indigo-500">2</div>
+                        <h4 class="font-bold mb-2">컨텍스트 설정</h4>
+                        <p class="text-xs text-indigo-300"><code class="bg-indigo-800 px-1">/interview</code>로 목표 정의</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="relative z-10 text-center">
+                        <div class="w-12 h-12 bg-white text-indigo-900 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 border-4 border-indigo-500">3</div>
+                        <h4 class="font-bold mb-2">계획 및 구현</h4>
+                        <p class="text-xs text-indigo-300">Plan 수립 후 단계별 코딩</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="relative z-10 text-center">
+                        <div class="w-12 h-12 bg-white text-indigo-900 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 border-4 border-indigo-500">4</div>
+                        <h4 class="font-bold mb-2">전문가 리뷰</h4>
+                        <p class="text-xs text-indigo-300"><code class="bg-indigo-800 px-1">/review</code>로 품질 점검</p>
+                    </div>
+                    <!-- Step 5 -->
+                    <div class="relative z-10 text-center">
+                        <div class="w-12 h-12 bg-white text-indigo-900 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 border-4 border-indigo-500">5</div>
+                        <h4 class="font-bold mb-2">최종 배포</h4>
+                        <p class="text-xs text-indigo-300"><code class="bg-indigo-800 px-1">/ship</code>으로 검증 및 출시</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-4xl mx-auto text-center">
+            <p class="text-gray-500 text-sm mb-4">본 가이드는 '마일드코드'의 클로드 코드 바이브 코딩 입문 영상을 바탕으로 제작되었습니다.</p>
+            <div class="flex justify-center gap-6">
+                <span class="text-indigo-600 font-bold">#VibeCoding</span>
+                <span class="text-indigo-600 font-bold">#ClaudeCode</span>
+                <span class="text-indigo-600 font-bold">#AgenticWorkflow</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Structures
+        const pillars = [
+            {
+                title: "의사결정 기준과 목표 세팅",
+                emoji: "🎯",
+                summary: "AI의 판단은 확률입니다. 목적, 타겟, 비즈니스 규칙이라는 '좌표'를 박는 순간 AI는 일관성 있는 시니어 개발자로 변합니다.",
+                content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-indigo-700 mb-4">주요 전략:</h4>
+                            <ul class="space-y-4 text-sm text-gray-600">
+                                <li><strong>1. 프로젝트의 성격 규정:</strong> 개인용(단순 기능 우선)인지 SaaS용(확장성/DB 필수)인지 정의합니다.</li>
+                                <li><strong>2. 타겟 사용자 분석:</strong> 누가 왜 사용하는지 명확히 하여 UI/UX의 우선순위를 정합니다.</li>
+                                <li><strong>3. 규칙(Rules) 정의:</strong> '항상 테스트 코드 포함', 'TypeScript 필수' 등의 제약 조건을 부여합니다.</li>
+                            </ul>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="contextChart"></canvas>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "테스트 자동화 및 피드백 루프",
+                emoji: "🧪",
+                summary: "AI가 실수할 수 없는 환경을 만드세요. 실수를 해도 시스템이 이를 감지하고 스스로 수정할 수 있게 합니다.",
+                content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-indigo-700 mb-4">품질 보장 메커니즘:</h4>
+                            <ul class="space-y-4 text-sm text-gray-600">
+                                <li><strong>Claude Code Hooks:</strong> 작업이 끝나는 즉시 자동으로 테스트 코드를 검증하는 훅이 트리거됩니다.</li>
+                                <li><strong>자동 테스트 실행:</strong> 로직 수정 시 관련된 모든 유닛 테스트를 즉시 실행하여 Side Effect를 방지합니다.</li>
+                                <li><strong>자가 수정(Self-Healing):</strong> 테스트 실패 시 로그를 분석하여 AI가 스스로 코드를 수정하도록 유도합니다.</li>
+                            </ul>
+                        </div>
+                        <div class="flex flex-col justify-center items-center p-6 bg-indigo-50 rounded-2xl text-center">
+                            <div class="text-indigo-900 font-bold text-lg mb-2">Feedback Loop</div>
+                            <div class="text-4xl">🔄</div>
+                            <p class="text-xs text-indigo-600 mt-2 font-medium">Action → Hook → Test → Fix</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "코드보다 계획(Plan)부터 세우기",
+                emoji: "📝",
+                summary: "가장 중요한 습관입니다. AI가 파일들을 헤집어놓기 전에, 어떤 파일을 어떻게 고칠지 '설계도'를 먼저 받으세요.",
+                content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-indigo-700 mb-4">왜 계획이 우선인가?</h4>
+                            <ul class="space-y-4 text-sm text-gray-600">
+                                <li><strong>환각 현상(Hallucination) 방지:</strong> 단계별 청사진이 있으면 AI가 엉뚱한 코드를 짤 확률이 낮아집니다.</li>
+                                <li><strong>사전 리뷰 가능:</strong> 사용자가 코드가 나오기 전에 설계의 결함을 미리 찾아낼 수 있습니다.</li>
+                                <li><strong>단계별 구현:</strong> 한꺼번에 고치는 것이 아니라 계획에 맞춰 하나씩 차례로 작업합니다.</li>
+                            </ul>
+                        </div>
+                        <div class="p-6 border-2 border-dashed border-indigo-200 rounded-2xl">
+                            <div class="text-xs font-bold text-indigo-500 uppercase mb-2">Example Command</div>
+                            <div class="bg-gray-900 text-green-400 p-4 rounded text-xs font-mono">
+                                "회원가입 기능을 만들 거야.<br>파일 수정 계획(Plan)부터 보여줘."
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: "지식 축적과 의사결정 기록",
+                emoji: "🧠",
+                summary: "세션이 바뀌어도 AI가 과거의 결정을 기억하게 하세요. '왜' 이렇게 짰는지에 대한 맥락을 관리합니다.",
+                content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-indigo-700 mb-4">러닝 시스템(Learning System):</h4>
+                            <ul class="space-y-4 text-sm text-gray-600">
+                                <li><strong>디시전 로그(Decision Logs):</strong> 특정 라이브러리를 선택한 이유나 아키텍처 결정을 기록합니다.</li>
+                                <li><strong>삽질(Learning) 기록:</strong> 개발 중 겪은 기술적 버그와 해결책을 파일로 축적합니다.</li>
+                                <li><strong>신입 사원 가이드:</strong> AI가 프로젝트에 투입될 때 기존 맥락을 읽고 즉시 적응하게 만듭니다.</li>
+                            </ul>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="knowledgeChart"></canvas>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        const commands = [
+            { cmd: "/init", role: "템플릿 구조 파악 및 환경 설정 안내", time: "프로젝트 최초 개시 시", type: "start" },
+            { cmd: "/interview", role: "프로젝트 목적, 타겟, 기술 스택 정의", time: "초기 컨텍스트 설정 시", type: "start" },
+            { cmd: "/review", role: "시니어/QA 전문가 관점의 코드 리뷰", time: "주요 기능 구현 완료 후", type: "verify" },
+            { cmd: "/add-review", role: "새로운 전문가 페르소나(SEO 등) 추가", time: "특수 전문성이 필요할 때", type: "start" },
+            { cmd: "/ship", role: "테스트 및 빌드 최종 검증 및 배포 준비", time: "기능 출시/배포 직전", type: "verify" },
+            { cmd: "/help", role: "템플릿 명령어 및 가이드 호출", time: "작업 중 상시", type: "all" }
+        ];
+
+        // Chart Initialization
+        function initCharts() {
+            // Efficiency Chart
+            const ctx1 = document.getElementById('efficiencyChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['S', 'M', 'L', 'XL'],
+                    datasets: [{
+                        label: '바이브 코딩 (시스템적)',
+                        data: [85, 88, 90, 92],
+                        borderColor: '#6366f1',
+                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: '일반 코딩 (주먹구구)',
+                        data: [80, 65, 40, 20],
+                        borderColor: '#94a3b8',
+                        borderDash: [5, 5],
+                        fill: false,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: '프로젝트 규모별 성공 확률' },
+                        legend: { labels: { boxWidth: 10, font: { size: 10 } } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 100, title: { display: true, text: '%' } },
+                        x: { title: { display: true, text: '프로젝트 규모' } }
+                    }
+                }
+            });
+        }
+
+        function initContextChart() {
+            const ctx = document.getElementById('contextChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['비즈니스 목표', '기술 스택', '보안/안정성', 'UX/UI', '확장성', '비용 효율'],
+                    datasets: [{
+                        label: 'SaaS용 프로젝트',
+                        data: [95, 80, 90, 85, 90, 70],
+                        borderColor: '#6366f1',
+                        backgroundColor: 'rgba(99, 102, 241, 0.2)'
+                    }, {
+                        label: '개인용 프로젝트',
+                        data: [30, 90, 40, 60, 40, 95],
+                        borderColor: '#2dd4bf',
+                        backgroundColor: 'rgba(45, 212, 191, 0.2)'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } },
+                    scales: { r: { suggestMin: 0, suggestMax: 100, ticks: { display: false } } }
+                }
+            });
+        }
+
+        function initKnowledgeChart() {
+            const ctx = document.getElementById('knowledgeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['의사결정 이유', '버그 해결법', '아키텍처 규칙', '서버 설정'],
+                    datasets: [{
+                        label: '누적된 지식 조각',
+                        data: [45, 82, 38, 25],
+                        backgroundColor: '#6366f1',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+
+        // Logic for Pillars
+        function showPillar(index) {
+            const pillar = pillars[index];
+            const detailArea = document.getElementById('pillarDetail');
+            
+            // Highlight button
+            document.querySelectorAll('.pillar-btn').forEach((btn, idx) => {
+                if(idx === index) btn.classList.add('step-active');
+                else btn.classList.remove('step-active');
+            });
+
+            detailArea.innerHTML = `
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="text-4xl">${pillar.emoji}</span>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900">${pillar.title}</h3>
+                        <p class="text-indigo-600 font-medium italic text-sm mt-1">"${pillar.summary}"</p>
+                    </div>
+                </div>
+                <div class="mt-8 border-t border-gray-100 pt-8">
+                    ${pillar.content}
+                </div>
+            `;
+
+            // Re-init charts in detail area if needed
+            if (index === 0) initContextChart();
+            if (index === 3) initKnowledgeChart();
+        }
+
+        // Logic for Commands
+        function filterCommands(type) {
+            const tbody = document.getElementById('commandTableBody');
+            const filtered = type === 'all' ? commands : commands.filter(c => c.type === type || c.type === 'all');
+            
+            tbody.innerHTML = filtered.map(c => `
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4 whitespace-nowrap"><code class="text-indigo-600 font-bold bg-indigo-50 px-2 py-1 rounded text-sm">${c.cmd}</code></td>
+                    <td class="px-6 py-4 text-sm text-gray-700">${c.role}</td>
+                    <td class="px-6 py-4 text-xs text-gray-500 italic">${c.time}</td>
+                </tr>
+            `).join('');
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initial Load
+        window.onload = () => {
+            initCharts();
+            showPillar(0);
+            filterCommands('all');
+        };
+    </script>
+</body>
+</html>
