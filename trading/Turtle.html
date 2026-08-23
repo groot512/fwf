@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>터틀 트레이딩(Turtle Trading) 인터랙티브 실전 가이드 & 대시보드</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    },
+                    colors: {
+                        turtle: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        amberAccent: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fafaf9;
+            color: #1c1917;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+        .tab-btn.active {
+            border-bottom-color: #16a34a;
+            color: #15803d;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Chosen Palette: Warm Stone background (#fafaf9), Turtle Green (#16a34a), Amber Accent (#d97706), Slate Gray (#334155) -->
+
+    <!-- Application Structure Plan: 
+         1. Hero Header & Key Story: 소개 및 300만원을 5000억으로 만든 터틀 트레이딩 전설 요약.
+         2. Dynamic Navigation (Tabs):
+            - Tab 1: 4대 절대 원칙 & 핵심 철학 (카드 인터랙션 + 원칙 가이드)
+            - Tab 2: 손익비 수학 시뮬레이터 (10% 승률로도 우상향하는 계좌 시뮬레이션 Chart.js)
+            - Tab 3: 지표 세팅 & 알고리즘 (TradingView 설정 + Donchian/ATR/200MA 시각화 차트)
+            - Tab 4: 실전 포지션 & 리스크 계산기 (사용자가 직접 가격, ATR, 시드를 입력해 손절가/포지션 크기 자동 계산)
+            - Tab 5: 커스텀 보완전략 (속임수 방지 및 업그레이드 필터 가이드)
+         3. Footer: 핵심 인용구 및 요약
+         WHY: 사용자가 단편적인 글로 읽는 것에 그치지 않고, 직접 숫자와 차트를 조작하며 '왜 낮 승률에도 우상향하는지' 및 '내 계좌에 리스크 규칙을 어떻게 적용하는지' 체득하도록 구성.
+    -->
+
+    <!-- Visualization & Content Choices:
+         - Win-rate vs Risk:Reward Calculator -> Chart.js Line Chart -> Interactive Sliders -> 9번 연속 손절 후 1번의 추세로 우상향하는 곡선 증명.
+         - Indicator Breakdown -> Chart.js Line/Area Chart -> Dynamic Donchian Channel Breakout Simulator -> 20일 고점 돌파 및 ATR 2N 손절, 10일 저점 청산 메커니즘 시각화.
+         - Real-time Position Sizing Calculator -> Custom JS Logic -> Live User Inputs -> 2% 리스크 준수 포지션 크기 및 정확한 손절가 산출.
+         - CONFIRMATION: NO SVG used. NO Mermaid JS used.
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Top Navigation Header -->
+    <header class="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">🐢</span>
+                    <div>
+                        <h1 class="text-lg font-bold text-stone-900 leading-tight">터틀 트레이딩 (Turtle Trading)</h1>
+                        <p class="text-xs text-stone-500">전설적인 추세추종 매매 시스템 완벽 가이드</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-2 text-xs font-medium">
+                    <span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full border border-emerald-200">1회 리스크 ≤ 2%</span>
+                    <span class="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full border border-amber-200">손익비 중심</span>
+                    <span class="bg-stone-100 text-stone-700 px-2.5 py-1 rounded-full border border-stone-300">추세추종 (Trend Following)</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="bg-gradient-to-r from-stone-900 via-stone-800 to-turtle-900 text-white py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto text-center md:text-left md:flex items-center justify-between gap-8">
+            <div class="space-y-4 max-w-2xl">
+                <div class="inline-block bg-turtle-600/30 border border-turtle-500/40 text-turtle-200 text-xs px-3 py-1 rounded-full font-semibold">
+                    💡 리처드 데니스의 1980년대 월스트리트 실험
+                </div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white leading-snug">
+                    "트레이딩은 타고난 재능이 아닌,<br class="hidden sm:inline"> 가르칠 수 있는 기계적 원칙이다."
+                </h2>
+                <p class="text-stone-300 text-sm leading-relaxed">
+                    초보자들을 단 2주 동안 교육시켜 4년 만에 <strong class="text-amber-400">1억 7,500만 달러(약 2,300억 원)</strong>의 수익을 올린 터틀 전략. 감정을 배제하고 2% 리스크와 추세를 끝까지 먹는 시스템의 핵심을 다룹니다.
+                </p>
+            </div>
+            <div class="mt-6 md:mt-0 bg-stone-800/80 border border-stone-700 p-5 rounded-2xl shadow-xl min-w-[280px]">
+                <div class="text-xs text-stone-400 font-medium mb-1">터틀 트레이딩의 핵심 공식</div>
+                <div class="text-lg font-bold text-emerald-400 mb-2">낮은 승률 + 압도적 손익비</div>
+                <p class="text-xs text-stone-300 leading-normal">
+                    10번 중 9번을 손절하더라도(-2%), 단 1번의 큰 추세(+50%)를 잡으면 계좌는 결국 우상향합니다.
+                </p>
+                <div class="mt-3 pt-3 border-t border-stone-700 text-[11px] text-amber-300 font-mono">
+                    ✦ 운영비로서의 손절 = 당연한 기회비용
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Section Tabs Navigation -->
+    <div class="bg-white border-b border-stone-200 sticky top-16 z-40">
+        <div class="max-w-5xl mx-auto px-4 overflow-x-auto">
+            <nav class="flex space-x-6 min-w-max text-sm font-medium" id="tabs-nav">
+                <button onclick="switchTab('tab-philosophy')" id="btn-tab-philosophy" class="tab-btn py-4 border-b-2 border-transparent hover:text-turtle-600 transition-colors active">
+                    1. 철학 & 4대 원칙
+                </button>
+                <button onclick="switchTab('tab-math')" id="btn-tab-math" class="tab-btn py-4 border-b-2 border-transparent hover:text-turtle-600 transition-colors">
+                    2. 손익비 수학 시뮬레이터
+                </button>
+                <button onclick="switchTab('tab-indicators')" id="btn-tab-indicators" class="tab-btn py-4 border-b-2 border-transparent hover:text-turtle-600 transition-colors">
+                    3. 지표 세팅 & 알고리즘
+                </button>
+                <button onclick="switchTab('tab-calculator')" id="btn-tab-calculator" class="tab-btn py-4 border-b-2 border-transparent hover:text-turtle-600 transition-colors">
+                    4. 실전 포지션 계산기
+                </button>
+                <button onclick="switchTab('tab-custom')" id="btn-tab-custom" class="tab-btn py-4 border-b-2 border-transparent hover:text-turtle-600 transition-colors">
+                    5. 한계점 & 커스텀 보완
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- SECTION 1: 철학 & 4대 원칙 -->
+        <section id="tab-philosophy" class="tab-content space-y-8">
+            <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-stone-900 flex items-center gap-2">
+                    <span>📜</span> 섹션 개요: 원칙이 전부다
+                </h3>
+                <p class="text-stone-600 text-sm leading-relaxed">
+                    이 섹션에서는 리처드 데니스가 제자들에게 목숨처럼 강조한 터틀 트레이딩의 4대 절대 원칙과 핵심 심리 철학을 다룹니다.
+                    아무리 뛰어난 기법이라도 리스크 통제와 감정 제어가 수반되지 않으면 계좌는 결국 무너지게 됩니다.
+                </p>
+            </div>
+
+            <!-- Quotes Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-amber-50/60 border border-amber-200 rounded-xl p-5 space-y-2">
+                    <div class="text-amber-700 font-bold text-sm">💬 핵심 명언 #1</div>
+                    <p class="text-stone-800 text-xs leading-relaxed font-medium">
+                        "대부분의 거래는 실패할 것이다. 하지만 그 실패는 감당할 수 있어야 한다. 대신 추세가 제대로 터지면 그 포지션은 끝까지 들고 가라."
+                    </p>
+                </div>
+                <div class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-5 space-y-2">
+                    <div class="text-emerald-700 font-bold text-sm">💬 핵심 명언 #2</div>
+                    <p class="text-stone-800 text-xs leading-relaxed font-medium">
+                        "트레이더가 계좌를 날리는 것은 시스템이 잘못돼서가 아니라, 그 시스템을 끝까지 밀고 갈 멘탈이 없기 때문이다."
+                    </p>
+                </div>
+                <div class="bg-stone-100 border border-stone-200 rounded-xl p-5 space-y-2">
+                    <div class="text-stone-700 font-bold text-sm">💬 핵심 명언 #3</div>
+                    <p class="text-stone-800 text-xs leading-relaxed font-medium">
+                        "원칙이 전부다. 실무에서는 복잡한 차트보다 내 마음과 감정을 다스리는 통제력이 훨씬 더 중요하다."
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4 Golden Rules Grid -->
+            <div class="space-y-4">
+                <h4 class="text-lg font-bold text-stone-900">절대로 어기면 안 되는 4대 절대 원칙</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Rule 1 -->
+                    <div class="bg-white p-5 rounded-xl border-l-4 border-l-rose-500 border border-stone-200 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">Rule 01</span>
+                            <span class="text-xs bg-rose-50 text-rose-700 px-2 py-0.5 rounded font-mono font-bold">1회 최대 리스크 2%</span>
+                        </div>
+                        <h5 class="font-bold text-stone-900 text-base">한 거래당 리스크는 최대 2%로 제한</h5>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            한 번의 매매에서 잃을 수 있는 금액은 전체 시드의 2%를 절대로 넘지 않아야 합니다. 연속으로 손절이 발생하더라도 계좌가 파산하는 것을 완벽히 방지합니다.
+                        </p>
+                    </div>
+
+                    <!-- Rule 2 -->
+                    <div class="bg-white p-5 rounded-xl border-l-4 border-l-amber-500 border border-stone-200 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Rule 02</span>
+                            <span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-mono font-bold">운영비로서의 손절</span>
+                        </div>
+                        <h5 class="font-bold text-stone-900 text-base">손실은 빠르고 단호하게 잘라낸다</h5>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            "곧 반등하겠지"라는 기대를 버려야 합니다. 손절은 실패가 아니라 비즈니스를 지속하기 위해 지불하는 당연한 '운영비(Cost)'로 받아들여야 합니다.
+                        </p>
+                    </div>
+
+                    <!-- Rule 3 -->
+                    <div class="bg-white p-5 rounded-xl border-l-4 border-l-emerald-500 border border-stone-200 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Rule 03</span>
+                            <span class="text-xs bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-mono font-bold">Trailing Stop</span>
+                        </div>
+                        <h5 class="font-bold text-stone-900 text-base">수익은 최대한 길게 끌고 간다</h5>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            조급한 마음에 조기 익절하지 않습니다. 추세가 유지되는 한 포지션을 계속 들고 가며, 추세 꺾임 신호가 확실히 나올 때까지 이익을 끝까지 누적합니다.
+                        </p>
+                    </div>
+
+                    <!-- Rule 4 -->
+                    <div class="bg-white p-5 rounded-xl border-l-4 border-l-blue-500 border border-stone-200 shadow-sm space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Rule 04</span>
+                            <span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-mono font-bold">Price Action</span>
+                        </div>
+                        <h5 class="font-bold text-stone-900 text-base">예측하지 말고 추세를 따라간다</h5>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            "오를 것 같다", "내릴 것 같다"는 개인적 직관을 철저히 배제합니다. 오직 차트의 고점/저점 돌파 및 이탈 신호에만 기계적으로 대응합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: 손익비 수학 시뮬레이터 -->
+        <section id="tab-math" class="tab-content space-y-8 hidden">
+            <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-stone-900 flex items-center gap-2">
+                    <span>🧮</span> 섹션 개요: 낮은 승률로도 계좌가 우상향하는 수학적 원리
+                </h3>
+                <p class="text-stone-600 text-sm leading-relaxed">
+                    터틀 트레이딩의 핵심은 높은 승률이 아니라 <strong>압도적인 손익비(Risk-Reward Ratio)</strong>입니다. 
+                    아래 시뮬레이터는 9번 연속으로 손절(-2%)이 발생하더라도, 단 1번의 대형 추세(+50%)를 맞이하면 전체 계좌가 왜 +25% 수익으로 전환되는지 직접 증명합니다.
+                </p>
+            </div>
+
+            <!-- Mathematical Proof Example Box -->
+            <div class="bg-stone-900 text-stone-100 rounded-2xl p-6 shadow-md space-y-4">
+                <h4 class="text-base font-bold text-amber-400 flex items-center gap-2">
+                    <span>📌</span> 영상 속 실제 예시 계산 (원금 1,000만 원 기준)
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+                    <div class="bg-stone-800/90 p-4 rounded-xl border border-stone-700 space-y-2">
+                        <div class="font-bold text-rose-400 text-sm">1번 ~ 9번 거래 (연속 손절)</div>
+                        <p class="text-stone-300">매번 계좌 시드의 2%씩 손절 발생</p>
+                        <div class="font-mono text-stone-200 bg-stone-950 p-2 rounded">
+                            잔여 시드 = 1,000만 원 × (0.98)⁹ <br>
+                            ≈ <span class="text-rose-400 font-bold">833.7만 원</span> (-16.63% 손실)
+                        </div>
+                    </div>
+                    <div class="bg-stone-800/90 p-4 rounded-xl border border-stone-700 space-y-2">
+                        <div class="font-bold text-emerald-400 text-sm">10번째 거래 (대형 추세 적중)</div>
+                        <p class="text-stone-300">큰 추세를 타서 +50% 수익 달성</p>
+                        <div class="font-mono text-stone-200 bg-stone-950 p-2 rounded">
+                            최종 시드 = 833.7만 원 × 1.50 <br>
+                            = <span class="text-emerald-400 font-bold">1,250.55만 원</span> (<span class="text-emerald-400 font-bold">+25.05% 최종 수익</span>)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Chart & Controls -->
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-6">
+                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
+                    <div>
+                        <h4 class="text-lg font-bold text-stone-900">시드 우상향 인터랙티브 시뮬레이터</h4>
+                        <p class="text-xs text-stone-500">슬라이더를 조절하여 거래 조건에 따른 계좌 변화 추이를 확인하세요.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="resetMathSim()" class="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg text-xs font-medium">
+                            기본값 복원 (영상 예시)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Control Sliders -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-stone-50 p-4 rounded-xl border border-stone-200 text-xs">
+                    <div>
+                        <label class="font-bold text-stone-700 flex justify-between">
+                            <span>시작 시드:</span>
+                            <span id="val-seed" class="text-turtle-700 font-mono">10,000,000 원</span>
+                        </label>
+                        <input type="range" id="input-seed" min="1000000" max="50000000" step="1000000" value="10000000" oninput="updateMathSim()" class="w-full mt-2 accent-turtle-600">
+                    </div>
+                    <div>
+                        <label class="font-bold text-stone-700 flex justify-between">
+                            <span>손절 시 리스크 (%):</span>
+                            <span id="val-loss-pct" class="text-rose-600 font-mono">2.0 %</span>
+                        </label>
+                        <input type="range" id="input-loss-pct" min="0.5" max="5.0" step="0.1" value="2.0" oninput="updateMathSim()" class="w-full mt-2 accent-rose-500">
+                    </div>
+                    <div>
+                        <label class="font-bold text-stone-700 flex justify-between">
+                            <span>추세 적중 시 수익 (%):</span>
+                            <span id="val-win-pct" class="text-emerald-600 font-mono">50.0 %</span>
+                        </label>
+                        <input type="range" id="input-win-pct" min="10" max="100" step="5" value="50" oninput="updateMathSim()" class="w-full mt-2 accent-emerald-600">
+                    </div>
+                </div>
+
+                <!-- Simulation Chart Container -->
+                <div class="chart-container">
+                    <canvas id="mathSimChart"></canvas>
+                </div>
+
+                <div class="text-center text-xs text-stone-500 italic">
+                    💡 1번~9번 연속 손절 후 10번째 거래에서 대형 추세가 발생하는 10회 매매 시뮬레이션 결과입니다.
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: 지표 세팅 & 알고리즘 -->
+        <section id="tab-indicators" class="tab-content space-y-8 hidden">
+            <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-stone-900 flex items-center gap-2">
+                    <span>📊</span> 섹션 개요: 트레이딩뷰 지표 세팅 & 알고리즘
+                </h3>
+                <p class="text-stone-600 text-sm leading-relaxed">
+                    터틀 트레이딩을 실전 차트에 적용하기 위한 3가지 필수 지표(돈치안 채널 계열, ATR, 200일 이동평균선) 세팅법과 롱/숏 매매 알고리즘을 설명합니다.
+                </p>
+            </div>
+
+            <!-- Indicator Setup Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-bold">1</span>
+                        <h4 class="font-bold text-stone-900 text-sm">돈치안 채널 계열</h4>
+                    </div>
+                    <p class="text-xs text-stone-500">`Highest High Lowest Low` 지표 검색</p>
+                    <ul class="text-xs text-stone-700 space-y-1.5 font-mono bg-stone-50 p-3 rounded-lg">
+                        <li>• Moving Average: <strong class="text-rose-600">체크 해제</strong></li>
+                        <li>• 진입 길이 (Input Length): <strong class="text-turtle-700">20</strong></li>
+                        <li>• 청산 길이 (Exit Length): <strong class="text-amber-700">10</strong></li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-amber-100 text-amber-800 text-xs px-2 py-0.5 rounded font-bold">2</span>
+                        <h4 class="font-bold text-stone-900 text-sm">ATR (변동성 측정)</h4>
+                    </div>
+                    <p class="text-xs text-stone-500">`Average True Range` 지표 검색</p>
+                    <ul class="text-xs text-stone-700 space-y-1.5 font-mono bg-stone-50 p-3 rounded-lg">
+                        <li>• 길이 (Length): <strong class="text-turtle-700">20</strong>으로 변경</li>
+                        <li>• 역할: 시장 변동폭 측정</li>
+                        <li>• 손절폭: <strong class="text-rose-600 font-bold">2 × ATR</strong> 지정</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm space-y-3">
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded font-bold">3</span>
+                        <h4 class="font-bold text-stone-900 text-sm">200일 이동평균선</h4>
+                    </div>
+                    <p class="text-xs text-stone-500">`Moving Average` 지표 검색</p>
+                    <ul class="text-xs text-stone-700 space-y-1.5 font-mono bg-stone-50 p-3 rounded-lg">
+                        <li>• 길이 (Length): <strong class="text-turtle-700">200</strong></li>
+                        <li>• 가격 > 200MA: <strong class="text-emerald-600">롱 포지션만</strong></li>
+                        <li>• 가격 < 200MA: <strong class="text-rose-600">숏 포지션만</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Strategy Flow Breakdown -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Long Strategy -->
+                <div class="bg-emerald-50/40 border border-emerald-200 rounded-2xl p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-emerald-800 text-base flex items-center gap-2">
+                            <span>📈</span> 롱(매수) 포지션 프로세스
+                        </h4>
+                        <span class="text-xs bg-emerald-200 text-emerald-800 font-bold px-2 py-0.5 rounded">상승 추세 대응</span>
+                    </div>
+                    <ol class="text-xs text-stone-700 space-y-2.5 list-decimal list-inside">
+                        <li class="leading-relaxed"><strong class="text-stone-900">추세 필터 확인:</strong> 가격이 200MA 위에 위치해야 함</li>
+                        <li class="leading-relaxed"><strong class="text-stone-900">진입 타점:</strong> 캔들이 20일 고점 선(녹색 상단선)을 위로 돌파하여 <strong class="text-emerald-700">종가 마감</strong>할 때 롱 진입</li>
+                        <li class="leading-relaxed"><strong class="text-stone-900">손절가 설정:</strong> <span class="font-mono bg-emerald-100 px-1 rounded text-emerald-900">진입가 - (2 × ATR)</span></li>
+                        <li class="leading-relaxed"><strong class="text-stone-900">유동적 청산 (Trailing Stop):</strong> 가격 상승에 따라 10일 저점 선(빨간선)이 손절가보다 올라오면 청산 기준을 10일 저점선으로 변경. 캔들이 10일 저점선 아래로 종가 마감 시 익절</li>
+                    </ol>
+                </div>
+
+                <!-- Short Strategy -->
+                <div class="bg-rose-50/40 border border-rose-200 rounded-2xl p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-rose-800 text-base flex items-center gap-2">
+                            <span>📉</span> 숏(매도) 포지션 프로세스
+                        </h4>
+                        <span class="text-xs bg-rose-200 text-rose-800 font-bold px-2 py-0.5 rounded">하락 추세 대응</span>
+                    </div>
+                    <ol class="text-xs text-stone-700 space-y-2.5 list-decimal list-inside">
+                        <li class="leading-relaxed"><strong class="text-stone-900">추세 필터 확인:</strong> 가격이 200MA 아래에 위치해야 함</li>
+                        <li class="leading-relaxed"><strong class="text-stone-900">진입 타점:</strong> 캔들이 20일 저점 선(빨간 하단선)을 아래로 이탈하여 <strong class="text-rose-700">종가 마감</strong>할 때 숏 진입</li>
+                        <li class="leading-relaxed"><strong class="text-stone-900">손절가 설정:</strong> <span class="font-mono bg-rose-100 px-1 rounded text-rose-900">진입가 + (2 × ATR)</span></li>
+                        <li class="leading-relaxed"><strong class="text-stone-900">유동적 청산 (Trailing Stop):</strong> 캔들이 10일 고점 선(녹색 상단선) 위로 올라가서 종가 마감할 때 청산/익절</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Dynamic Interactive Trade Simulator Chart -->
+            <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+                <div class="flex justify-between items-center">
+                    <h4 class="text-base font-bold text-stone-900">돈치안 채널 돌파 & ATR 손절 시뮬레이션</h4>
+                    <span class="text-xs text-stone-500 font-mono">TradingView 메커니즘 시각화</span>
+                </div>
+                <div class="chart-container">
+                    <canvas id="tradeFlowChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: 실전 포지션 계산기 -->
+        <section id="tab-calculator" class="tab-content space-y-8 hidden">
+            <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-stone-900 flex items-center gap-2">
+                    <span>⚡</span> 섹션 개요: 실전 포지션 & 리스크 계산기
+                </h3>
+                <p class="text-stone-600 text-sm leading-relaxed">
+                    현재 계좌 시드와 시장 매매 수치(현재가, ATR, 200MA)를 입력하면 
+                    터틀의 <strong>2% 리스크 규칙</strong>을 정확히 적용한 손절가, 포지션 크기 및 진입 자격 요건을 자동으로 산출합니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Input Panel -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-4">
+                    <h4 class="font-bold text-stone-900 text-sm border-b border-stone-200 pb-2">1. 매매 정보 입력</h4>
+                    
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <label class="font-medium text-stone-700 block mb-1">포지션 방향</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button type="button" id="pos-long-btn" onclick="setPositionType('LONG')" class="py-2 rounded-lg font-bold border border-emerald-500 bg-emerald-50 text-emerald-700">
+                                    🟢 LONG (매수)
+                                </button>
+                                <button type="button" id="pos-short-btn" onclick="setPositionType('SHORT')" class="py-2 rounded-lg font-bold border border-stone-300 bg-stone-50 text-stone-600">
+                                    🔴 SHORT (매도)
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="font-medium text-stone-700 block mb-1">전체 계좌 시드 ($ 또는 원)</label>
+                            <input type="number" id="calc-seed" value="10000000" oninput="calculateTurtleTrade()" class="w-full p-2.5 border border-stone-300 rounded-lg font-mono">
+                        </div>
+
+                        <div>
+                            <label class="font-medium text-stone-700 block mb-1">진입 희망가 ($ 또는 원)</label>
+                            <input type="number" id="calc-price" value="65000" oninput="calculateTurtleTrade()" class="w-full p-2.5 border border-stone-300 rounded-lg font-mono">
+                        </div>
+
+                        <div>
+                            <label class="font-medium text-stone-700 block mb-1">현재 ATR (20) 수치</label>
+                            <input type="number" id="calc-atr" value="360" oninput="calculateTurtleTrade()" class="w-full p-2.5 border border-stone-300 rounded-lg font-mono">
+                        </div>
+
+                        <div>
+                            <label class="font-medium text-stone-700 block mb-1">200일 이동평균선 (200MA) 가격</label>
+                            <input type="number" id="calc-ma200" value="60000" oninput="calculateTurtleTrade()" class="w-full p-2.5 border border-stone-300 rounded-lg font-mono">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Output Panel -->
+                <div class="lg:col-span-7 bg-stone-900 text-white p-6 rounded-2xl shadow-md space-y-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center border-b border-stone-800 pb-3 mb-4">
+                            <h4 class="font-bold text-amber-400 text-sm">2. 계산된 터틀 리스크 파라미터</h4>
+                            <span id="calc-status-badge" class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2.5 py-0.5 rounded-full font-bold">
+                                추세조건 충족 (진입 가능)
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 text-xs mb-6">
+                            <div class="bg-stone-800/80 p-3.5 rounded-xl border border-stone-700">
+                                <span class="text-stone-400 block mb-1">1회 최대 허용 손실액 (2%)</span>
+                                <span id="res-max-risk" class="text-base font-bold font-mono text-amber-300">200,000</span>
+                            </div>
+
+                            <div class="bg-stone-800/80 p-3.5 rounded-xl border border-stone-700">
+                                <span class="text-stone-400 block mb-1">손절 폭 (2 × ATR)</span>
+                                <span id="res-stop-distance" class="text-base font-bold font-mono text-stone-200">720</span>
+                            </div>
+
+                            <div class="bg-stone-800/80 p-3.5 rounded-xl border border-stone-700 col-span-2 sm:col-span-1">
+                                <span class="text-stone-400 block mb-1">최종 설정 손절가격 (Stop-Loss)</span>
+                                <span id="res-stop-price" class="text-lg font-extrabold font-mono text-rose-400">64,280</span>
+                            </div>
+
+                            <div class="bg-stone-800/80 p-3.5 rounded-xl border border-stone-700 col-span-2 sm:col-span-1">
+                                <span class="text-stone-400 block mb-1">추천 진입 수량 (Position Size)</span>
+                                <span id="res-pos-size" class="text-lg font-extrabold font-mono text-emerald-400">277.77 단위</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-stone-950 p-4 rounded-xl border border-stone-800 text-xs space-y-2">
+                            <div class="font-bold text-stone-300 flex items-center gap-1">
+                                <span>💡</span> 가이드 체크리스트
+                            </div>
+                            <p id="res-guide-text" class="text-stone-400 leading-relaxed">
+                                가격($65,000)이 200MA($60,000) 위에 위치하므로 롱 추세 조건 합격. 20일 최고가 돌파 시 손절가 $64,280을 감수하고 롱에 진입하십시오.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-[11px] text-stone-500 pt-2 border-t border-stone-800">
+                        * 손절폭이 ATR에 따라 달라지므로, 몇 분봉을 쓰느냐에 따라 보통 0.5% ~ 5% 선으로 리스크가 자동 조절됩니다.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: 한계점 & 커스텀 보완 -->
+        <section id="tab-custom" class="tab-content space-y-8 hidden">
+            <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm space-y-4">
+                <h3 class="text-xl font-bold text-stone-900 flex items-center gap-2">
+                    <span>💡</span> 섹션 개요: 터틀 트레이딩의 한계 및 커스텀 보완책
+                </h3>
+                <p class="text-stone-600 text-sm leading-relaxed">
+                    전래적인 터틀 전략의 단점(횡보장 속임수, 지연성)을 현대적인 관점에서 보완하는 최신 커스텀 지표 활용 전략을 설명합니다.
+                </p>
+            </div>
+
+            <!-- Weaknesses vs Solutions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Weakness -->
+                <div class="bg-rose-50/50 border border-rose-200 p-6 rounded-2xl space-y-3">
+                    <h4 class="font-bold text-rose-800 text-base flex items-center gap-2">
+                        <span>⚠️</span> 터틀 기법의 한계점 (Weakness)
+                    </h4>
+                    <ul class="text-xs text-stone-700 space-y-2.5 list-disc list-inside">
+                        <li class="leading-relaxed">
+                            <strong class="text-stone-900">횡보장에서의 속임수 (Whipsaw):</strong> 박스권 횡보장에서는 돌파 후 바로 꺾이는 현상이 잦아 자잘한 연속 손절이 다수 발생함.
+                        </li>
+                        <li class="leading-relaxed">
+                            <strong class="text-stone-900">지연성 (Lagging):</strong> 20일/10일 고점·저점을 확인하고 뒤늦게 진입하면 상승/하락 추세의 끝물일 위험 존재.
+                        </li>
+                        <li class="leading-relaxed">
+                            <strong class="text-stone-900">장중 개미털기 (False Wick):</strong> 캔들 진행 중에 손절가를 건드렸다가 종가에는 다시 복귀하는 꼬리 달기 현상에 털리기 쉬움.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Custom Solution -->
+                <div class="bg-emerald-50/50 border border-emerald-200 p-6 rounded-2xl space-y-3">
+                    <h4 class="font-bold text-emerald-800 text-base flex items-center gap-2">
+                        <span>🛡️</span> 최신 커스텀 보완책 (Upgrades)
+                    </h4>
+                    <ul class="text-xs text-stone-700 space-y-2.5 list-disc list-inside">
+                        <li class="leading-relaxed">
+                            <strong class="text-stone-900">밴드 색상 자동 시각화:</strong> 추세 전환 구간에서 배경/밴드 색상이 자동으로 변경되도록 설정하여 직관성 확보.
+                        </li>
+                        <li class="leading-relaxed">
+                            <strong class="text-stone-900">중앙선(Mid-line) 익절 전략:</strong> 채널의 중앙선을 이탈할 때 1차 익절을 수행하여 손익비를 정교하게 보완.
+                        </li>
+                        <li class="leading-relaxed">
+                            <strong class="text-stone-900">종가 기준 손절 확인:</strong> 개미털기에 털리지 않도록 반드시 <span class="text-emerald-700 font-bold">캔들 종가 마감</span>을 기준으로 손절 및 청산 결정.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Upgraded Indicator Comparison Visual -->
+            <div class="bg-stone-900 text-white p-6 rounded-2xl shadow-md space-y-4">
+                <h4 class="font-bold text-amber-400 text-sm">한 장 터틀 지표 커스텀 기능 한눈에 보기</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                    <div class="bg-stone-800 p-4 rounded-xl border border-stone-700 space-y-1">
+                        <div class="text-turtle-400 font-bold">🎨 직관적 추세 색상</div>
+                        <p class="text-stone-300">초록색(상승) / 빨간색(하락) 밴드 색상 전환으로 눈이 편한 트레이딩 환경 구축</p>
+                    </div>
+                    <div class="bg-stone-800 p-4 rounded-xl border border-stone-700 space-y-1">
+                        <div class="text-amber-300 font-bold">🎯 파란색 중심선 익절</div>
+                        <p class="text-stone-300">하단선까지 안 내려가더라도 중심선 이탈 시 빠르게 익절하여 수익 보전</p>
+                    </div>
+                    <div class="bg-stone-800 p-4 rounded-xl border border-stone-700 space-y-1">
+                        <div class="text-rose-400 font-bold">🕯️ 종가 확정 매매</div>
+                        <p class="text-stone-300">장중 단기 꼬리(개미털기)에 털리지 않고 캔들 종가 마감 시에만 기계적 진입/손절</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 border-t border-stone-800 py-6 px-4 text-center text-xs">
+        <div class="max-w-5xl mx-auto space-y-2">
+            <p class="text-stone-300 font-medium">"원칙이 전부다. 실무에서는 차트보다 내 마음을 다스리는 통제력이 더 중요하다." - 리처드 데니스</p>
+            <p class="text-stone-500">본 대시보드는 터틀 트레이딩 가이드 및 가속 학습을 위한 교육용 인터랙티브 도구입니다.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // TAB SWITCHING LOGIC
+        function switchTab(tabId) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            // Remove active style from buttons
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            // Show current tab
+            document.getElementById(tabId).classList.remove('hidden');
+            // Highlight current button
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+
+        // --- MATH SIMULATOR (Chart.js) ---
+        let mathChart = null;
+
+        function initMathSimChart() {
+            const ctx = document.getElementById('mathSimChart').getContext('2d');
+            mathChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['시작', '1회차(손절)', '2회차(손절)', '3회차(손절)', '4회차(손절)', '5회차(손절)', '6회차(손절)', '7회차(손절)', '8회차(손절)', '9회차(손절)', '10회차(추세적중)'],
+                    datasets: [{
+                        label: '계좌 잔고 변화 (원)',
+                        data: [],
+                        borderColor: '#16a34a',
+                        backgroundColor: 'rgba(22, 163, 74, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: ['#16a34a', '#e11d48', '#e11d48', '#e11d48', '#e11d48', '#e11d48', '#e11d48', '#e11d48', '#e11d48', '#e11d48', '#16a34a'],
+                        pointRadius: 5,
+                        fill: true,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '잔고: ' + context.raw.toLocaleString() + ' 원';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return (value / 10000).toLocaleString() + '만';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            updateMathSim();
+        }
+
+        function updateMathSim() {
+            const seed = parseFloat(document.getElementById('input-seed').value);
+            const lossPct = parseFloat(document.getElementById('input-loss-pct').value) / 100;
+            const winPct = parseFloat(document.getElementById('input-win-pct').value) / 100;
+
+            document.getElementById('val-seed').innerText = seed.toLocaleString() + ' 원';
+            document.getElementById('val-loss-pct').innerText = (lossPct * 100).toFixed(1) + ' %';
+            document.getElementById('val-win-pct').innerText = (winPct * 100).toFixed(1) + ' %';
+
+            let dataPoints = [seed];
+            let currentSeed = seed;
+
+            // 9 consecutive losses
+            for (let i = 0; i < 9; i++) {
+                currentSeed = currentSeed * (1 - lossPct);
+                dataPoints.push(Math.round(currentSeed));
+            }
+
+            // 10th big trend win
+            currentSeed = currentSeed * (1 + winPct);
+            dataPoints.push(Math.round(currentSeed));
+
+            if (mathChart) {
+                mathChart.data.datasets[0].data = dataPoints;
+                mathChart.update();
+            }
+        }
+
+        function resetMathSim() {
+            document.getElementById('input-seed').value = 10000000;
+            document.getElementById('input-loss-pct').value = 2.0;
+            document.getElementById('input-win-pct').value = 50.0;
+            updateMathSim();
+        }
+
+        // --- TRADE FLOW SIMULATOR (Chart.js) ---
+        let tradeChart = null;
+
+        function initTradeFlowChart() {
+            const ctx = document.getElementById('tradeFlowChart').getContext('2d');
+            const candles = [61000, 61500, 62000, 61800, 62200, 63000, 62800, 63500, 65200, 66000, 65800, 66500, 64000, 62500];
+            const donchian20High = [64000, 64000, 64000, 64000, 64000, 64000, 64000, 64000, 65200, 66000, 66000, 66500, 66500, 66500];
+            const stopLossLine =   [62500, 62500, 62500, 62500, 62500, 62500, 62500, 62500, 63500, 64320, 64320, 64320, 64320, 64320];
+
+            tradeChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['1일', '2일', '3일', '4일', '5일', '6일', '7일', '8일(돌파진입)', '9일', '10일', '11일', '12일', '13일', '14일(청산)'],
+                    datasets: [
+                        {
+                            label: '비트코인/자산 가격',
+                            data: candles,
+                            borderColor: '#334155',
+                            borderWidth: 2,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#334155'
+                        },
+                        {
+                            label: '20일 고점 선 (진입 기준)',
+                            data: donchian20High,
+                            borderColor: '#16a34a',
+                            borderDash: [5, 5],
+                            borderWidth: 2,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Trailing Stop / ATR 손절선',
+                            data: stopLossLine,
+                            borderColor: '#e11d48',
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        y: {
+                            min: 60000,
+                            max: 68000
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- REAL-TIME POSITION CALCULATOR ---
+        let currentPositionType = 'LONG';
+
+        function setPositionType(type) {
+            currentPositionType = type;
+            const longBtn = document.getElementById('pos-long-btn');
+            const shortBtn = document.getElementById('pos-short-btn');
+
+            if (type === 'LONG') {
+                longBtn.className = "py-2 rounded-lg font-bold border border-emerald-500 bg-emerald-50 text-emerald-700";
+                shortBtn.className = "py-2 rounded-lg font-bold border border-stone-300 bg-stone-50 text-stone-600";
+            } else {
+                shortBtn.className = "py-2 rounded-lg font-bold border border-rose-500 bg-rose-50 text-rose-700";
+                longBtn.className = "py-2 rounded-lg font-bold border border-stone-300 bg-stone-50 text-stone-600";
+            }
+            calculateTurtleTrade();
+        }
+
+        function calculateTurtleTrade() {
+            const seed = parseFloat(document.getElementById('calc-seed').value) || 0;
+            const price = parseFloat(document.getElementById('calc-price').value) || 0;
+            const atr = parseFloat(document.getElementById('calc-atr').value) || 0;
+            const ma200 = parseFloat(document.getElementById('calc-ma200').value) || 0;
+
+            const maxRisk = seed * 0.02; // 2% Rule
+            const stopDistance = 2 * atr; // 2ATR Rule
+
+            let stopPrice = 0;
+            let posSize = 0;
+            let isTrendValid = false;
+
+            if (currentPositionType === 'LONG') {
+                stopPrice = price - stopDistance;
+                isTrendValid = price > ma200;
+            } else {
+                stopPrice = price + stopDistance;
+                isTrendValid = price < ma200;
+            }
+
+            if (stopDistance > 0) {
+                posSize = maxRisk / stopDistance;
+            }
+
+            document.getElementById('res-max-risk').innerText = Math.round(maxRisk).toLocaleString() + ' 원';
+            document.getElementById('res-stop-distance').innerText = stopDistance.toLocaleString();
+            document.getElementById('res-stop-price').innerText = stopPrice.toLocaleString();
+            document.getElementById('res-pos-size').innerText = posSize.toFixed(2) + ' 개/단위';
+
+            const badge = document.getElementById('calc-status-badge');
+            const guide = document.getElementById('res-guide-text');
+
+            if (isTrendValid) {
+                badge.className = "text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2.5 py-0.5 rounded-full font-bold";
+                badge.innerText = "추세조건 충족 (진입 가능)";
+                guide.innerText = `현재가(${price.toLocaleString()})가 200MA(${ma200.toLocaleString()}) 조건과 일치합니다. ${currentPositionType === 'LONG' ? '20일 최고가' : '20일 최저가'} 돌파 시 손절가 ${stopPrice.toLocaleString()}를 설정하고 진입하십시오.`;
+            } else {
+                badge.className = "text-xs bg-rose-500/20 text-rose-400 border border-rose-500/40 px-2.5 py-0.5 rounded-full font-bold";
+                badge.innerText = "추세 필터 미달 (진입 금지)";
+                guide.innerText = `현재가(${price.toLocaleString()})와 200MA(${ma200.toLocaleString()}) 조건이 맞지 않습니다. 200일선 아래에서의 롱, 혹은 200일선 위에서의 숏은 역추세 매매이므로 터틀 원칙상 관망해야 합니다.`;
+            }
+        }
+
+        // Initialize Charts on DOM Ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initMathSimChart();
+            initTradeFlowChart();
+            calculateTurtleTrade();
+        });
+    </script>
+</body>
+</html>

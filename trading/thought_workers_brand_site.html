@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>생각노동자™ [THOUGHT WORKERS] — 사유의 주권을 선언한다</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lenis Smooth Scroll CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ivory: '#F7F5EF',
+                        charcoal: '#121212',
+                        muted: '#666666',
+                        vermilion: '#D83A20',
+                        gridline: '#E2E0D8',
+                        darkbg: '#101010'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Pretendard', 'sans-serif'],
+                        serif: ['"Noto Serif KR"', '"Cormorant Garamond"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Strict Swiss Design Enforcement: Zero Border Radius */
+        * {
+            border-radius: 0px !important;
+        }
+
+        body {
+            background-color: #F7F5EF;
+            color: #121212;
+            font-family: 'Inter', 'Pretendard', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F7F5EF;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #121212;
+        }
+
+        /* Blur to focus text transition effect */
+        .blur-text {
+            filter: blur(8px);
+            opacity: 0.2;
+            transform: translateY(15px);
+            transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: filter, opacity, transform;
+        }
+
+        .blur-text.focused {
+            filter: blur(0px);
+            opacity: 1;
+            transform: translateY(0px);
+        }
+
+        /* Hero Entrance Staged Clip Reveal */
+        .clip-reveal {
+            clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .clip-reveal.revealed {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Red Accent Line Animation */
+        .accent-line {
+            width: 0%;
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .accent-line.drawn {
+            width: 100%;
+        }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: 200%;
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Swiss Grid Divider Line */
+        .border-grid {
+            border-color: #E2E0D8;
+        }
+
+        /* Toast Popup styling */
+        #toast {
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #toast.show {
+            transform: translateY(0%);
+        }
+    </style>
+</head>
+<body class="selection:bg-vermilion selection:text-ivory">
+
+    <!-- Top Navigation Bar -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-ivory/90 backdrop-blur-md border-b border-gridline px-6 py-4 transition-all duration-300" id="mainHeader">
+        <div class="max-w-[1440px] mx-auto flex justify-between items-center text-xs font-mono tracking-widest uppercase">
+            <div class="flex items-center gap-3">
+                <span class="w-2.5 h-2.5 bg-vermilion inline-block"></span>
+                <span class="font-bold text-charcoal">생각노동자™ [THOUGHT WORKERS]</span>
+            </div>
+            <div class="hidden md:block text-muted">
+                2026 EDITORIAL ISSUE 01 — SOVEREIGN MIND
+            </div>
+            <div>
+                <button onclick="scrollToSection('ctaSection')" class="border border-charcoal px-4 py-2 hover:bg-charcoal hover:text-ivory transition-colors uppercase font-medium">
+                    [ Manifesto ]
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- [01 HERO] Cinematic Entrance -->
+    <section id="heroSection" class="min-h-screen relative flex flex-col justify-between pt-28 pb-12 px-6 max-w-[1440px] mx-auto border-x border-gridline">
+        <!-- Eyebrow Tag -->
+        <div class="pt-8">
+            <div id="heroEyebrow" class="inline-block border border-charcoal px-3 py-1 text-xs font-mono tracking-widest uppercase bg-ivory mb-6 clip-reveal">
+                [ ESSAY & ARCHITECTURE ]
+            </div>
+        </div>
+
+        <!-- Main Headline -->
+        <div class="my-auto py-12">
+            <div class="clip-reveal" id="heroHeadlineWrap">
+                <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-charcoal tracking-tight leading-[1.05] uppercase">
+                    지능의 외주화 시대,<br>
+                    <span class="italic font-serif font-normal text-muted">잃어버린</span> '생각의<br>
+                    <span class="text-vermilion">아키텍처</span>'를 찾아서
+                </h1>
+            </div>
+            <div class="accent-line h-[2px] bg-vermilion my-8" id="heroAccentLine"></div>
+            <p id="heroSubtext" class="text-lg md:text-2xl font-serif text-muted max-w-2xl leading-relaxed blur-text">
+                "지능이 극적으로 편리해진 세상, 우리는 기술의 기능공이 될 것인가, 아니면 사유의 주권을 쥔 아키텍트가 될 것인가."
+            </p>
+        </div>
+
+        <!-- Footer Cue -->
+        <div class="flex justify-between items-end border-t border-gridline pt-6 text-xs font-mono tracking-widest text-muted">
+            <div class="hidden sm:block">
+                VOL. 01 / ESSAY & SYSTEM SPEC
+            </div>
+            <div class="flex items-center gap-2 cursor-pointer hover:text-vermilion transition-colors" onclick="scrollToSection('philosophySection')">
+                <span>[ SCROLL TO REASON ]</span>
+                <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- [02 PHILOSOPHY] The Paradox of Efficiency -->
+    <section id="philosophySection" class="border-t border-gridline">
+        <div class="max-w-[1440px] mx-auto border-x border-gridline grid grid-cols-1 lg:grid-cols-12 min-h-screen">
+            
+            <!-- Left Column: Sticky Runway -->
+            <div class="lg:col-span-4 p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-gridline lg:sticky lg:top-20 lg:h-[calc(100vh-80px)] flex flex-col justify-between bg-ivory">
+                <div>
+                    <span class="text-xs font-mono tracking-widest text-vermilion block mb-2">[ 01 / PHILOSOPHY ]</span>
+                    <h2 class="text-3xl font-extrabold uppercase tracking-tight text-charcoal mb-6">승리의 역설:<br>효율성이 안겨준 인지적 공허</h2>
+                    <div class="w-12 h-1 bg-charcoal mb-8"></div>
+                </div>
+                
+                <div class="p-6 border-l-2 border-vermilion bg-white/40 my-6">
+                    <p class="font-serif italic text-lg text-charcoal leading-relaxed">
+                        "나를 죽이지 못하는 고통은 나를 더 강하게 만든다."
+                    </p>
+                    <span class="text-xs font-mono text-muted block mt-3">— 프리드리히 니체 (Friedrich Nietzsche)</span>
+                </div>
+
+                <div class="text-xs font-mono text-muted">
+                    PARADOX OF EFFICIENCY // COGNITIVE FRICTION
+                </div>
+            </div>
+
+            <!-- Right Column: Longform Essay Content -->
+            <div class="lg:col-span-8 p-8 lg:p-16 flex flex-col gap-12 bg-ivory">
+                
+                <div class="blur-text">
+                    <h3 class="text-xl font-bold uppercase tracking-tight text-charcoal mb-4 flex items-center gap-3">
+                        <span class="text-vermilion font-mono">01.1</span> 마찰이 사라진 세상의 위험
+                    </h3>
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed font-normal mb-4">
+                        최근 생성형 AI를 활용하여 신규 사업 과제에 합격하고, 바이브 코딩(Vibe Coding) 기법을 통해 실제 기업을 창업하며, 복잡한 시스템 개발을 일주일 만에 완수해 내는 경이로운 경험을 하였다. 과거 수개월이 걸리던 실행의 과정이 단 몇 줄의 프롬프트와 클릭 몇 번으로 축소된 것이다.
+                    </p>
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed font-normal">
+                        그러나 파도처럼 밀려오는 생산성의 환희 뒤편에서 묵직한 질문이 등줄기를 훑고 지나간다: <strong class="bg-vermilion/10 px-1 text-vermilion">"AI가 똑똑해질수록, 나는 왜 점차 멍청해지는 기분이 드는가?"</strong> 실행의 속도는 비약적으로 상승했으나, 그 실행을 이끄는 내면의 사유 근육은 정작 퇴화하고 있다는 강렬한 경고음이었다.
+                    </p>
+                </div>
+
+                <div class="blur-text border-t border-gridline pt-8">
+                    <h3 class="text-xl font-bold uppercase tracking-tight text-charcoal mb-4 flex items-center gap-3">
+                        <span class="text-vermilion font-mono">01.2</span> 사유의 무중력 상태
+                    </h3>
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed font-normal">
+                        우리는 마찰이 사라진 세상에서 살아가고 있다. 생각의 마찰, 기술적 모호함과의 투쟁, 밤을 새우며 논리의 허점을 메우던 고통스러운 시간들이 AI라는 거대한 연돌을 통해 매끄럽게 승화된다. 
+                    </p>
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed font-normal mt-4">
+                        그러나 근육이 저항을 통해서만 강화되듯, 인간의 지성은 마찰과 고통을 통해서만 단단해진다. 인지적 마찰을 AI에게 모두 외주화(Outsourcing)해 버린 현대인은, 역설적으로 자신도 모르는 사이에 사고의 무중력 상태로 빠져들고 있다.
+                    </p>
+                </div>
+
+                <div class="blur-text border-t border-gridline pt-8">
+                    <div class="p-8 border border-charcoal bg-charcoal text-ivory">
+                        <h4 class="font-mono text-xs text-vermilion uppercase tracking-widest mb-2">[ CORE QUESTION ]</h4>
+                        <p class="text-xl md:text-2xl font-serif leading-snug">
+                            "AI라는 강력한 엔진이 장착된 시대, 당신은 핸들을 AI에게 완전히 넘겨준 채 승객석에서 졸고 있는 것은 아닌가?"
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- [03 VISION] Executive & Chief Architect -->
+    <section id="visionSection" class="border-t border-gridline bg-ivory">
+        <div class="max-w-[1440px] mx-auto border-x border-gridline py-20 px-6 lg:px-12">
+            
+            <div class="mb-16">
+                <span class="text-xs font-mono tracking-widest text-vermilion block mb-2">[ 02 / VISION ]</span>
+                <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-charcoal max-w-4xl leading-tight">
+                    "AI에게 정답을 구하지 말고,<br>나의 논리를 파괴하라."
+                </h2>
+                <p class="text-muted text-base md:text-lg mt-4 max-w-2xl font-serif">
+                    인간과 AI의 관계를 '명령자와 실행자'에서 '아키텍트(Chief Architect)와 수석 튜터'로 전면 재정의합니다.
+                </p>
+            </div>
+
+            <!-- 3 Pillar Grid Cards (Strict 1px separation) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border border-gridline bg-gridline gap-[1px]">
+                
+                <!-- Pillar 1 -->
+                <div class="bg-ivory p-8 md:p-10 flex flex-col justify-between hover:bg-white transition-colors group">
+                    <div>
+                        <div class="font-mono text-xs text-vermilion mb-4">[ PILLAR 01 ]</div>
+                        <h3 class="text-2xl font-bold uppercase tracking-tight text-charcoal mb-4 group-hover:text-vermilion transition-colors">
+                            Context<br>Architecting
+                        </h3>
+                        <p class="text-sm md:text-base text-muted leading-relaxed">
+                            지식의 소유에서 관점의 설계로. AI는 현존하는 모든 지식을 인용할 수 있지만, 지식과 지식을 연결하여 새로운 가치를 부여하는 '의도'와 '맥락'은 인간의 영역입니다.
+                        </p>
+                    </div>
+                    <div class="mt-8 font-mono text-xs text-charcoal pt-4 border-t border-gridline">
+                        FOCUS: INTENT & FRAMEWORK
+                    </div>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="bg-ivory p-8 md:p-10 flex flex-col justify-between hover:bg-white transition-colors group">
+                    <div>
+                        <div class="font-mono text-xs text-vermilion mb-4">[ PILLAR 02 ]</div>
+                        <h3 class="text-2xl font-bold uppercase tracking-tight text-charcoal mb-4 group-hover:text-vermilion transition-colors">
+                            Socratic<br>Red Teaming
+                        </h3>
+                        <p class="text-sm md:text-base text-muted leading-relaxed">
+                            소크라테스식 반론의 생활화. 답을 쉽게 얻는 편의성에 중독되지 않고, 세운 가설과 아키텍처에 대해 AI가 집요하게 허점을 공격하도록 만들어 사고를 단단하게 다집니다.
+                        </p>
+                    </div>
+                    <div class="mt-8 font-mono text-xs text-charcoal pt-4 border-t border-gridline">
+                        FOCUS: CRITICAL DEBATE
+                    </div>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="bg-ivory p-8 md:p-10 flex flex-col justify-between hover:bg-white transition-colors group">
+                    <div>
+                        <div class="font-mono text-xs text-vermilion mb-4">[ PILLAR 03 ]</div>
+                        <h3 class="text-2xl font-bold uppercase tracking-tight text-charcoal mb-4 group-hover:text-vermilion transition-colors">
+                            Unboxing The<br>Black Box
+                        </h3>
+                        <p class="text-sm md:text-base text-muted leading-relaxed">
+                            "작동하니까 됐다"는 지적 자살 행위입니다. 코드가 왜 그렇게 작동했는지, 아키텍처의 트레이드오프(Trade-off)가 무엇인지 역으로 AI에게 설명받고 이해해야 내 지산이 됩니다.
+                        </p>
+                    </div>
+                    <div class="mt-8 font-mono text-xs text-charcoal pt-4 border-t border-gridline">
+                        FOCUS: TRADE-OFF AUDIT
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- [04 APPROACH] The AI Tutor Protocol -->
+    <section id="approachSection" class="border-t border-gridline bg-ivory">
+        <div class="max-w-[1440px] mx-auto border-x border-gridline py-20 px-6 lg:px-12">
+            
+            <div class="mb-12">
+                <span class="text-xs font-mono tracking-widest text-vermilion block mb-2">[ 03 / PROTOCOL ]</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-charcoal">
+                    사유력을 증폭시키는 4단계 프로토콜
+                </h2>
+            </div>
+
+            <!-- Swiss Comparison Matrix Table -->
+            <div class="mb-16 overflow-x-auto">
+                <table class="w-full border-collapse text-left border border-gridline">
+                    <thead>
+                        <tr class="bg-charcoal text-ivory font-mono text-xs uppercase tracking-wider">
+                            <th class="p-4 md:p-6 border-r border-gridline w-1/4">구분</th>
+                            <th class="p-4 md:p-6 border-r border-gridline w-3/8 text-muted">기존 방식 (지능 퇴화 유발)</th>
+                            <th class="p-4 md:p-6 w-3/8 text-vermilion font-bold">생각노동자 AI 튜터 방식 (사유력 증폭)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gridline text-sm md:text-base">
+                        <tr class="hover:bg-white transition-colors">
+                            <td class="p-4 md:p-6 font-mono font-bold border-r border-gridline text-xs uppercase">질문 방식</td>
+                            <td class="p-4 md:p-6 text-muted border-r border-gridline">"이 문제의 정답과 코드를 작성해줘."</td>
+                            <td class="p-4 md:p-6 font-semibold text-charcoal">"내 가설은 X이다. 이 논리의 3가지 허점을 지적하고 반론해줘."</td>
+                        </tr>
+                        <tr class="hover:bg-white transition-colors">
+                            <td class="p-4 md:p-6 font-mono font-bold border-r border-gridline text-xs uppercase">피드백 수용</td>
+                            <td class="p-4 md:p-6 text-muted border-r border-gridline">AI가 준 결과를 그대로 복사 및 적용.</td>
+                            <td class="p-4 md:p-6 font-semibold text-charcoal">AI 제안 중 핵심 로직과 트레이드오프를 역으로 심문 및 검증.</td>
+                        </tr>
+                        <tr class="hover:bg-white transition-colors">
+                            <td class="p-4 md:p-6 font-mono font-bold border-r border-gridline text-xs uppercase">목표 설정</td>
+                            <td class="p-4 md:p-6 text-muted border-r border-gridline">단순한 빠른 완성과 결과물 도출.</td>
+                            <td class="p-4 md:p-6 font-semibold text-charcoal">메타인지 확장, 제1원리 파악 및 확장적 사고력 확보.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Daily Routine Timeline -->
+            <h3 class="text-xl font-bold uppercase tracking-tight text-charcoal mb-6 font-mono">[ DAILY ARCHITECT ROUTINE ]</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="border border-gridline p-6 bg-white">
+                    <span class="text-xs font-mono text-vermilion font-bold">[ MORNING ]</span>
+                    <h4 class="text-lg font-bold text-charcoal my-2">전략적 가설 설정</h4>
+                    <p class="text-xs text-muted leading-relaxed">
+                        AI에게 질문하기 전, 오늘 해결할 사업적 문제나 개발 구조에 대한 나의 가설을 3문장으로 정리합니다.
+                    </p>
+                </div>
+
+                <div class="border border-gridline p-6 bg-white">
+                    <span class="text-xs font-mono text-vermilion font-bold">[ WORK / CODING ]</span>
+                    <h4 class="text-lg font-bold text-charcoal my-2">역설명 & 트레이드오프 감사</h4>
+                    <p class="text-xs text-muted leading-relaxed">
+                        AI가 작성한 코드가 동작하더라도 제1원리와 시스템 손실(Trade-off)을 역으로 질문해 블랙박스를 해제합니다.
+                    </p>
+                </div>
+
+                <div class="border border-gridline p-6 bg-white">
+                    <span class="text-xs font-mono text-vermilion font-bold">[ EVENING ]</span>
+                    <h4 class="text-lg font-bold text-charcoal my-2">소크라테스식 디브리핑</h4>
+                    <p class="text-xs text-muted leading-relaxed">
+                        오늘 내린 주요 의사결정을 고전 철학이나 역사적 사건과 대조하여 통찰력을 매일 확장합니다.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- [05 STORY] Historical Elite & Liberal Arts -->
+    <section id="storySection" class="border-t border-gridline bg-ivory">
+        <div class="max-w-[1440px] mx-auto border-x border-gridline grid grid-cols-1 lg:grid-cols-12 min-h-screen">
+            
+            <!-- Left Side Editorial Graphic -->
+            <div class="lg:col-span-5 p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-gridline bg-charcoal text-ivory flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-mono tracking-widest text-vermilion block mb-2">[ 04 / HISTORICAL ANCHOR ]</span>
+                    <h2 class="text-3xl lg:text-4xl font-extrabold uppercase tracking-tight text-ivory leading-tight">
+                        자유인을 위한 학문,<br>리버럴 아츠의 부활
+                    </h2>
+                </div>
+
+                <div class="my-12">
+                    <p class="font-serif italic text-xl text-ivory/80 leading-relaxed mb-4">
+                        "우리가 삶을 짧게 느끼는 것은 시간을 낭비하기 때문이다. 제대로 사유하지 않는 삶은 살아있는 죽음과 같다."
+                    </p>
+                    <span class="text-xs font-mono text-vermilion uppercase tracking-widest">— 세네카 (Seneca, 도덕 간찰)</span>
+                </div>
+
+                <div class="text-xs font-mono text-muted border-t border-muted/30 pt-4">
+                    LIBERAL ARTS // LIBERTAS // SOVEREIGNTY
+                </div>
+            </div>
+
+            <!-- Right Side Longform Narrative -->
+            <div class="lg:col-span-7 p-8 lg:p-16 flex flex-col justify-center gap-8 bg-ivory">
+                <div class="blur-text">
+                    <h3 class="text-2xl font-bold text-charcoal uppercase tracking-tight mb-4">
+                        왜 과거 귀족들은 '자유학예'를 배웠는가
+                    </h3>
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed">
+                        고대 로마와 르네상스 시대의 엘리트들에게 '자유학예(Liberal Arts)'란 글자 그대로 <strong class="text-vermilion">노예가 아닌 자유인을 위한 학문</strong>이었습니다. 누군가의 명령을 받아 기술을 수행하는 기능공이 아닌, 세계의 본질을 관찰하고, 방향성을 결정하며, 윤리적·전략적 가치를 판단하는 '주권자'를 만드는 교육이었습니다.
+                    </p>
+                </div>
+
+                <div class="blur-text border-t border-gridline pt-8">
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed">
+                        오늘날 AI의 등장은 인류 역사상 최초로 <strong class="bg-vermilion/10 text-vermilion px-1">"모든 개인에게 로마 시대의 귀족들이 누리던 최상위 지성인 가정교사를 배치할 수 있는 시대"</strong>가 열렸음을 의미합니다.
+                    </p>
+                    <p class="text-base md:text-lg text-charcoal leading-relaxed mt-4">
+                        그러나 대부분의 사람들은 이 위대한 가정교사를 단순한 '번역기', '코드 작성기' 정도의 하급 기능공으로 격하하여 사용하고 있습니다. 정작 멍청해지는 것은 AI가 아니라, 사고의 주권 권한을 포기하는 인간 자신입니다.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- [06 VISUAL IDENTITY] Marquee & 5 Commandments -->
+    <section id="identitySection" class="border-t border-gridline overflow-hidden bg-ivory">
+        
+        <!-- Seamless Horizontal Marquee -->
+        <div class="border-b border-gridline py-6 bg-charcoal text-ivory overflow-hidden whitespace-nowrap">
+            <div class="animate-marquee font-mono text-2xl md:text-4xl font-extrabold tracking-widest uppercase flex items-center gap-8">
+                <span>SOVEREIGN MIND</span> <span class="text-vermilion">—</span>
+                <span>CHIEF ARCHITECT</span> <span class="text-vermilion">—</span>
+                <span>RED TEAMING</span> <span class="text-vermilion">—</span>
+                <span>LIBERAL ARTS</span> <span class="text-vermilion">—</span>
+                <span>SAPERE AUDE</span> <span class="text-vermilion">—</span>
+                <span>THOUGHT WORKER</span> <span class="text-vermilion">—</span>
+                <span>SOVEREIGN MIND</span> <span class="text-vermilion">—</span>
+                <span>CHIEF ARCHITECT</span> <span class="text-vermilion">—</span>
+                <span>RED TEAMING</span> <span class="text-vermilion">—</span>
+                <span>LIBERAL ARTS</span> <span class="text-vermilion">—</span>
+            </div>
+        </div>
+
+        <div class="max-w-[1440px] mx-auto border-x border-gridline py-20 px-6 lg:px-12">
+            <div class="mb-12">
+                <span class="text-xs font-mono tracking-widest text-vermilion block mb-2">[ 05 / MANIFESTO ]</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-charcoal">
+                    AI 주권(Sovereignty) 유지를 위한 5대 계명
+                </h2>
+            </div>
+
+            <!-- 5 Commandments Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 border border-gridline bg-gridline gap-[1px]">
+                
+                <div class="bg-ivory p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="font-mono text-xs text-vermilion font-bold block mb-2">RULE 01</span>
+                        <h3 class="font-bold text-sm text-charcoal mb-3 uppercase">First Principle First</h3>
+                        <p class="text-xs text-muted leading-relaxed">
+                            AI에게 질문하기 전, 최소 3분간 종이에 내 생각을 직접 적는다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-ivory p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="font-mono text-xs text-vermilion font-bold block mb-2">RULE 02</span>
+                        <h3 class="font-bold text-sm text-charcoal mb-3 uppercase">No Unchecked Code</h3>
+                        <p class="text-xs text-muted leading-relaxed">
+                            이해하지 못하는 코드는 단 한 줄도 내 제품에 반영하지 않는다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-ivory p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="font-mono text-xs text-vermilion font-bold block mb-2">RULE 03</span>
+                        <h3 class="font-bold text-sm text-charcoal mb-3 uppercase">Socratic Dialogue</h3>
+                        <p class="text-xs text-muted leading-relaxed">
+                            AI 정답에 대해 최소 한 번은 "왜 그렇지?"라고 역질문한다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-ivory p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="font-mono text-xs text-vermilion font-bold block mb-2">RULE 04</span>
+                        <h3 class="font-bold text-sm text-charcoal mb-3 uppercase">Classical Anchor</h3>
+                        <p class="text-xs text-muted leading-relaxed">
+                            100년 이상 검증된 고전을 매월 한 권 읽고 AI와 토론한다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-ivory p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="font-mono text-xs text-vermilion font-bold block mb-2">RULE 05</span>
+                        <h3 class="font-bold text-sm text-charcoal mb-3 uppercase">Intent Sovereignty</h3>
+                        <p class="text-xs text-muted leading-relaxed">
+                            '어떻게'는 AI에 맡겨도, '무엇을'과 '왜'는 인간이 결정한다.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- [07 APPLICATIONS] Prompt Engine Accordions -->
+    <section id="applicationsSection" class="border-t border-gridline bg-ivory">
+        <div class="max-w-[1440px] mx-auto border-x border-gridline py-20 px-6 lg:px-12">
+            
+            <div class="mb-12">
+                <span class="text-xs font-mono tracking-widest text-vermilion block mb-2">[ 06 / PROMPT ENGINES ]</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-charcoal">
+                    생각노동자 AI 프롬프트 라이브러리
+                </h2>
+                <p class="text-muted text-sm md:text-base mt-2 font-mono">
+                    복사하여 ChatGPT / Claude에 즉시 적용할 수 있는 최상위 튜터용 스펙입니다.
+                </p>
+            </div>
+
+            <!-- Accordion Container -->
+            <div class="border border-gridline divide-y divide-gridline bg-white">
+                
+                <!-- Prompt 1 -->
+                <div class="accordion-item">
+                    <button onclick="toggleAccordion(1)" class="w-full text-left p-6 flex justify-between items-center hover:bg-ivory/50 transition-colors font-mono">
+                        <div class="flex items-center gap-4">
+                            <span class="text-vermilion font-bold">[ PROMPT 01 ]</span>
+                            <span class="text-base font-bold text-charcoal uppercase">레드팀 & 비판적 철학자 프롬프트 (가설 검증용)</span>
+                        </div>
+                        <span id="accIcon-1" class="text-xl font-bold">+</span>
+                    </button>
+                    <div id="accContent-1" class="hidden p-6 border-t border-gridline bg-ivory/30">
+                        <pre class="bg-charcoal text-ivory p-6 font-mono text-xs leading-relaxed overflow-x-auto whitespace-pre-wrap select-all">역할 부여: 당신은 세계 최고의 비즈니스 전략가이자 엄격한 비판적 철학자입니다. 친절한 칭찬은 생략하고, 오직 논리적 허점과 위험 요소만 집요하게 파헤치는 레드팀(Red Team) 역할을 맡습니다.
+
+상황: 내가 구상한 신규 사업 모델/기획안은 다음과 같습니다:
+[내 기획안/가설 내용 입력]
+
+지시 사항:
+1. 이 기획안에서 가장 취약한 논리적 도약(Logical Leap) 3가지를 지적하십시오.
+2. 이 사업이 실패할 수밖에 없는 시장/인간 심리적 이유를 가장 가혹한 관점에서 2가지 제시하십시오.
+3. 내가 이 비판에 답할 수 있도록, 나에게 역으로 3가지 고차원 질문을 던져주십시오.</pre>
+                        <button onclick="copyPrompt(`accContent-1`)" class="mt-4 border border-charcoal bg-charcoal text-ivory px-4 py-2 font-mono text-xs uppercase hover:bg-vermilion transition-colors">
+                            [ Copy Prompt ]
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Prompt 2 -->
+                <div class="accordion-item">
+                    <button onclick="toggleAccordion(2)" class="w-full text-left p-6 flex justify-between items-center hover:bg-ivory/50 transition-colors font-mono">
+                        <div class="flex items-center gap-4">
+                            <span class="text-vermilion font-bold">[ PROMPT 02 ]</span>
+                            <span class="text-base font-bold text-charcoal uppercase">고전·인문학 융합 아키텍팅 프롬프트 (통찰력 확장용)</span>
+                        </div>
+                        <span id="accIcon-2" class="text-xl font-bold">+</span>
+                    </button>
+                    <div id="accContent-2" class="hidden p-6 border-t border-gridline bg-ivory/30">
+                        <pre class="bg-charcoal text-ivory p-6 font-mono text-xs leading-relaxed overflow-x-auto whitespace-pre-wrap select-all">역할 부여: 당신은 동서양 고전(플라톤, 한비자, 마키아벨리, 애덤 스미스 등)과 현대 테크놀로지 생태계를 모두 통찰하는 르네상스형 인문학자입니다.
+
+상황: 나는 현재 [사업 문제/서비스 기획/조직 관리 문제]에 대해 고민하고 있습니다:
+[고민 내용 입력]
+
+지시 사항:
+1. 이 고민을 동서양 고전 중 하나의 사상이나 역사적 사건과 연결하여 재해석해 주십시오.
+2. 단순히 답을 주지 말고, 내가 이 문제를 해결하기 위해 스스로 사유할 수 있도록 소크라테스식 문답법 형태로 나에게 질문을 3단계로 나누어 던져주십시오.</pre>
+                        <button onclick="copyPrompt(`accContent-2`)" class="mt-4 border border-charcoal bg-charcoal text-ivory px-4 py-2 font-mono text-xs uppercase hover:bg-vermilion transition-colors">
+                            [ Copy Prompt ]
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Prompt 3 -->
+                <div class="accordion-item">
+                    <button onclick="toggleAccordion(3)" class="w-full text-left p-6 flex justify-between items-center hover:bg-ivory/50 transition-colors font-mono">
+                        <div class="flex items-center gap-4">
+                            <span class="text-vermilion font-bold">[ PROMPT 03 ]</span>
+                            <span class="text-base font-bold text-charcoal uppercase">블랙박스 파괴 및 역설명 프롬프트 (바이브 코딩용)</span>
+                        </div>
+                        <span id="accIcon-3" class="text-xl font-bold">+</span>
+                    </button>
+                    <div id="accContent-3" class="hidden p-6 border-t border-gridline bg-ivory/30">
+                        <pre class="bg-charcoal text-ivory p-6 font-mono text-xs leading-relaxed overflow-x-auto whitespace-pre-wrap select-all">역할 부여: 당신은 컴퓨터 과학 명예교수이자 최고 아키텍트입니다. 코드만 툭 던져주는 방식은 거부합니다.
+
+상황: 아래 코드는 시스템이 작성하여 성공적으로 작동한 코드입니다:
+[작동 코드 입력]
+
+지시 사항:
+1. 이 코드가 왜 이런 아키텍처로 설계되었는지 '제1원리(First Principles)'에 기반하여 설명하십시오.
+2. 이 구조를 선택함으로써 우리가 포기한 성능이나 트레이드오프(Trade-off)는 무엇입니까?
+3. 내가 이 코드를 작성하지 않고도 완벽히 이해했는지 검증할 수 있는 '기술 퀴즈 2개'를 출제하십시오.</pre>
+                        <button onclick="copyPrompt(`accContent-3`)" class="mt-4 border border-charcoal bg-charcoal text-ivory px-4 py-2 font-mono text-xs uppercase hover:bg-vermilion transition-colors">
+                            [ Copy Prompt ]
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Prompt 4 -->
+                <div class="accordion-item">
+                    <button onclick="toggleAccordion(4)" class="w-full text-left p-6 flex justify-between items-center hover:bg-ivory/50 transition-colors font-mono">
+                        <div class="flex items-center gap-4">
+                            <span class="text-vermilion font-bold">[ PROMPT 04 ]</span>
+                            <span class="text-base font-bold text-charcoal uppercase">메타인지 평가 및 주간 디브리핑 프롬프트</span>
+                        </div>
+                        <span id="accIcon-4" class="text-xl font-bold">+</span>
+                    </button>
+                    <div id="accContent-4" class="hidden p-6 border-t border-gridline bg-ivory/30">
+                        <pre class="bg-charcoal text-ivory p-6 font-mono text-xs leading-relaxed overflow-x-auto whitespace-pre-wrap select-all">역할 부여: 당신은 나의 지적 성장을 감독하는 개인 튜터입니다.
+
+상황: 지난 일주일 동안 내가 AI와 나누었던 주요 대화 주제와 결정들의 요약입니다:
+[일주일 간의 질문 및 결정 요약 입력]
+
+지시 사항:
+1. 이번 주 나의 사고방식에서 나타난 수동적 경향(AI 의존적 패턴)이 있었는지 평가하십시오.
+2. 내가 던진 질문들의 수준(단순 실행형 vs. 본질 기획형)을 분석해 주십시오.
+3. 다음 주 사고 수준을 끌어올리기 위해 읽어야 할 고전 한 권과 핵심 화두를 추천하십시오.</pre>
+                        <button onclick="copyPrompt(`accContent-4`)" class="mt-4 border border-charcoal bg-charcoal text-ivory px-4 py-2 font-mono text-xs uppercase hover:bg-vermilion transition-colors">
+                            [ Copy Prompt ]
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- [08 CTA / FOOTER] Manifesto Download & Inverted Dark Footer -->
+    <footer id="ctaSection" class="bg-darkbg text-ivory border-t border-gridline pt-24 pb-12">
+        <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+            
+            <div class="max-w-4xl mx-auto text-center mb-16">
+                <span class="font-mono text-xs text-vermilion tracking-widest block mb-4 uppercase">[ SOVEREIGN MIND JOIN ]</span>
+                <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight mb-6">
+                    "Sapere Aude!"
+                </h2>
+                <p class="font-serif italic text-lg sm:text-xl text-ivory/80 mb-8 leading-relaxed">
+                    "스스로의 지성을 사용할 용기를 가져라." — 임마누엘 칸트 (Immanuel Kant)
+                </p>
+                <p class="text-sm text-muted font-mono mb-8 max-w-lg mx-auto">
+                    지능의 외주화 시대, 사유의 주권을 회복하는 <span class="text-ivory">생각노동자 매니페스토 PDF</span> 풀버전을 받아보세요.
+                </p>
+
+                <!-- Sharp Email Input Form -->
+                <form onsubmit="handleFormSubmit(event)" class="flex flex-col sm:flex-row gap-0 max-w-md mx-auto border border-ivory/30">
+                    <input type="email" required placeholder="ENTER YOUR EMAIL..." class="bg-transparent px-4 py-3 font-mono text-xs text-ivory placeholder-muted focus:outline-none flex-grow">
+                    <button type="submit" class="bg-vermilion text-ivory font-mono text-xs uppercase px-6 py-3 hover:bg-white hover:text-charcoal transition-colors font-bold whitespace-nowrap">
+                        GET MANIFESTO
+                    </button>
+                </form>
+            </div>
+
+            <!-- Footer Bottom Metadata -->
+            <div class="border-t border-ivory/10 pt-12 flex flex-col md:flex-row justify-between items-center text-xs font-mono text-muted gap-4">
+                <div>
+                    THOUGHT WORKERS © 2026. ALL RIGHTS RESERVED.
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-vermilion transition-colors">SWISS EDITORIAL SPEC</a>
+                    <a href="#" class="hover:text-vermilion transition-colors">PRIVACY POLICY</a>
+                    <a href="#" class="hover:text-vermilion transition-colors">TERMS OF REASON</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Interactive Toast Banner (Replaces alert) -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-vermilion text-ivory font-mono text-xs px-6 py-4 shadow-xl z-50 border border-ivory/20 flex items-center gap-3">
+        <span class="w-2 h-2 bg-ivory"></span>
+        <span id="toastMsg">텍스트가 클립보드에 복사되었습니다.</span>
+    </div>
+
+    <script>
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hero Entrance Timeline
+            setTimeout(() => {
+                document.getElementById('heroEyebrow')?.classList.add('revealed');
+            }, 200);
+
+            setTimeout(() => {
+                document.getElementById('heroHeadlineWrap')?.classList.add('revealed');
+            }, 500);
+
+            setTimeout(() => {
+                document.getElementById('heroAccentLine')?.classList.add('drawn');
+            }, 1000);
+
+            // Intersection Observer for Blur-to-Focus Text
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -10% 0px',
+                threshold: 0.15
+            };
+
+            const blurObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('focused');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.blur-text').forEach(el => {
+                blurObserver.observe(el);
+            });
+        });
+
+        function scrollToSection(id) {
+            const elem = document.getElementById(id);
+            if (elem) {
+                lenis.scrollTo(elem, { offset: -60 });
+            }
+        }
+
+        function toggleAccordion(index) {
+            const content = document.getElementById(`accContent-${index}`);
+            const icon = document.getElementById(`accIcon-${index}`);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.textContent = '—';
+            } else {
+                content.classList.add('hidden');
+                icon.textContent = '+';
+            }
+        }
+
+        function copyPrompt(containerId) {
+            const pre = document.querySelector(`#${containerId} pre`);
+            if (!pre) return;
+
+            const textToCopy = pre.innerText;
+
+            // Fallback clipboard logic
+            const tempInput = document.createElement('textarea');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast('프롬프트가 클립보드에 복사되었습니다.');
+            } catch (err) {
+                showToast('복사 실패. 직접 텍스트를 선택하세요.');
+            } finally {
+                document.body.removeChild(tempInput);
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            showToast('매니페스토 PDF가 신청되었습니다. 이메일을 확인하세요.');
+            e.target.reset();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toastMsg');
+            if (!toast || !msgEl) return;
+
+            msgEl.textContent = message;
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
